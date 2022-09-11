@@ -16,7 +16,7 @@ class SellerDetailBillController {
        //console.log('traangthai: '+ req.body.DH_trangthai);
       
         if(req.query.DG_sosao === ''){
-            Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE NB_id='${req.query.NB_id}'`)])
+            Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE NB_id='${req.query.NB_id}' ORDER by DG_id DESC` )])
             .then(([result])=>{
                 Promise.all([ mydb.query(`SELECT count(DG_id) as star5 FROM danhgia WHERE NB_id='${req.query.NB_id}' AND DG_sosao='5'`)])
                 .then(([star5])=>{
@@ -75,7 +75,7 @@ class SellerDetailBillController {
                 })
             })
         }else{
-            Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE NB_id='${req.query.NB_id}' AND DG_sosao='${req.query.DG_sosao}'`)])
+            Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE NB_id='${req.query.NB_id}' AND DG_sosao='${req.query.DG_sosao}' ORDER by DG_id DESC`)])
             .then(([result])=>{
                 if(result[0] !== undefined){
                     Promise.all([ mydb.query(`SELECT count(DG_id) as star5 FROM danhgia WHERE NB_id='${req.query.NB_id}' AND DG_sosao='5'`)])
@@ -142,53 +142,19 @@ class SellerDetailBillController {
        
     }
 
-    // billDetailPrepare(req, res, next){
-    //     Promise.all([ mydb.query(`UPDATE donhang SET DH_trangthai='${req.body.DH_trangthai}' WHERE NB_id='${req.body.NB_id}' AND DH_id='${req.body.DH_id}'`)])
-    //         .then(([result])=>{
-    //             res.json({
-    //                 update: true,
-    //             })
-    //         })
-    //         .catch((err) =>{
-    //             res.json({
-    //                 update: false,
-    //             })
-    //         })
-    // }
-
-    // billPrint(req, res, next){
-    //     Promise.all([ mydb.query(`SELECT * FROM donhang WHERE NB_id='${req.body.NB_id}' AND DH_id='${req.body.DH_id}'`)])
-    //     .then(([result])=>{
-    //                 console.log(result.length);
-    //                 for(let i=0; i<result.length; i++){
-    //                     Promise.all([ mydb.query(`SELECT  ttdh.TTDH_soluong, sp.SP_ten, sp.SP_image, sp.SP_gia, nd.ND_hoten, nd.ND_sdt  FROM sanpham as sp, thongtindonhang as ttdh, nguoidung as nd WHERE sp.SP_id = ttdh.SP_id AND nd.ND_id = ttdh.ND_id AND DH_id='${result[i].DH_id}'`)])
-    //                     .then(([product]) => {
-    //                         result[i].product = product;
-    //                         if(i === result.length-1){
-    //                             Promise.all([ mydb.query(`SELECT * FROM motashop WHERE NB_id='${req.body.NB_id}'`)])
-    //                             .then(([shop])=>{
-    //                                 result[0].shop = shop;
-    //                                 res.json({
-    //                                     result: result,
-    //                                 });
-    //                             })
-    //                             .catch((err)=>{
-    //                                 console.log('loi shop');
-    //                             })
-    //                         }
-    //                     })
-    //                     .catch((err)=>{
-    //                         console.log('loi');
-    //                     })
-    //                 } 
-                
-    //      })
-    //      .catch((err) =>{
-    //         res.send({
-    //             seller: false,
-    //         })
-    //      })
-    // }
+    UpdateAnswer(req, res, next){
+        console.log('id', req.body.DG_id);
+        console.log('answer', req.body.DG_traloi);
+        if(req.body.DG_traloi !== ''){
+            Promise.all([ mydb.query(`UPDATE danhgia SET DG_traloi='${req.body.DG_traloi}' WHERE DG_id='${req.body.DG_id}'`)])
+                .then(([result]) => {
+                    res.send(result);
+                })
+                .catch((err) => {
+                    console.error(err);
+                })
+        }
+    }
 
 }
 

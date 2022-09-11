@@ -52,7 +52,13 @@ class CustomerController {
     //POST LOGIN
     login(req, res, next){
         console.log(req.body.userName)
-        Promise.all([mydb.query(`SELECT ND_id, ND_hoten, ND_password, ND_image, ND_email, ND_diachi, ND_ngaysinh, ND_sdt FROM nguoidung WHERE ND_username='${req.body.ND_username}'`) ])
+        let url;
+        if(req.body.seller){
+            url =`SELECT ND_id, ND_hoten, ND_password, ND_image, ND_email, ND_diachi, ND_sdt,  ND_ngay FROM nguoidung WHERE ND_username='${req.body.ND_username}' AND ND_quyen=1`;
+        }else{
+            url =`SELECT ND_id, ND_hoten, ND_password, ND_image, ND_email, ND_diachi, ND_sdt, ND_ngay FROM nguoidung WHERE ND_username='${req.body.ND_username}' AND ND_quyen=2`;
+        }
+        Promise.all([mydb.query(url) ])
         .then(([ result]) =>{
             if(result){
                 //let user = result[0];

@@ -15,7 +15,7 @@ class SellerProductController {
     productShowAll(req, res, next) {
        console.log('traangthai: '+ req.body.SP_trangthai);
        if(req.body.SP_trangthai === 'trangthai'){
-        Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE NB_id='${req.body.NB_id}'AND SP_trangthai='0'`)])
+        Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE NB_id='${req.body.NB_id}'AND SP_trangthai='0' ORDER by SP_id DESC`)])
         .then(([result])=>{
             Promise.all([ mydb.query(`SELECT count(SP_id) as status FROM sanpham WHERE NB_id='${req.body.NB_id}' AND SP_trangthai='0'`)])
             .then(([status])=>{
@@ -31,7 +31,7 @@ class SellerProductController {
             })
          })
        }else if(req.body.SP_trangthai === 'trangthaiaction'){
-           Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE NB_id='${req.body.NB_id}'AND SP_trangthai='1'`)])
+           Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE NB_id='${req.body.NB_id}'AND SP_trangthai='1' ORDER by SP_id DESC`)])
            .then(([result])=>{
               Promise.all([ mydb.query(`SELECT count(SP_id) as status FROM sanpham WHERE NB_id='${req.body.NB_id}' AND SP_trangthai='0'`)])
               .then(([status])=>{
@@ -47,7 +47,7 @@ class SellerProductController {
               })
            })
        }else{
-            Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE NB_id='${req.body.NB_id}'`)])
+            Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE NB_id='${req.body.NB_id}' ORDER by SP_id DESC`)])
             .then(([result])=>{
                 Promise.all([ mydb.query(`SELECT count(SP_id) as status FROM sanpham WHERE NB_id='${req.body.NB_id}' AND SP_trangthai='0'`)])
                 .then(([status])=>{
@@ -115,7 +115,7 @@ class SellerProductController {
             })
             paths = paths.substring(0, paths.lastIndexOf(','));
             req.body.image = paths;  
-            Promise.all([ mydb.query(`INSERT INTO sanpham(NB_id, SP_ten, SP_soluong, SP_gia, SP_image, SP_khuyenmai, SP_trangthai, DM_id) VALUES ('${req.body.NB_id}','${req.body.SP_ten}','${req.body.SP_soluong}','${req.body.SP_gia}','${req.body.image}','${req.body.SP_khuyenmai}','1', '${req.body.DM_id}')`)])  
+            Promise.all([ mydb.query(`INSERT INTO sanpham(NB_id, SP_ten, SP_soluong, SP_gia, SP_image, SP_khuyenmai, SP_trongluong, SP_mota, SP_trangthai, DM_id) VALUES ('${req.body.NB_id}','${req.body.SP_ten}','${req.body.SP_soluong}','${req.body.SP_gia}','${req.body.image}','${req.body.SP_khuyenmai}','${req.body.SP_trongluong}','${req.body.SP_mota}','1', '${req.body.DM_id}')`)])  
          }
         
             // .then(([result])=>{

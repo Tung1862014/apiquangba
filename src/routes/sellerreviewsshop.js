@@ -5,6 +5,8 @@ const sellerReviewsShopController = require('../app/controllers/SellerRevviewSho
 
 router.get('/evaluate/show/all',sellerReviewsShopController.billReviewsShowAll);
 
+router.put('/update/answer', sellerReviewsShopController.UpdateAnswer)
+
 //router.get('/', customerController.index);
 
 module.exports = router;
