@@ -14,15 +14,15 @@ class CustomerController {
     insert(req, res, next) {
         console.log('image: '+ JSON.stringify(req.files))
         const formData = req.body;
-        console.log(req.body.userName);
+        console.log(req.body.ND_username);
         let testUserName = '';
-         Promise.all([mydb.query(`SELECT * FROM nguoidung WHERE ND_TenDN='${formData.userName}'`)])
+         Promise.all([mydb.query(`SELECT * FROM nguoidung WHERE ND_username='${formData.ND_username}' AND ND_quyen=2`)])
          .then(([results]) => {
             console.log(results[0]);
             if(results[0] !== undefined) {
                 res.json(
                     {
-                        userName: false,
+                        ND_username: false,
                     }
                 )
             }else {
@@ -39,8 +39,8 @@ class CustomerController {
                  }else{
                     console.log('loi image')
                 }
-                Promise.all([mydb.query(`INSERT INTO nguoidung( ND_Hoten, ND_TenDN, ND_Password, ND_Link, ND_Email, ND_Diachi, ND_Ngaysinh, ND_Sodt, ND_Quyen) VALUES (
-                    '${formData.fullName}','${formData.userName}','${formData.password}','${formData.image}','${formData.email}','${formData.address}','${formData.birthday}','${formData.phone}','2'
+                Promise.all([mydb.query(`INSERT INTO nguoidung( ND_hoten, ND_username, ND_password, ND_image, ND_email, ND_diachi, ND_ngay, ND_sdt, ND_quyen) VALUES (
+                    '${formData.ND_hoten}','${formData.ND_username}','${formData.ND_password}','${formData.image}','${formData.ND_email}','${formData.ND_diachi}','${formData.ND_ngay}','${formData.ND_sdt}','2'
                     )`)])        
             }
          })
