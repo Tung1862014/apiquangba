@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../middleware/establish');
+const uploads = require('../middleware/customers');
 
 
 const sellerController = require('../app/controllers/SellerController');
@@ -15,7 +16,7 @@ router.post('/establish/show',sellerController.establishShow);
 
 router.get('/statistical/show/all',sellerController.statisticalShowAll);
 
-router.post('/signup', sellerController.insert);
+router.post('/signup',uploads.array('image',12), sellerController.insert);
 
 router.post('/login', sellerController.login);
 

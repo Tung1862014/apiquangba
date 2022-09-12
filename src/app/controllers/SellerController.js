@@ -14,27 +14,41 @@ let mydb = new Database(dbConn);
 class SellerController {
 
     insert(req, res, next) {
+        console.log('image: '+ JSON.stringify(req.files))
         const formData = req.body;
-                Promise.all([mydb.query(`SELECT * FROM nguoiban WHERE NB_email='${formData.email}'`)])
-                    .then(([result])=>{
-                        console.log(result);
-                        if(result[0] !== undefined){
-                            res.json({err: true, email: 'email already exist'})
-                        }else{
-                            Promise.all([mydb.query(`INSERT INTO nguoiban(NB_hoten, NB_email, NB_password, NB_diachi, NB_sdt, NB_ngay, NB_quyen) VALUES ('${formData.fullName}','${formData.email}','${formData.password}','${formData.address}','${formData.phone}','${formData.YMD}','1')`)])
-                                .then(([seller]) => {
-                                    res.json({
-                                        err: false,
-                                    })
-                                })
-                                .catch((err) =>
-                                    res.json({err: true, email: err})
-                                )
-                        }
+        console.log(req.body.ND_username);
+        let testUserName = '';
+         Promise.all([mydb.query(`SELECT * FROM nguoidung WHERE ND_username='${formData.ND_username}' AND ND_quyen=1`)])
+         .then(([results]) => {
+            console.log(results[0]);
+            if(results[0] !== undefined) {
+                res.json(
+                    {
+                        ND_username: false,
+                    }
+                )
+            }else {
+                if(req.files){
+                    let paths ='';
+                     res.json(req.files)
+                    const arr =  req.files;
+                    arr.forEach(function(e, index, arr){
+                       paths = paths + process.env.URL_IMAGE_CUSTOMER+ e.filename +',';
                     })
-                    .catch((err) =>
-                        res.json({err: true})
-                    )
+                    paths = paths.substring(0, paths.lastIndexOf(','));
+                    formData.image = paths;
+                    
+                 }else{
+                    console.log('loi image')
+                }
+                Promise.all([mydb.query(`INSERT INTO nguoidung( ND_hoten, ND_username, ND_password, ND_image, ND_email, ND_diachi, ND_ngay, ND_sdt, ND_quyen) VALUES (
+                    '${formData.ND_hoten}','${formData.ND_username}','${formData.ND_password}','${formData.image}','${formData.ND_email}','${formData.ND_diachi}','${formData.ND_ngay}','${formData.ND_sdt}','1'
+                    )`)])        
+            }
+         })
+         .catch((err) => {
+             res.send('Loi khong tim user')
+         })   
     }
 
     //POST LOGIN
