@@ -68,7 +68,7 @@ class CustomerController {
             } 
         }
         )
-            .catch(err => res.json({tt:'Tài khoản không tồn tại sss'}))
+        .catch(err => res.json({tt:'Tài khoản không tồn tại sss'}))
     }
 
     updateImage(req, res, next) {
