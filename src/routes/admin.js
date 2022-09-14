@@ -16,6 +16,12 @@ router.get('/search/customer',adminController.SearchCustomer);
 
 // router.delete('/delete/product', adminController.DeleteProduct);
 
+router.get('/show/all/seller', adminController.ShowAllSeller);
+
+router.put('/update/status/seller',adminController.UpdateStatusSeller);
+
+router.get('/search/seller',adminController.SearchSeller);
+
 // router.put('/update/address', adminController.UpdateAddress);
 
 
