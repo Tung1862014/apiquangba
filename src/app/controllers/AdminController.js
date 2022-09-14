@@ -45,57 +45,96 @@ class AdminController {
     
     //[GET]  /user/show
     ShowAllUser(req, res, next){
-        Promise.all([ mydb.query(`SELECT ND_hoten, ND_sdt, ND_diachigiaohang, ND_ttqhpx FROM nguoidung WHERE ND_id='${req.query.ND_id}'`)])
-            .then(([results]) => {
-                res.json({
-                    results: results[0],
-                })
-            })
-            .catch((err) => {
-                console.log('loi');
-            })
-    }
-
-
-    //[UPDATE]  /update/address
-    UpdateAddress(req, res, next){
-        console.log(req.body.ND_ttqhpx,req.body.ND_diachigiaohang,req.body.ND_id);
+        // console.log(req.query.ND_trangthai);
         let url;
-        if(req.body.ND_ttqhpx !== '' && req.body.ND_diachigiaohang !== ''){
-            url = `UPDATE nguoidung SET ND_ttqhpx= '${req.body.ND_ttqhpx}', ND_diachigiaohang= '${req.body.ND_diachigiaohang}' WHERE ND_id='${req.body.ND_id}'`;
-        }else if(req.body.ND_ttqhpx !== '' && req.body.ND_diachigiaohang === ''){
-            url = `UPDATE nguoidung SET ND_ttqhpx= '${req.body.ND_ttqhpx}' WHERE ND_id='${req.body.ND_id}'`;
-        }else if(req.body.ND_ttqhpx === '' && req.body.ND_diachigiaohang !== ''){
-            url = `UPDATE nguoidung SET ND_diachigiaohang= '${req.body.ND_diachigiaohang}' WHERE ND_id='${req.body.ND_id}'`;
+        if(req.query.ND_trangthai === 'trangthaiaction'){
+            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai FROM nguoidung WHERE ND_quyen=2 AND ND_trangthai=1 ORDER by ND_id DESC`;
+        }else if(req.query.ND_trangthai === 'trangthaihanche'){
+            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai FROM nguoidung WHERE ND_quyen=2 AND ND_trangthai=0 ORDER by ND_id DESC`;
+        }else{
+            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai FROM nguoidung WHERE ND_quyen=2 ORDER by ND_id DESC`;
         }
         Promise.all([ mydb.query(url)])
             .then(([results]) => {
-                console.log('thanh cong');
-                res.json({
-                    update: true,
-                })
+                Promise.all([ mydb.query(`SELECT count(ND_id) as actions FROM nguoidung WHERE ND_quyen=2 AND ND_trangthai=1`)])
+                    .then(([actions]) => {
+                        Promise.all([ mydb.query(`SELECT count(ND_id) as limits FROM nguoidung WHERE ND_quyen=2 AND ND_trangthai=0`)])
+                        .then(([limits]) => {
+                            res.json({
+                                results: results,
+                                actions: actions[0].actions,
+                                limits: limits[0].limits,
+                            })
+                        })
+                        .catch((err) => {
+                            console.log('loi nha nhe');
+                        })
+                    })
+                    .catch((err) => {
+                        console.log('loi nha');
+                    })
             })
             .catch((err) => {
                 console.log('loi');
-                res.json({
-                    update: false,
-                })
             })
     }
 
-    //[delete]  delete/product
-    DeleteProduct(req, res, next){
-        console.log(req.body.TTDH_id);
-        Promise.all([ mydb.query(`DELETE FROM thongtindonhang WHERE TTDH_id=${req.body.TTDH_id}`)])
-            .then(([results])=>{
-                res.send(results);
+
+    //[PUT]  /update/status/customer
+    UpdateStatusCustomer(req, res, next) {
+        Promise.all([ mydb.query(`SELECT ND_trangthai FROM nguoidung WHERE ND_id = '${req.body.ND_id}' AND ND_quyen=2 `)])
+            .then(([result]) => {
+               if(result[0].ND_trangthai === 1) {
+                    Promise.all([ mydb.query(`UPDATE nguoidung SET ND_trangthai=0 WHERE ND_id='${req.body.ND_id}' `)])
+                        .then(([status]) => {
+                            res.send(status);
+                        })
+                        .catch((err) => {
+                            console.log('loi nha');
+                        })
+               }else{
+                    Promise.all([ mydb.query(`UPDATE nguoidung SET ND_trangthai=1 WHERE ND_id='${req.body.ND_id}'  `)])
+                        .then(([status]) => {
+                            res.send(status);
+                        })
+                        .catch((err) => {
+                            console.log('loi nhe');
+                        })
+               }
             })
-            .catch((err) =>{
+            .catch((err) => {
                 console.log('loi');
-                res.send(results);
             })
-       
+        
     }
+
+    SearchCustomer(req, res, next) {
+        Promise.all([ mydb.query(`SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai FROM nguoidung WHERE ND_hoten LIKE '%${req.query.name}%' AND ND_quyen=2 ORDER by ND_id DESC`)])
+        .then(([results]) => {
+            Promise.all([ mydb.query(`SELECT count(ND_id) as actions FROM nguoidung WHERE ND_quyen=2 AND ND_trangthai=1`)])
+                .then(([actions]) => {
+                    Promise.all([ mydb.query(`SELECT count(ND_id) as limits FROM nguoidung WHERE ND_quyen=2 AND ND_trangthai=0`)])
+                    .then(([limits]) => {
+                        res.json({
+                            results: results,
+                            actions: actions[0].actions,
+                            limits: limits[0].limits,
+                        })
+                    })
+                    .catch((err) => {
+                        console.log('loi nha nhe');
+                    })
+                })
+                .catch((err) => {
+                    console.log('loi nha');
+                })
+        })
+        .catch((err) => {
+            console.log('loi');
+        })
+    }
+
+    
 }
 
 module.exports = new AdminController();

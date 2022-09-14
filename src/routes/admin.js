@@ -8,9 +8,15 @@ const adminController = require('../app/controllers/AdminController');
 
 router.post('/login', adminController.loginAdmin);
 
-router.delete('/delete/product', adminController.DeleteProduct);
+router.get('/show/all/user', adminController.ShowAllUser);
 
-router.put('/update/address', adminController.UpdateAddress);
+router.put('/update/status/customer',adminController.UpdateStatusCustomer);
+
+router.get('/search/customer',adminController.SearchCustomer);
+
+// router.delete('/delete/product', adminController.DeleteProduct);
+
+// router.put('/update/address', adminController.UpdateAddress);
 
 
 module.exports = router;
