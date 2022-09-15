@@ -42,6 +42,19 @@ class AdminController {
         )
             .catch(err => res.json({tt:'Tài khoản không tồn tại sss'}))
     }
+
+    //[GET]  /show/account
+    ShowAccount(req, res, next){
+        Promise.all([ mydb.query(`SELECT * FROM nguoidung WHERE ND_quyen=0`)])
+            .then(([result]) => {
+                res.json({
+                    result: result[0],
+                })
+            })
+            .catch((err) => {
+                console.log('loi');
+            })
+    }
     
     //[GET]  /user/show
     ShowAllUser(req, res, next){
