@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 // const multer = require('multer');
-const upload = require('../middleware/upload');
+const upload = require('../middleware/customers')
 // var upload = multer({ dest:'../images/' });
 
 const adminController = require('../app/controllers/AdminController');
@@ -12,6 +12,8 @@ router.post('/login', adminController.loginAdmin);
 router.get('/show/account', adminController.ShowAccount);
 
 router.put('/update/account', adminController.UpdateAccountNoImage);
+
+router.put('/update/account/image',upload.array('image'), adminController.UpdateAccountImage);
 
 // router.delete('/delete/product', adminController.DeleteProduct);
 
