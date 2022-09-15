@@ -7,8 +7,11 @@ const upload = require('../middleware/upload');
 const adminController = require('../app/controllers/AdminController');
 
 router.post('/login', adminController.loginAdmin);
+// router.delete('/delete/product', adminController.DeleteProduct);
 
 router.get('/show/account', adminController.ShowAccount);
+
+router.put('/update/account', adminController.UpdateAccountNoImage);
 
 // router.delete('/delete/product', adminController.DeleteProduct);
 
