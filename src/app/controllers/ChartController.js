@@ -50,13 +50,81 @@ class ChartController {
     index(req, res, next) {
         // res.json(req.query)
       
-        Promise.all([ mydb.query(`SELECT TK_id, TK_ngay, TK_donhang, TK_doanhthu, TK_soluong FROM thongke WHERE NB_id='${req.query.NB_id}' AND TK_ngay BETWEEN DATE_SUB(DATE('${req.query.ngdi}'),INTERVAL 2 DAY) AND DATE_ADD(DATE('${req.query.ngde}'),INTERVAL 2 DAY)`)])
-            .then(([results]) =>
-                // res.json({numbers,results}),
+        // Promise.all([ mydb.query(`SELECT TK_id, TK_ngay, TK_donhang, TK_doanhthu, TK_soluong FROM thongke WHERE NB_id='${req.query.NB_id}' AND TK_ngay BETWEEN DATE_SUB(DATE('${req.query.ngdi}'),INTERVAL 2 DAY) AND DATE_ADD(DATE('${req.query.ngde}'),INTERVAL 2 DAY)`)])
+        //     .then(([results]) =>
+        //         // res.json({numbers,results}),
 
-                res.json(
-                    results
-                )
+        //         res.json(
+        //            { results: results}
+        //         )
+        //     )
+        let arr = [];
+        
+         Promise.all([ mydb.query(`SELECT * FROM donhang WHERE NB_id='${req.query.NB_id}' `)])
+            .then(([results]) =>{
+                let numbers = [];
+                let turnovers = [];
+                for(let i=0; i<results.length; i++){
+                    let YMD='';
+                    let DateChart = new Date(results[i].DH_ngay);
+                        let day = DateChart.getDate();
+                        let month = DateChart.getMonth() + 1;
+                        let year = DateChart.getFullYear();
+
+                        if (month < 10 && day >= 10) {
+                            YMD = year + '-0' + month + '-' + day;
+                        } else if (month < 10 && day < 10) {
+                            YMD =  year + '-0' + month + '0' + day;
+                        } else if (month > 10 && day < 10) {
+                            YMD =  year + '-' + month + '0' + day;
+                        } else if (month > 10 && day >= 10) {
+                            YMD = year + '-' + month + day;
+                        } else {
+                            YMD = year + '-' + month + '-' + day;
+                        }
+                        //console.log(YMD);
+                        if(arr[0] === undefined){
+                            arr = [...arr,YMD];
+                        }else{
+                            for(let j=0; j < arr.length; j++){
+                                if(arr[j] !== (YMD)){
+                                    if(j === arr.length-1){
+                                        arr = [...arr,YMD];
+                                    }
+                                }
+                            }
+                        }
+                }
+                
+                for(let i=0; i < arr.length; i++){
+                    console.log('day', arr[i]);
+                    Promise.all([ mydb.query(`SELECT sum(DH_tongtien) as money FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay='${arr[i]}'`)])
+                        .then(([money]) =>{
+                           
+                            turnovers =  [...turnovers,money[0].money];
+                           
+                            Promise.all([ mydb.query(`SELECT COUNT(DH_id) as orders FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay='${arr[i]}'`)])
+                                .then(([orders]) =>{
+                                    //console.log('tong tien', turnovers);
+                                    numbers = [...numbers, orders[0].orders];
+                                    if(i === arr.length-1){
+                                        console.log('arr', arr);
+                                        console.log('chartListTurnover', turnovers);
+                                        console.log('chartListNumber', numbers);
+                                    }
+                                })
+                                .catch((err) =>{
+                                    console.log('loi nha');
+                                })
+                        })
+                        .catch((err) =>{
+                            console.log('loi');
+                        })
+                    
+                        
+                }
+            }
+                // res.json({numbers,results}),
             )
     }
     //     index(req, res, next) {
