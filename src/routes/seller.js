@@ -1,20 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const upload = require('../middleware/establish');
+const upload = require('../middleware/customers');
 const uploads = require('../middleware/customers');
 
 
 const sellerController = require('../app/controllers/SellerController');
 
-router.post('/establish/image',upload.array('image'), sellerController.establish);
+////////////////////////////////////////////////////////////////// Thong tin tai khoan
+router.get('/show/account', sellerController.ShowAccount);
 
-router.post('/establish', sellerController.establishNoImage);
+router.put('/update/account', sellerController.UpdateAccountNoImage);
 
-router.post('/establish/logo',upload.array('image'), sellerController.establishLogo);
+router.put('/update/account/image',upload.array('image'), sellerController.UpdateAccountImage);
 
-router.post('/establish/show',sellerController.establishShow);
+////////////////////////////////////////////////////////////////// Thong ke
 
 router.get('/statistical/show/all',sellerController.statisticalShowAll);
+
+//////////////////////////////////////////////////////////////////Dang ky / Dang nhap
 
 router.post('/signup',uploads.array('image',12), sellerController.insert);
 

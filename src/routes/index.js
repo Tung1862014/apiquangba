@@ -2,6 +2,7 @@
 const staffRoute = require('./staff');
 const customerRoute = require('./customer');
 const sellerRoute = require('./seller');
+const sellersettingshopRoute = require('./sellersettingshop');
 const sellerproductRoute = require('./sellerproduct');
 const sellerupdateproductRoute = require('./sellerupdateproduct');
 const sellercategoryandweightRoute = require('./sellercategoryandweight');
@@ -26,6 +27,7 @@ function route(app) {
     app.use('/staff', staffRoute);
     app.use('/customer', customerRoute);
     app.use('/seller', sellerRoute);
+    app.use('/sellersettingshop',sellersettingshopRoute);
     app.use('/sellerproduct', sellerproductRoute);
     app.use('/sellerupdateproduct',sellerupdateproductRoute);
     app.use('/sellercategoryandweight', sellercategoryandweightRoute);
