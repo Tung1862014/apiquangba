@@ -51,109 +51,310 @@ class CustomerController {
 
     //POST LOGIN
     login(req, res, next){
-        console.log(req.body.userName)
+        // console.log(req.body.userName)
         let url;
         if(req.body.seller){
-            url =`SELECT ND_id, ND_hoten, ND_password, ND_image, ND_email, ND_diachi, ND_sdt,  ND_ngay FROM nguoidung WHERE ND_username='${req.body.ND_username}' AND ND_quyen=1`;
+            url =`SELECT ND_id FROM nguoidung WHERE ND_username='${req.body.ND_username}' AND ND_quyen=1`;
         }else{
-            url =`SELECT ND_id, ND_hoten, ND_password, ND_image, ND_email, ND_diachi, ND_sdt, ND_ngay FROM nguoidung WHERE ND_username='${req.body.ND_username}' AND ND_quyen=2`;
+            url =`SELECT ND_id FROM nguoidung WHERE ND_username='${req.body.ND_username}' AND ND_quyen=2`;
         }
-        Promise.all([mydb.query(url) ])
-        .then(([ result]) =>{
+        Promise.all([mydb.query(url)])
+        .then(([result]) =>{
             if(result){
                 //let user = result[0];
-                res.json({result: result[0]})
+                let url2;
+                if(req.body.seller){
+                    url2=`SELECT * FROM nguoidung WHERE ND_id='${result[0].ND_id}' AND ND_quyen=1`;
+                }else{
+                    url2=`SELECT * FROM nguoidung WHERE ND_id='${result[0].ND_id}' AND ND_quyen=2`;
+                }
+                Promise.all([mydb.query(url2)])
+                    .then(([results]) => {
+                        if(results[0].ND_password === req.body.ND_password){
+                            res.json({
+                                account:true,
+                                pass: true,
+                                result: result[0]
+                            })
+                        }else{
+                            res.json({
+                                account:true,
+                                pass: false,
+                                result: false,
+                            })
+                        }
+                    })
+                    .catch((err) => {
+
+                    })
+               
             }else{
-                res.json({tt:'Tài khoản không tồn tại'})
+                res.json({
+                    account: false,
+                })
             } 
         }
         )
-        .catch(err => res.json({tt:'Tài khoản không tồn tại sss'}))
+        .catch(err => res.json({
+            account: false,
+        }))
     }
 
-    updateImage(req, res, next) {
-        const formData = req.body;
-        console.log('files: '+ JSON.stringify(req.files))
-        if(req.files){
-            Promise.all([ mydb.query(`SELECT * FROM nguoidung WHERE ND_Id='${formData.idND}'`)])
-            .then(([result]) =>{
-                if(result[0]){
-                    const uploadImage  = uploadDir+ result[0].ND_Link.split('/').slice(4,5);
-                    console.log('iamge: '+uploadImage)
-                    fs.unlink(uploadImage, (error) => {
-                        // if any error
-                        if (error) {
-                          console.error(error);
-                          return;
-                        }
-                        console.log("Successfully deleted file!");
-                      });
-            }
+    // updateImage(req, res, next) {
+    //     const formData = req.body;
+    //     console.log('files: '+ JSON.stringify(req.files))
+    //     if(req.files){
+    //         Promise.all([ mydb.query(`SELECT * FROM nguoidung WHERE ND_Id='${formData.idND}'`)])
+    //         .then(([result]) =>{
+    //             if(result[0]){
+    //                 const uploadImage  = uploadDir+ result[0].ND_Link.split('/').slice(4,5);
+    //                 console.log('iamge: '+uploadImage)
+    //                 fs.unlink(uploadImage, (error) => {
+    //                     // if any error
+    //                     if (error) {
+    //                       console.error(error);
+    //                       return;
+    //                     }
+    //                     console.log("Successfully deleted file!");
+    //                   });
+    //         }
+    //         })
+    //         .catch(err => res.json({err: true, promise: false, errorCode: 'loi'})) 
+    //         let paths ='';
+    //         // res.json(req.files)
+    //         const arr =  req.files;
+    //         arr.forEach(function(e, index, arr){
+    //            paths = paths + process.env.URL_IMAGE_CUSTOMER+ e.filename +',';
+    //         })
+    //         paths = paths.substring(0, paths.lastIndexOf(','));
+    //         console.log("data: "+ paths)
+    //         formData.image = paths;
+    //      }else{
+    //         console.log('loi image')
+    //      }
+        
+    //      Promise.all([mydb.query( `UPDATE nguoidung SET ND_Hoten='${formData.fullName}',ND_Password='${formData.password}',ND_Link='${formData.image}',ND_Email='${formData.email}',ND_Diachi='${formData.address}',ND_Ngaysinh='${formData.birthday}',ND_Sodt='${formData.phone}' WHERE ND_Id='${formData.idND}'`)])
+    //     .then(([user]) =>{
+    //         if(user){
+    //             Promise.all([mydb.query(`SELECT ND_Id, ND_Hoten, ND_Password, ND_Link, ND_Email, ND_Diachi, ND_Ngaysinh, ND_Sodt FROM nguoidung WHERE ND_Id='${req.body.idND}'`) ])
+    //             .then(([result]) =>{
+    //                 if(result){
+    //                     res.json({result: result[0]})
+    //                 }else{
+    //                     res.json({err: true})
+    //                 } 
+    //             })
+    //             .catch(err => res.json({err: true, promise: false, errorCode: 'loi'})) 
+    //         }
+           
+    //     }
+    //     )
+    //     .catch(err => res.json({err: true, promise: false, errorCode: true}))
+        
+        
+    // }
+
+    // update(req, res, next) {
+    //     const formData = req.body;
+    //      Promise.all( [db.User.update({
+    //         fullName: formData.fullName,
+    //         password: formData.password,
+    //         email: formData.email,
+    //         address: formData.address,
+    //         birthday: formData.birthday,
+    //         phone: formData.phone,
+    //     },{where: {idND: formData.idND}})])
+    //     .then(([user]) =>{
+    //         if(user){
+    //             Promise.all([ db.User.findOne({
+    //                 attributes: {exclude: ['userName']},
+    //                 where: {idND: formData.idND}
+    //             })])
+    //             .then(([result]) =>{
+    //                 if(result){
+    //                     res.json({result})
+    //                 }else{
+    //                     res.json({err: true})
+    //                 } 
+    //             })
+    //             .catch(err => res.json({err: true, promise: false, errorCode: 'loi'})) 
+    //         }
+           
+    //     }
+    //     )
+    //     .catch(err => res.json({err: true, promise: false, errorCode: true})) 
+    // }
+
+     //[GET]  /show/account
+     ShowAccount(req, res, next){
+        Promise.all([ mydb.query(`SELECT * FROM nguoidung WHERE ND_id='${req.query.ND_id}' AND ND_quyen=2`)])
+            .then(([result]) => {
+                res.json({
+                    result: result[0],
+                })
             })
-            .catch(err => res.json({err: true, promise: false, errorCode: 'loi'})) 
+            .catch((err) => {
+                console.log('loi');
+            })
+    }
+
+    //[PUT] /update/account
+    UpdateAccountNoImage(req, res, next){
+        console.log('hoten', req.body.ND_hoten);
+        let url;
+        if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email === '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_password='${req.body.ND_password}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_email='${req.body.ND_email}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else  if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email == '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_email='${req.body.ND_email}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email === '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_password='${req.body.ND_password}', ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_password='${req.body.ND_password}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_email='${req.body.ND_email}', ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_email='${req.body.ND_email}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_diachi='${req.body.ND_diachi}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}',ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}',ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_email='${req.body.ND_email}',ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_email='${req.body.ND_email}',ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}',ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}',ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_password='${req.body.ND_password}', ND_diachi='${req.body.ND_diachi}',ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_email='${req.body.ND_email}', ND_diachi='${req.body.ND_diachi}',ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}', ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}', ND_diachi='${req.body.ND_diachi}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_email='${req.body.ND_email}', ND_diachi='${req.body.ND_diachi}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}', ND_diachi='${req.body.ND_diachi}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+            url = `UPDATE nguoidung SET ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}', ND_diachi='${req.body.ND_diachi}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+        }
+        Promise.all([ mydb.query(url)])
+            .then(([results]) => {
+                res.send(results);
+            })
+            .catch((err) => {
+                console.log('loi');
+            })   
+    }
+
+    UpdateAccountImage(req, res, next){
+        console.log('hoten', req.body.ND_email);
+        if(req.files){
             let paths ='';
-            // res.json(req.files)
+             //res.json(req.files)
             const arr =  req.files;
             arr.forEach(function(e, index, arr){
                paths = paths + process.env.URL_IMAGE_CUSTOMER+ e.filename +',';
             })
             paths = paths.substring(0, paths.lastIndexOf(','));
-            console.log("data: "+ paths)
-            formData.image = paths;
-         }else{
-            console.log('loi image')
-         }
-        
-         Promise.all([mydb.query( `UPDATE nguoidung SET ND_Hoten='${formData.fullName}',ND_Password='${formData.password}',ND_Link='${formData.image}',ND_Email='${formData.email}',ND_Diachi='${formData.address}',ND_Ngaysinh='${formData.birthday}',ND_Sodt='${formData.phone}' WHERE ND_Id='${formData.idND}'`)])
-        .then(([user]) =>{
-            if(user){
-                Promise.all([mydb.query(`SELECT ND_Id, ND_Hoten, ND_Password, ND_Link, ND_Email, ND_Diachi, ND_Ngaysinh, ND_Sodt FROM nguoidung WHERE ND_Id='${req.body.idND}'`) ])
-                .then(([result]) =>{
-                    if(result){
-                        res.json({result: result[0]})
-                    }else{
-                        res.json({err: true})
-                    } 
-                })
-                .catch(err => res.json({err: true, promise: false, errorCode: 'loi'})) 
+            req.body.ND_image = paths;
+            let url; 
+            if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email === '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_password='${req.body.ND_password}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_email='${req.body.ND_email}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else  if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email == '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_email='${req.body.ND_email}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email === '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_password='${req.body.ND_password}', ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_password='${req.body.ND_password}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_email='${req.body.ND_email}', ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_email='${req.body.ND_email}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_diachi='${req.body.ND_diachi}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}',ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}',ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_email='${req.body.ND_email}',ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_email='${req.body.ND_email}',ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}',ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}',ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_password='${req.body.ND_password}', ND_diachi='${req.body.ND_diachi}',ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_email='${req.body.ND_email}', ND_diachi='${req.body.ND_diachi}',ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}', ND_diachi='${req.body.ND_diachi}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi === '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email === '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}', ND_diachi='${req.body.ND_diachi}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password ==='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_email='${req.body.ND_email}', ND_diachi='${req.body.ND_diachi}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}', ND_diachi='${req.body.ND_diachi}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten !== '' && req.body.ND_password !=='' && req.body.ND_email !== '' && req.body.ND_diachi !== '' && req.body.ND_sdt !== ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}', ND_hoten='${req.body.ND_hoten}', ND_password='${req.body.ND_password}', ND_email='${req.body.ND_email}', ND_diachi='${req.body.ND_diachi}', ND_sdt='${req.body.ND_sdt}' WHERE ND_id = '${req.body.ND_id}'`;
+            }else if(req.body.ND_hoten === '' && req.body.ND_password ==='' && req.body.ND_email === '' && req.body.ND_diachi === '' && req.body.ND_sdt === ''){
+                url = `UPDATE nguoidung SET ND_image='${req.body.ND_image}' WHERE ND_id = '${req.body.ND_id}'`;
             }
-           
-        }
-        )
-        .catch(err => res.json({err: true, promise: false, errorCode: true}))
-        
-        
-    }
-
-    update(req, res, next) {
-        const formData = req.body;
-         Promise.all( [db.User.update({
-            fullName: formData.fullName,
-            password: formData.password,
-            email: formData.email,
-            address: formData.address,
-            birthday: formData.birthday,
-            phone: formData.phone,
-        },{where: {idND: formData.idND}})])
-        .then(([user]) =>{
-            if(user){
-                Promise.all([ db.User.findOne({
-                    attributes: {exclude: ['userName']},
-                    where: {idND: formData.idND}
-                })])
-                .then(([result]) =>{
-                    if(result){
-                        res.json({result})
-                    }else{
-                        res.json({err: true})
-                    } 
+            Promise.all([ mydb.query(url)])
+                .then(([results]) => {
+                    res.send(results);
                 })
-                .catch(err => res.json({err: true, promise: false, errorCode: 'loi'})) 
-            }
-           
+                .catch((err) => {
+                    console.log('loi');
+                })   
         }
-        )
-        .catch(err => res.json({err: true, promise: false, errorCode: true})) 
     }
 }
 
