@@ -9,47 +9,81 @@ let mydb = new Database(dbConn);
 class ProductDetailController {
     
     ShowProduct(req, res, next){
-        Promise.all([ mydb.query(`SELECT * FROM sanpham as sp, motasanpham as mtsp WHERE sp.SP_id = mtsp.SP_id AND sp.SP_id=${req.query.SP_id}`)])
+        Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id=${req.query.SP_id}`)])
             .then(([results])=>{
                 Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE SP_id='${req.query.SP_id}'`)])
                     .then(([evaluation])=>{
+                        console.log('evaluation',evaluation[0]);
                         let num = 0;
-                        for(let i = 0; i < evaluation.length; i++){
-                            Promise.all([ mydb.query(`SELECT ND_hoten, ND_username, ND_image, ND_email, ND_diachi, ND_ngaysinh, ND_sdt FROM nguoidung WHERE ND_id = '${evaluation[i].ND_id}'`)])
-                                .then(([user])=>{
-                                    //console.log(user[0]);
-                                    num = num + evaluation[i].DG_sosao;
-                                    evaluation[i].userName = user[0];
-                                    if(i == evaluation.length-1){
-                                        Promise.all([ mydb.query(`SELECT * FROM hinhanh WHERE SP_id='${req.query.SP_id}'`)])
-                                            .then(([image])=>{
-                                                results[0].image = image;
-                                                Promise.all([ mydb.query(`SELECT * FROM motashop WHERE NB_id='${results[0].NB_id}'`)])
-                                                    .then(([shop])=>{
-                                                        results[0].shop = shop;
-                                                        res.json({
-                                                            results: results,
-                                                            evaluation: evaluation,
-                                                            evaluationNum: evaluation.length,
-                                                            evaluationStar: Math.round(num/evaluation.length),
-                                                        });
-                                                    })
-                                                    .catch((error)=>{
-                                                        console.log('loi anh nha');
-                                                    })
-                                                
-                                            })
-                                            .catch((error)=>{
-                                                console.log('loi anh nha');
-                                            })
-                                    }
+                        if(evaluation[0] !== undefined){
+                            for(let i = 0; i < evaluation.length; i++){
+                                Promise.all([ mydb.query(`SELECT ND_hoten, ND_username, ND_image, ND_email, ND_diachi, ND_ngay, ND_sdt FROM nguoidung WHERE ND_id = '${evaluation[i].ND_id}'`)])
+                                    .then(([user])=>{
+                                        //console.log(user[0]);
+                                        num = num + evaluation[i].DG_sosao;
+                                        evaluation[i].userName = user[0];
+                                        if(i == evaluation.length-1){
+                                            Promise.all([ mydb.query(`SELECT * FROM hinhanh WHERE SP_id='${req.query.SP_id}'`)])
+                                                .then(([image])=>{
+                                                    results[0].image = image;
+                                                    Promise.all([ mydb.query(`SELECT * FROM motashop WHERE NB_id='${results[0].NB_id}'`)])
+                                                        .then(([shop])=>{
+                                                            results[0].shop = shop;
+                                                            res.json({
+                                                                results: results,
+                                                                evaluation: evaluation,
+                                                                evaluationNum: evaluation.length,
+                                                                evaluationStar: Math.round(num/evaluation.length),
+                                                            });
+                                                        })
+                                                        .catch((error)=>{
+                                                            console.log('loi anh nha');
+                                                        })
+                                                    
+                                                })
+                                                .catch((error)=>{
+                                                    console.log('loi anh nha');
+                                                })
+                                        }
+                                        
+                                    })
+                                    .catch((error)=>{
+                                        console.log('loi nha');
+                                    })    
+                            }
+                        }else{
+                            Promise.all([ mydb.query(`SELECT ND_hoten, ND_username, ND_image, ND_email, ND_diachi, ND_ngay, ND_sdt FROM nguoidung WHERE ND_id = '${results[0].ND_id}'`)])
+                            .then(([user])=>{
+                                //console.log(user[0]);
+                                //num = num + evaluation[i].DG_sosao;
+                                results[0].userName = user[0];
+                                Promise.all([ mydb.query(`SELECT * FROM hinhanh WHERE SP_id='${req.query.SP_id}'`)])
+                                .then(([image])=>{
+                                    results[0].image = image;
+                                    Promise.all([ mydb.query(`SELECT * FROM motashop WHERE NB_id='${results[0].NB_id}'`)])
+                                        .then(([shop])=>{
+                                            results[0].shop = shop;
+                                            res.json({
+                                                results: results,
+                                                evaluation: '',
+                                                evaluationNum: '',
+                                                evaluationStar: '',
+                                            });
+                                        })
+                                        .catch((error)=>{
+                                            console.log('loi anh nha');
+                                        })
                                     
                                 })
                                 .catch((error)=>{
-                                    console.log('loi nha');
-                                })    
+                                    console.log('loi anh nha');
+                                })
+                                
+                            })
+                            .catch((error)=>{
+                                console.log('loi nha');
+                            }) 
                         }
-                        
                     })
                     .catch((err) =>{
                         console.log('loi');

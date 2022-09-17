@@ -9,7 +9,7 @@ let mydb = new Database(dbConn);
 class ProductShopController {
     
     ShowProduct(req, res, next){
-        Promise.all([ mydb.query(`SELECT mts.MTS_logo, mts.MTS_ten, mts.MTS_image, mts.MTS_diachi, nb.NB_ngay FROM motashop as mts, nguoiban as nb WHERE mts.NB_id = nb.NB_id AND mts.NB_id='${req.query.NB_id}'`)])
+        Promise.all([ mydb.query(`SELECT mts.MTS_logo, mts.MTS_ten, mts.MTS_image, mts.MTS_diachi, nb.ND_ngay FROM motashop as mts, nguoidung as nb WHERE mts.NB_id = nb.ND_id AND mts.NB_id='${req.query.NB_id}'`)])
         .then(([results]) => {
             Promise.all([ mydb.query(`SELECT count(SP_id) as numproduct FROM sanpham WHERE NB_id='${req.query.NB_id}'`)])
                 .then(([numproduct]) => {

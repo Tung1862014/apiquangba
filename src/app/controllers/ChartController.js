@@ -111,6 +111,11 @@ class ChartController {
                                         console.log('arr', arr);
                                         console.log('chartListTurnover', turnovers);
                                         console.log('chartListNumber', numbers);
+                                        res.json({
+                                            arr: arr,
+                                            turnovers: turnovers,
+                                            numbers: numbers,
+                                        })
                                     }
                                 })
                                 .catch((err) =>{
