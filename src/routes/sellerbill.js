@@ -5,6 +5,8 @@ const sellerBillController = require('../app/controllers/SellerBillController');
 
 router.post('/bill/show/all',sellerBillController.billShowAll);
 
+router.get('/bill/show/number',sellerBillController.ShowNumberBill);
+
 router.get('/bill/search/id',sellerBillController.billSearchId);
 
 
