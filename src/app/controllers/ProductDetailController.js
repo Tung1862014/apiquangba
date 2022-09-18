@@ -111,11 +111,11 @@ class ProductDetailController {
 
     //[POST]  /add/product/customer
     AddProduct(req, res, next){
-        console.log(req.body.ND_id, req.body.NB_id, req.body.TTDH_soluong,req.body.SP_id );
+        //console.log(req.body.ND_id, req.body.NB_id, req.body.TTDH_soluong,req.body.SP_id );
        //res.json({results: req.body.SP_id});
-       Promise.all([ mydb.query(`SELECT * FROM thongtindonhang WHERE ND_id='${req.body.ND_id}' AND SP_id='${req.body.SP_id}'`)])
+       Promise.all([ mydb.query(`SELECT * FROM thongtindonhang WHERE ND_id='${req.body.ND_id}' AND SP_id='${req.body.SP_id}' AND DH_id IS NULL`)])
         .then(([result]) => {
-            console.log(result[0].TTDH_soluong);
+            //console.log(typeof result[1].DH_id);
             if(result[0] != undefined){
                 Promise.all([ mydb.query(`UPDATE thongtindonhang SET TTDH_soluong='${req.body.TTDH_soluong+result[0].TTDH_soluong}' WHERE ND_id='${req.body.ND_id}' AND SP_id='${req.body.SP_id}'`)])
                 .then(([info]) => {
@@ -135,7 +135,7 @@ class ProductDetailController {
             }
         })
         .catch((err) =>{
-            console.log('loi');
+            console.log('loi dh', err);
         })
        
     }
