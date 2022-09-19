@@ -40,7 +40,7 @@ function route(app) {
     app.use('/productdetail', productdetailRoute);
     app.use('/productshop',productshopRoute);
     app.use('/cartcustomer',cartRoute);
-    app.use('/orderproduct',orderRoute);
+    app.use('/order',orderRoute);
     // app.use('/type', typeRoute);
     app.use('/admin',adminRoute);
     app.use('/home', homeRoute);

@@ -10,7 +10,7 @@ class OrderController {
     
     //[GET]  /user/show
     ShowAllUser(req, res, next){
-        Promise.all([ mydb.query(`SELECT ND_hoten, ND_sdt, ND_diachigiaohang, ND_ttqhpx FROM nguoidung WHERE ND_id='${req.query.ND_id}'`)])
+        Promise.all([ mydb.query(`SELECT ND_hoten, ND_sdt, ND_diachiGH, ND_chitiet FROM nguoidung WHERE ND_id='${req.query.ND_id}'`)])
             .then(([results]) => {
                 res.json({
                     results: results[0],
@@ -24,14 +24,14 @@ class OrderController {
 
     //[UPDATE]  /update/address
     UpdateAddress(req, res, next){
-        console.log(req.body.ND_ttqhpx,req.body.ND_diachigiaohang,req.body.ND_id);
+        //console.log(req.body.ND_ttqhpx,req.body.ND_diachigiaohang,req.body.ND_id);
         let url;
-        if(req.body.ND_ttqhpx !== '' && req.body.ND_diachigiaohang !== ''){
-            url = `UPDATE nguoidung SET ND_ttqhpx= '${req.body.ND_ttqhpx}', ND_diachigiaohang= '${req.body.ND_diachigiaohang}' WHERE ND_id='${req.body.ND_id}'`;
-        }else if(req.body.ND_ttqhpx !== '' && req.body.ND_diachigiaohang === ''){
-            url = `UPDATE nguoidung SET ND_ttqhpx= '${req.body.ND_ttqhpx}' WHERE ND_id='${req.body.ND_id}'`;
-        }else if(req.body.ND_ttqhpx === '' && req.body.ND_diachigiaohang !== ''){
-            url = `UPDATE nguoidung SET ND_diachigiaohang= '${req.body.ND_diachigiaohang}' WHERE ND_id='${req.body.ND_id}'`;
+        if(req.body.ND_diachiGH !== '' && req.body.ND_chitiet !== ''){
+            url = `UPDATE nguoidung SET ND_ttqhpx= '${req.body.ND_diachiGH}', ND_chitiet= '${req.body.ND_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
+        }else if(req.body.ND_diachiGH !== '' && req.body.ND_chitiet === ''){
+            url = `UPDATE nguoidung SET ND_diachiGH= '${req.body.ND_diachiGH}' WHERE ND_id='${req.body.ND_id}'`;
+        }else if(req.body.ND_diachiGH === '' && req.body.ND_chitiet !== ''){
+            url = `UPDATE nguoidung SET ND_chitiet= '${req.body.ND_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
         }
         Promise.all([ mydb.query(url)])
             .then(([results]) => {
@@ -60,6 +60,10 @@ class OrderController {
                 res.send(results);
             })
        
+    }
+
+    TakeListTinhThanh(req, res, next){
+        
     }
 }
 

@@ -12,5 +12,7 @@ router.delete('/delete/product', orderController.DeleteProduct);
 
 router.put('/update/address', orderController.UpdateAddress);
 
+router.get('/take/list/tinh/thanh', orderController.TakeListTinhThanh);
+
 
 module.exports = router;
