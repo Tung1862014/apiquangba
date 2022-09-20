@@ -62,7 +62,32 @@ class OrderController {
        
     }
 
-    TakeListTinhThanh(req, res, next){
+
+    AddOrderProduct(req, res, next){
+        //console.log('ND_id',req.body.ND_id);
+        Promise.all([ mydb.query(`INSERT INTO donhang(ND_id, NB_id, DH_tongtien, DH_trangthai, DH_loaithanhtoan, DH_diachi, DH_phivanchuyen, DH_ngay, DH_trangthaiTT) VALUES('${req.body.ND_id}', '${req.body.NB_id}', '${req.body.DH_tongtien}',1,'${req.body.DH_loaithanhtoan}','${req.body.DH_diachi}','${req.body.DH_phivanchuyen}','2022-09-20','${req.body.DH_trangthaiTT}')`)])
+        .then(([results])=>{
+            //console.log('results',results);
+            Promise.all([ mydb.query(`SELECT MAX(DH_id) AS MaxsValue FROM donhang`)])
+                .then(([MaxsValue])=>{
+                    console.log('MaxsValue',MaxsValue[0].MaxsValue);
+                    Promise.all([ mydb.query(`UPDATE thongtindonhang SET DH_id='${MaxsValue[0].MaxsValue}' WHERE NB_id='${req.body.NB_id}' AND  DH_id IS NULL`)])
+                        .then(([result])=>{
+                            res.send(result);
+                        })
+                        .catch((err) =>{
+                            console.log('loi up');
+                        })
+                })
+                .catch((err) =>{
+                    console.log('loi');
+                
+                })
+        })
+        .catch((err) =>{
+            console.log('loi in');
+        
+        })
         
     }
 }
