@@ -25,5 +25,7 @@ router.put('/establish/update/image/logo',upload.array('image'), sellerSettingSh
 
 router.put('/establish/update/address', sellerSettingShopController.establishUpdateAddress);
 
+router.get('/establish/show/all/shop', sellerSettingShopController.showShop);
+
 
 module.exports = router;

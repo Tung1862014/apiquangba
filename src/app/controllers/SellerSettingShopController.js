@@ -191,7 +191,7 @@ class sellerSettingShopController {
     }
 
     establishSaveInsert(req, res, next){
-        console.log('NB_id', req.body.NB_id, req.body.MTS_ten, req.body.MTS_diachi);
+        //console.log('NB_id', req.body.NB_id, req.body.MTS_ten, req.body.MTS_diachi);
         if(req.files){
             let paths ='';
              //res.json(req.files)
@@ -202,7 +202,7 @@ class sellerSettingShopController {
             paths = paths.substring(0, paths.lastIndexOf(','));
             req.body.MTS_image = paths;
 
-            Promise.all([ mydb.query(`INSERT INTO motashop(NB_id, MTS_ten, MTS_image, MTS_diachi) VALUES ('${req.body.NB_id}', '${req.body.MTS_ten}', '${req.body.MTS_image}','${req.body.MTS_diachi}')`)])
+            Promise.all([ mydb.query(`INSERT INTO motashop(NB_id, MTS_ten, MTS_image, MTS_diachi, MTS_chitiet) VALUES ('${req.body.NB_id}', '${req.body.MTS_ten}', '${req.body.MTS_image}','${req.body.MTS_diachi}', '${req.body.MTS_chitiet}')`)])
                 .then(([result]) => {
                     res.send(result);
                 })
@@ -224,10 +224,10 @@ class sellerSettingShopController {
             })
             paths = paths.substring(0, paths.lastIndexOf(','));
             req.body.MTS_image = paths;
-            if(req.body.MTS_diachi === ''){
+            if(req.body.MTS_chitiet === ''){
                 url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}' WHERE NB_id='${req.body.NB_id}'`;
             }else{
-                url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}', MTS_diachi='${req.body.MTS_diachi}' WHERE NB_id='${req.body.NB_id}'`;
+                url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}', MTS_chitiet='${req.body.MTS_chitiet}' WHERE NB_id='${req.body.NB_id}'`;
             }
             Promise.all([ mydb.query(url)])
             .then(([result])=>{
@@ -252,10 +252,10 @@ class sellerSettingShopController {
             })
             paths = paths.substring(0, paths.lastIndexOf(','));
             req.body.MTS_logo = paths;
-            if(req.body.MTS_diachi === ''){
+            if(req.body.MTS_chitiet === ''){
                 url = `UPDATE motashop SET MTS_logo='${req.body.MTS_logo}' WHERE NB_id='${req.body.NB_id}'`;
             }else{
-                url = `UPDATE motashop SET MTS_logo='${req.body.MTS_logo}',MTS_diachi='${req.body.MTS_diachi}' WHERE NB_id='${req.body.NB_id}'`;
+                url = `UPDATE motashop SET MTS_logo='${req.body.MTS_logo}',MTS_chitiet='${req.body.MTS_chitiet}' WHERE NB_id='${req.body.NB_id}'`;
             }
             Promise.all([ mydb.query(url)])
             .then(([result])=>{
@@ -271,7 +271,7 @@ class sellerSettingShopController {
 
     establishUpdateAddress(req, res, next){
         
-        Promise.all([ mydb.query(`UPDATE motashop SET MTS_diachi='${req.body.MTS_diachi}' WHERE NB_id='${req.body.NB_id}'`)])
+        Promise.all([ mydb.query(`UPDATE motashop SET MTS_chitiet='${req.body.MTS_chitiet}' WHERE NB_id='${req.body.NB_id}'`)])
         .then(([result])=>{
            res.send(result);
         })
@@ -280,6 +280,18 @@ class sellerSettingShopController {
                 seller: false,
             })
         })
+    }
+
+    showShop(req, res, next){
+        Promise.all([ mydb.query(`SELECT * FROM motashop WHERE NB_id='${req.query.NB_id}'`)])
+            .then(([results]) => {
+                res.json({
+                    results: results[0],
+                })
+            })
+            .catch((err) => {
+                console.log('loi');
+            })
     }
 }
 
