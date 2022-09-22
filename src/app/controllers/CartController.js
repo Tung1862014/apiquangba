@@ -24,7 +24,7 @@ class CartController {
                             results[i].product = product[0];
                             if(i === results.length-1){
                                 for(let j=0; j<results.length; j++){
-                                    Promise.all([ mydb.query(`SELECT * FROM motashop WHERE NB_id='${results[j].NB_id}'`)])
+                                    Promise.all([ mydb.query(`SELECT mts.MTS_chitiet, mts.MTS_diachi, mts.MTS_id, mts.MTS_image, mts.MTS_logo, mts.MTS_ten, nd.ND_sdt FROM motashop as mts, nguoidung as nd WHERE mts.NB_id = nd.ND_id AND mts.NB_id='${results[j].NB_id}'`)])
                                         .then(([seller]) => {
                                             results[j].seller = seller[0];
                                             if(j === results.length-1){
