@@ -14,9 +14,21 @@ class HistoryBillController {
     ShowAllBill(req, res, next){
         console.log(req.query.ND_id);
         //console.log(req.query.NB_id);
-        let sellerArr = [];
-        let sellerName = [];
-        Promise.all([ mydb.query(`SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL ORDER by ttdh.TTDH_id DESC`)])
+        let url;
+        if(req.query.DH_trangthai === 'all'){
+            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL ORDER by ttdh.TTDH_id DESC`;
+        }else if(req.query.DH_trangthai === 'waitForConfirmation'){
+            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=1 ORDER by ttdh.TTDH_id DESC`;
+        }else if(req.query.DH_trangthai === 'waitInLine'){
+            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=2 ORDER by ttdh.TTDH_id DESC`;
+        }else if(req.query.DH_trangthai === 'deliveryInProgress'){
+            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=3 ORDER by ttdh.TTDH_id DESC`;
+        }else if(req.query.DH_trangthai === 'delivered'){
+            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=4 ORDER by ttdh.TTDH_id DESC`;
+        }else {
+            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=5 ORDER by ttdh.TTDH_id DESC`;
+        }
+        Promise.all([ mydb.query(url)])
         .then(([results])=>{
             for(let i=0; i<results.length; i++){
                 Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id='${results[i].SP_id}'`)])
