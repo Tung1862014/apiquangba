@@ -17,6 +17,7 @@ const homeRoute = require('./home');
  const productshopRoute = require('./productshop');
  const cartRoute = require('./cart');
  const orderRoute = require('./order');
+ const historybillRoute = require('./historybill');
 
  const adminRoute = require('./admin');
 // const supplierRoute = require('./supplier');
@@ -41,6 +42,7 @@ function route(app) {
     app.use('/productshop',productshopRoute);
     app.use('/cartcustomer',cartRoute);
     app.use('/order',orderRoute);
+    app.use('/historybill',historybillRoute);
     // app.use('/type', typeRoute);
     app.use('/admin',adminRoute);
     app.use('/home', homeRoute);
