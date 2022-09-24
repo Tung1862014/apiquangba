@@ -64,33 +64,95 @@ class HistoryBillController {
         })   
     }
 
-    //[UPDATE]  /update/numbers
-    UpdateNumber(req, res, next){
-        console.log(req.body.TTDH_id, req.body.TTDH_soluong);
-        Promise.all([ mydb.query(`UPDATE thongtindonhang SET TTDH_soluong='${req.body.TTDH_soluong}' WHERE TTDH_id='${req.body.TTDH_id}'`)])
-            .then((result) => {
-                console.log('successfully');
-                res.send(result);
+    //[GET] /show/evaluate
+    ShowBillEvaluate(req, res, next){
+        Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE ND_id='${req.query.ND_id}'`)])
+            .then(([result]) => {
+                res.json({
+                    result: result,
+                })
             })
             .catch((err) => {
-                console.log('field');
-                res.send(result);
+                console.log('loi evaluate');
             })
     }
 
-    //[delete]  delete/product
-    DeleteProduct(req, res, next){
-        console.log(req.body.TTDH_id);
-        Promise.all([ mydb.query(`DELETE FROM thongtindonhang WHERE TTDH_id=${req.body.TTDH_id}`)])
-            .then(([results])=>{
-                res.send(results);
+    //[POST] /evaluate/star/text
+    EvaluateStar(req, res, next){
+        //console.log(req.body.ND_id,req.body.DH_id,req.body.SP_id,req.body.DG_sosao,req.body.DG_mota);
+        Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id='${req.body.SP_id}'`)])
+            .then(([result]) => {
+                console.log('result',result[0].NB_id);
+                if(result[0] !== undefined){
+                    Promise.all([mydb.query(`INSERT INTO danhgia(DH_id, SP_id, NB_id, ND_id, DG_sosao, DG_mota) VALUES('${req.body.DH_id}','${req.body.SP_id}','${result[0].NB_id}','${req.body.ND_id}','${req.body.DG_sosao}','${req.body.DG_mota}')`)])
+                    .then(([results]) => {
+                        res.json({
+                            results: results,
+                        })
+                    })
+                    .catch((err) => {
+                        console.log('loi insert');
+                    })
+                }
+            })             
+            .catch((err) => {
+                console.log('loi ND');
             })
-            .catch((err) =>{
-                console.log('loi');
-                res.send(results);
-            })
-       
     }
+
+    //[POST] /evaluate/update/star/text
+    EvaluateStarUpdate(req, res, next){
+        Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id='${req.body.SP_id}'`)])
+        .then(([result]) => {
+            Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE DH_id='${req.body.DH_id}' AND SP_id='${req.body.SP_id}' AND NB_id='${result[0].NB_id}' AND ND_id='${req.body.ND_id}'`)])
+                .then(([evaluate]) => {
+                    console.log('evaluate',evaluate);
+                    Promise.all([ mydb.query(`UPDATE danhgia SET DG_sosao='${req.body.DG_sosao}', DG_mota='${req.body.DG_mota}'  WHERE DH_id='${req.body.DH_id}' AND SP_id='${req.body.SP_id}' AND NB_id='${result[0].NB_id}' AND ND_id='${req.body.ND_id}'`)])
+                    .then(([evaluateupdate]) =>{
+                        res.json({
+                            result: evaluateupdate,
+                        })
+                    })
+                    .catch((err) => {
+                        console.log('loi update');
+                    })     
+                })
+                .catch((err) => {
+                    console.log('loi danh gia');
+                })
+        })
+        .catch((err) => {
+            console.log('loi ND');
+        })
+    }
+
+    // //[UPDATE]  /update/numbers
+    // UpdateNumber(req, res, next){
+    //     console.log(req.body.TTDH_id, req.body.TTDH_soluong);
+    //     Promise.all([ mydb.query(`UPDATE thongtindonhang SET TTDH_soluong='${req.body.TTDH_soluong}' WHERE TTDH_id='${req.body.TTDH_id}'`)])
+    //         .then((result) => {
+    //             console.log('successfully');
+    //             res.send(result);
+    //         })
+    //         .catch((err) => {
+    //             console.log('field');
+    //             res.send(result);
+    //         })
+    // }
+
+    // //[delete]  delete/product
+    // DeleteProduct(req, res, next){
+    //     console.log(req.body.TTDH_id);
+    //     Promise.all([ mydb.query(`DELETE FROM thongtindonhang WHERE TTDH_id=${req.body.TTDH_id}`)])
+    //         .then(([results])=>{
+    //             res.send(results);
+    //         })
+    //         .catch((err) =>{
+    //             console.log('loi');
+    //             res.send(results);
+    //         })
+       
+    // }
 }
 
 module.exports = new HistoryBillController();

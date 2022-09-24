@@ -8,9 +8,15 @@ const historyBillController = require('../app/controllers/HistoryBillController'
 
 router.get('/cart/show/all', historyBillController.ShowAllBill);
 
-router.delete('/delete/product', historyBillController.DeleteProduct);
+router.get('/cart/show/evaluate', historyBillController.ShowBillEvaluate);
 
-router.put('/update/number/product', historyBillController.UpdateNumber);
+router.post('/evaluate/star/text',historyBillController.EvaluateStar);
+
+router.post('/evaluate/update/star/text',historyBillController.EvaluateStarUpdate);
+
+// router.delete('/delete/product', historyBillController.DeleteProduct);
+
+// router.put('/update/number/product', historyBillController.UpdateNumber);
 
 
 module.exports = router;
