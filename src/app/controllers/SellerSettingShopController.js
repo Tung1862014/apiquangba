@@ -202,7 +202,7 @@ class sellerSettingShopController {
             paths = paths.substring(0, paths.lastIndexOf(','));
             req.body.MTS_image = paths;
 
-            Promise.all([ mydb.query(`INSERT INTO motashop(NB_id, MTS_ten, MTS_image, MTS_diachi, MTS_chitiet) VALUES ('${req.body.NB_id}', '${req.body.MTS_ten}', '${req.body.MTS_image}','${req.body.MTS_diachi}', '${req.body.MTS_chitiet}')`)])
+            Promise.all([ mydb.query(`INSERT INTO motashop(MTS_id, NB_id, MTS_ten, MTS_image, MTS_diachi, MTS_chitiet) VALUES ('${req.body.MTS_id}','${req.body.NB_id}', '${req.body.MTS_ten}', '${req.body.MTS_image}','${req.body.MTS_diachi}', '${req.body.MTS_chitiet}')`)])
                 .then(([result]) => {
                     res.send(result);
                 })

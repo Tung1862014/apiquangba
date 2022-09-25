@@ -14,6 +14,8 @@ router.post('/evaluate/star/text',historyBillController.EvaluateStar);
 
 router.post('/evaluate/update/star/text',historyBillController.EvaluateStarUpdate);
 
+router.put('/update/status/bill',historyBillController.CancelBill);
+
 // router.delete('/delete/product', historyBillController.DeleteProduct);
 
 // router.put('/update/number/product', historyBillController.UpdateNumber);
