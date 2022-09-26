@@ -18,7 +18,8 @@ router.put('/update/status/bill',historyBillController.CancelBill);
 
 // router.delete('/delete/product', historyBillController.DeleteProduct);
 
-// router.put('/update/number/product', historyBillController.UpdateNumber);
-
+ router.put('/update/auto/bill', historyBillController.UpdateAutoBill);
+ ///search
+ router.get('/search/show/all', historyBillController.SearchShowAllBill);
 
 module.exports = router;

@@ -304,56 +304,35 @@ class SellerBillController {
             .then(([result])=>{
                 console.log(result[0]);
                 if(result[0] !== undefined){
-                Promise.all([ mydb.query(`SELECT count(DH_id) as statusconfirm FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_trangthai='1'`)])
-                .then(([statusconfirm])=>{
-                    Promise.all([ mydb.query(`SELECT count(DH_id) as statusdelivered FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_trangthai='2'`)])
-                        .then(([statusdelivered])=>{
-                            Promise.all([ mydb.query(`SELECT count(DH_id) as statuscancelOrder FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_trangthai='3'`)])
-                                .then(([statuscancelOrder])=>{
-                                    Promise.all([ mydb.query(`SELECT count(DH_id) as number FROM donhang WHERE NB_id='${req.query.NB_id}'`)])
-                                    .then(([number])=>{
-                                        for(let i=0; i<result.length; i++){
-                                            Promise.all([ mydb.query(`SELECT ttdh.TTDH_soluong, sp.SP_ten, sp.SP_image FROM sanpham as sp, thongtindonhang as ttdh WHERE sp.SP_id = ttdh.SP_id AND DH_id='${result[i].DH_id}'`)])
-                                            .then(([num]) => {
-                                                result[i].soluong = num;
-                                                    if(i === result.length-1){
-                                                        for(let j=0; j<result.length; j++){
-                                                        Promise.all([mydb.query(`SELECT nd.ND_hoten, nd.ND_image FROM donhang as dh, nguoidung as nd WHERE dh.ND_id = nd.ND_id AND dh.DH_id='${result[j].DH_id}'`)])
-                                                        .then(([use]) => {
-                                                            result[j].nguoidung = use;
-                                                            if(j === result.length-1){
-                                                            
-                                                            res.json({
-                                                                result: result,
-                                                                statusconfirm: statusconfirm,
-                                                                statusdelivered: statusdelivered,
-                                                                statuscancelOrder: statuscancelOrder,
-                                                                number: number
-                                                            });
-                                                            }
-                                                        })
-                                                        .catch((err) =>{
-                                                            console.log('loi')
-                                                        })
-                                                        }
-                                                     }
-                                            })
-                                            .catch((err) =>{
-                                                console.log('loi cc')
-                                            })
-                                        }
-                                    })
-                                })
+                    for(let i=0; i<result.length; i++){
+                        Promise.all([ mydb.query(`SELECT ttdh.TTDH_soluong, sp.SP_ten, sp.SP_image FROM sanpham as sp, thongtindonhang as ttdh WHERE sp.SP_id = ttdh.SP_id AND DH_id='${result[i].DH_id}'`)])
+                        .then(([num]) => {
+                            result[i].soluong = num;
+                                if(i === result.length-1){
+                                    for(let j=0; j<result.length; j++){
+                                        Promise.all([mydb.query(`SELECT nd.ND_hoten, nd.ND_image FROM donhang as dh, nguoidung as nd WHERE dh.ND_id = nd.ND_id AND dh.DH_id='${result[j].DH_id}'`)])
+                                        .then(([use]) => {
+                                            result[j].nguoidung = use;
+                                            if(j === result.length-1){
+                                                res.json({
+                                                    result: result,
+                                                });
+                                            }
+                                        })
+                                        .catch((err) =>{
+                                            console.log('loi')
+                                        })
+                                    }
+                                }
                         })
-                })
+                        .catch((err) =>{
+                            console.log('loi cc')
+                        })
+                    }
             }
             else{
                 res.json({
-                    result: result,
-                    statusconfirm: [],
-                    statusdelivered: [],
-                    statuscancelOrder: [],
-                    number: []
+                    result: result, 
                 });
             }
             })
@@ -363,7 +342,6 @@ class SellerBillController {
                 })
             })
        }
-
 }
 
 module.exports = new SellerBillController();
