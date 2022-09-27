@@ -50,10 +50,9 @@ class HomeController {
     index(req, res, next) {
        // res.json(req.query.q)
       
-        Promise.all([ mydb.query(`select * FROM sanpham WHERE tensp like '%${req.query.q}%' limit 0,5`)])
+        Promise.all([mydb.query(`select * FROM sanpham WHERE SP_ten like '%${req.query.keyword}%' limit 0,5`)])
             .then(([results]) =>
                 // res.json({numbers,results}),
-
                 res.json(
                     results
                 )
