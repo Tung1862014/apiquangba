@@ -119,7 +119,9 @@ class ProductDetailController {
             if(result[0] != undefined){
                 Promise.all([ mydb.query(`UPDATE thongtindonhang SET TTDH_soluong='${req.body.TTDH_soluong+result[0].TTDH_soluong}' WHERE ND_id='${req.body.ND_id}' AND SP_id='${req.body.SP_id}'`)])
                 .then(([info]) => {
-                    res.send(info);
+                    res.json({
+                        info: info
+                    })
                 })
                 .catch((err) =>{
                     console.log('loi');
@@ -127,7 +129,9 @@ class ProductDetailController {
             }else{
                 Promise.all([ mydb.query(`INSERT INTO thongtindonhang( ND_id, NB_id, SP_id, TTDH_soluong) VALUES ('${req.body.ND_id}','${req.body.NB_id}','${req.body.SP_id}','${req.body.TTDH_soluong}')`)])
                 .then(([info]) => {
-                    res.send(info);
+                    res.json({
+                        info: info
+                    })
                 })
                 .catch((err) =>{
                     console.log('loi');
