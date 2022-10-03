@@ -5,6 +5,8 @@ const sellerReviewsShopController = require('../app/controllers/SellerRevviewSho
 
 router.get('/evaluate/show/all',sellerReviewsShopController.billReviewsShowAll);
 
+router.get('/evaluate/show/star',sellerReviewsShopController.ShowNumberStar);
+
 router.put('/update/answer', sellerReviewsShopController.UpdateAnswer)
 
 //router.get('/', customerController.index);

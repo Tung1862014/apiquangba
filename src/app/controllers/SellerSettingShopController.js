@@ -202,7 +202,7 @@ class sellerSettingShopController {
             paths = paths.substring(0, paths.lastIndexOf(','));
             req.body.MTS_image = paths;
 
-            Promise.all([ mydb.query(`INSERT INTO motashop(MTS_id, NB_id, MTS_ten, MTS_image, MTS_diachi, MTS_chitiet) VALUES ('${req.body.MTS_id}','${req.body.NB_id}', '${req.body.MTS_ten}', '${req.body.MTS_image}','${req.body.MTS_diachi}', '${req.body.MTS_chitiet}')`)])
+            Promise.all([ mydb.query(`INSERT INTO motashop(MTS_id, NB_id, MTS_ten, MTS_image, MTS_diachi, MTS_chitiet, MTS_clientId) VALUES ('${req.body.MTS_id}','${req.body.NB_id}', '${req.body.MTS_ten}', '${req.body.MTS_image}','${req.body.MTS_diachi}', '${req.body.MTS_chitiet}', '${req.body.MTS_clientId}')`)])
                 .then(([result]) => {
                     res.send(result);
                 })
@@ -224,10 +224,14 @@ class sellerSettingShopController {
             })
             paths = paths.substring(0, paths.lastIndexOf(','));
             req.body.MTS_image = paths;
-            if(req.body.MTS_chitiet === ''){
+            if(req.body.MTS_chitiet === '' && req.body.MTS_clientId === ''){
                 url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}' WHERE NB_id='${req.body.NB_id}'`;
-            }else{
+            }else if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId === ''){
                 url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}', MTS_chitiet='${req.body.MTS_chitiet}' WHERE NB_id='${req.body.NB_id}'`;
+            }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId !== ''){
+                url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}', MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+            }else{
+                url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}',MTS_chitiet='${req.body.MTS_chitiet}', MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
             }
             Promise.all([ mydb.query(url)])
             .then(([result])=>{
@@ -252,10 +256,14 @@ class sellerSettingShopController {
             })
             paths = paths.substring(0, paths.lastIndexOf(','));
             req.body.MTS_logo = paths;
-            if(req.body.MTS_chitiet === ''){
+            if(req.body.MTS_chitiet === '' && req.body.MTS_clientId === ''){
                 url = `UPDATE motashop SET MTS_logo='${req.body.MTS_logo}' WHERE NB_id='${req.body.NB_id}'`;
-            }else{
+            }else if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId === ''){
                 url = `UPDATE motashop SET MTS_logo='${req.body.MTS_logo}',MTS_chitiet='${req.body.MTS_chitiet}' WHERE NB_id='${req.body.NB_id}'`;
+            }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId !== ''){
+                url = `UPDATE motashop SET MTS_logo='${req.body.MTS_logo}',MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+            }else{
+                url = `UPDATE motashop SET MTS_logo='${req.body.MTS_logo}', MTS_chitiet='${req.body.MTS_chitiet}', MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
             }
             Promise.all([ mydb.query(url)])
             .then(([result])=>{
@@ -271,7 +279,15 @@ class sellerSettingShopController {
 
     establishUpdateAddress(req, res, next){
         
-        Promise.all([ mydb.query(`UPDATE motashop SET MTS_chitiet='${req.body.MTS_chitiet}' WHERE NB_id='${req.body.NB_id}'`)])
+        let url;
+        if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId === ''){
+            url = `UPDATE motashop SET MTS_chitiet='${req.body.MTS_chitiet}' WHERE NB_id='${req.body.NB_id}'`;
+        }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId !== ''){
+            url = `UPDATE motashop SET MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+        }else{
+            url = `UPDATE motashop SET  MTS_chitiet='${req.body.MTS_chitiet}', MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+        }
+        Promise.all([ mydb.query(url)])
         .then(([result])=>{
            res.send(result);
         })
