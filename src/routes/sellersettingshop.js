@@ -15,6 +15,8 @@ const sellerSettingShopController = require('../app/controllers/SellerSettingSho
 
 router.post('/establish/show',sellerSettingShopController.establishShow);
 
+router.get('/establish/check/name/shop',sellerSettingShopController.establishCheckName);
+
 router.post('/establish/save/insert',upload.array('image'),sellerSettingShopController.establishSaveInsert);
 
 router.post('/establish/logo',upload.array('image'), sellerSettingShopController.establishLogo);

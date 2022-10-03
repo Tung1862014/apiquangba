@@ -166,6 +166,31 @@ class sellerSettingShopController {
             })
          })
     }
+
+    //[GET] /establish/checkname/shop
+    establishCheckName(req, res, next){
+        console.log('name', req.query.MTS_ten);
+        Promise.all([ mydb.query(`SELECT * FROM motashop WHERE MTS_ten='${req.query.MTS_ten}'`)])
+        .then(([result])=>{
+            if(result.length > 0){
+                res.json({
+                    result: false,
+                   });
+            }else{
+                res.json({
+                    result: true,
+                   });
+            }
+           
+        })
+        .catch((err) =>{
+            res.json({
+                result: false,
+            })
+        })
+    }
+
+    //[POST] /establish/update/logo
     establishLogo(req, res, next){
         //console.log(req.files);
         if(req.files){
