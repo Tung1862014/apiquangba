@@ -82,7 +82,7 @@ class HistoryBillController {
             .then(([result]) => {
                 console.log('result',result[0].NB_id);
                 if(result[0] !== undefined){
-                    Promise.all([mydb.query(`INSERT INTO danhgia(DH_id, SP_id, NB_id, ND_id, DG_sosao, DG_mota) VALUES('${req.body.DH_id}','${req.body.SP_id}','${result[0].NB_id}','${req.body.ND_id}','${req.body.DG_sosao}','${req.body.DG_mota}')`)])
+                    Promise.all([mydb.query(`INSERT INTO danhgia(DH_id, SP_id, NB_id, ND_id, DG_sosao, DG_mota, DG_ngayDG) VALUES('${req.body.DH_id}','${req.body.SP_id}','${result[0].NB_id}','${req.body.ND_id}','${req.body.DG_sosao}','${req.body.DG_mota}','${req.body.DG_ngayDG}')`)])
                     .then(([results]) => {
                         res.json({
                             results: results,
@@ -105,7 +105,7 @@ class HistoryBillController {
             Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE DH_id='${req.body.DH_id}' AND SP_id='${req.body.SP_id}' AND NB_id='${result[0].NB_id}' AND ND_id='${req.body.ND_id}'`)])
                 .then(([evaluate]) => {
                     console.log('evaluate',evaluate);
-                    Promise.all([ mydb.query(`UPDATE danhgia SET DG_sosao='${req.body.DG_sosao}', DG_mota='${req.body.DG_mota}'  WHERE DH_id='${req.body.DH_id}' AND SP_id='${req.body.SP_id}' AND NB_id='${result[0].NB_id}' AND ND_id='${req.body.ND_id}'`)])
+                    Promise.all([ mydb.query(`UPDATE danhgia SET DG_sosao='${req.body.DG_sosao}', DG_mota='${req.body.DG_mota}', DG_ngayCN='${req.body.DG_ngayDG}'  WHERE DH_id='${req.body.DH_id}' AND SP_id='${req.body.SP_id}' AND NB_id='${result[0].NB_id}' AND ND_id='${req.body.ND_id}'`)])
                     .then(([evaluateupdate]) =>{
                         res.json({
                             result: evaluateupdate,
