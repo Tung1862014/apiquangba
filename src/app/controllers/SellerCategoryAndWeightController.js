@@ -13,6 +13,34 @@ let mydb = new Database(dbConn);
 
 class SellerCategoryAndWeightController {
 
+    //[GET]
+ //[GET] /show/category
+    productShowCategory(req, res, next){
+        Promise.all([ mydb.query(`SELECT * FROM danhmuc WHERE NB_id = '${req.query.seller}'`)])
+            .then(([result])=>{
+                for(let i=0; i<result.length; i++){
+                    Promise.all([ mydb.query(`SELECT COUNT(SP_id) as sl FROM sanpham WHERE NB_id = '${req.query.seller}' AND DM_id='${result[i].DM_id}'`)])
+                        .then(([sl])=>{
+                            console.log('sl',sl[0].sl);
+                            result[i].product = sl[0].sl;
+                            if(i === result.length-1){
+                                res.json({
+                                    result: result,
+                                    category: true,
+                                })
+                            }
+                        })
+                }
+            })
+            .catch((err) =>{
+                res.json({
+                    category: false,
+                })
+            })
+            
+    }
+
+
     categoryAdd(req, res, next){
         // console.log(req.body.DM_danhmuc);
         Promise.all([ mydb.query(`INSERT INTO danhmuc(NB_id, DM_danhmuc) VALUES ('${req.body.NB_id}', '${req.body.DM_danhmuc}')`)])

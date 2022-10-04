@@ -18,6 +18,7 @@ const sellerCategoryAndWeightController = require('../app/controllers/SellerCate
 // router.post('/establish/logo',upload.array('image'), sellerController.establishLogo);
 
 // router.post('/establish/show',sellerController.establishShow);
+router.get('/product/show/category',sellerCategoryAndWeightController.productShowCategory);
 
 router.post('/category/add',sellerCategoryAndWeightController.categoryAdd);
 
