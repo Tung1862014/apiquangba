@@ -224,7 +224,9 @@ class SellerUpdateProductController {
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}', SP_gia='${req.body.SP_gia}', SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id === ''  && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}', SP_soluong='${req.body.SP_soluong}', SP_gia='${req.body.SP_gia}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
-        }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
+        }
+        
+        else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}', SP_khuyenmai='${req.body.SP_khuyenmai}', DM_id='${req.body.DM_id}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id === '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}', SP_khuyenmai='${req.body.SP_khuyenmai}',SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
@@ -234,17 +236,25 @@ class SellerUpdateProductController {
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}', DM_id='${req.body.DM_id}',SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia === '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}', DM_id='${req.body.DM_id}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
-        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota === ''){
+        }
+        else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}', SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}', DM_id='${req.body.DM_id}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id === '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}', SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}', SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id === '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}', SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
-        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id === '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}', SP_gia='${req.body.SP_gia}',SP_trongluong='${req.body.SP_trongluong}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }
+        else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}', SP_gia='${req.body.SP_gia}',DM_id='${req.body.DM_id}', SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}', SP_gia='${req.body.SP_gia}',DM_id='${req.body.DM_id}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
-        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia === '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',DM_id='${req.body.DM_id}',SP_trongluong='${req.body.SP_trongluong}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }
+
+        else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}', SP_khuyenmai='${req.body.SP_khuyenmai}',DM_id='${req.body.DM_id}', SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}', SP_khuyenmai='${req.body.SP_khuyenmai}',DM_id='${req.body.DM_id}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
@@ -290,6 +300,19 @@ class SellerUpdateProductController {
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}',DM_id='${req.body.DM_id}',SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
             urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}',DM_id='${req.body.DM_id}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }
+        else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id === '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}',SP_gia='${req.body.SP_gia}',SP_trongluong='${req.body.SP_trongluong}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id === '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}',SP_khuyenmai='${req.body.SP_khuyenmai}',SP_trongluong='${req.body.SP_trongluong}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id === '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}',SP_trongluong='${req.body.SP_trongluong}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia === '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}',SP_trongluong='${req.body.SP_trongluong}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_gia='${req.body.SP_gia}',SP_trongluong='${req.body.SP_trongluong}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}',SP_trongluong='${req.body.SP_trongluong}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten === '' && req.body.SP_soluong !== '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_soluong='${req.body.SP_soluong}',SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}',DM_id='${req.body.DM_id}',SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten === '' && req.body.SP_soluong !== '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
@@ -327,21 +350,24 @@ class SellerUpdateProductController {
         // }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== ''){
         //     urlImage = `UPDATE sanpham SET SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}', SP_gia='${req.body.SP_gia}', SP_khuyenmai='${req.body.SP_khuyenmai}', DM_id='${req.body.DM_id}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         // }
-        Promise.all([ mydb.query(urlImage)])
-        .then(([result])=>{
-            res.json(
-                {
-                    update: true,
-                }
-            );
-        })
-        .catch((err)=>{
-            res.json(
-                {
-                    update: false,
-                }
-            );
-        })
+        if(urlImage !== undefined){
+            Promise.all([ mydb.query(urlImage)])
+            .then(([result])=>{
+                res.json(
+                    {
+                        update: true,
+                    }
+                );
+            })
+            .catch((err)=>{
+                res.json(
+                    {
+                        update: false,
+                    }
+                );
+            })
+        }
+        
     }
 
     productUpdateImge(req, res, next){
@@ -464,7 +490,8 @@ class SellerUpdateProductController {
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_khuyenmai='${req.body.SP_khuyenmai}', DM_id='${req.body.DM_id}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten === '' && req.body.SP_soluong === '' && req.body.SP_gia === '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== ''  && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', DM_id='${req.body.DM_id}', SP_trongluong='${req.body.SP_trongluong}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
-        }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id === ''  && req.body.SP_trongluong === '' && req.body.SP_mota === ''){
+        }
+        else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id === ''  && req.body.SP_trongluong === '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}', SP_gia='${req.body.SP_gia}', SP_khuyenmai='${req.body.SP_khuyenmai}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== ''  && req.body.SP_trongluong === '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}', SP_gia='${req.body.SP_gia}', DM_id='${req.body.DM_id}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
@@ -472,7 +499,8 @@ class SellerUpdateProductController {
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}', SP_gia='${req.body.SP_gia}', SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id === ''  && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}', SP_soluong='${req.body.SP_soluong}', SP_gia='${req.body.SP_gia}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
-        }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
+        }
+        else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota == ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}', SP_khuyenmai='${req.body.SP_khuyenmai}', DM_id='${req.body.DM_id}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id === '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}', SP_khuyenmai='${req.body.SP_khuyenmai}',SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
@@ -482,17 +510,24 @@ class SellerUpdateProductController {
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}', DM_id='${req.body.DM_id}',SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia === '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}', DM_id='${req.body.DM_id}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
-        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota === ''){
+        }
+        else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}', SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}', DM_id='${req.body.DM_id}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id === '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}', SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}', SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id === '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}', SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
-        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id === '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}', SP_gia='${req.body.SP_gia}',SP_trongluong='${req.body.SP_trongluong}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }
+        else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}', SP_gia='${req.body.SP_gia}',DM_id='${req.body.DM_id}', SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}', SP_gia='${req.body.SP_gia}',DM_id='${req.body.DM_id}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
-        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia === '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',DM_id='${req.body.DM_id}',SP_trongluong='${req.body.SP_trongluong}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }
+        else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}', SP_khuyenmai='${req.body.SP_khuyenmai}',DM_id='${req.body.DM_id}', SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}', SP_khuyenmai='${req.body.SP_khuyenmai}',DM_id='${req.body.DM_id}', SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
@@ -538,6 +573,19 @@ class SellerUpdateProductController {
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}',DM_id='${req.body.DM_id}',SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}',DM_id='${req.body.DM_id}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }
+        else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id === '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}',SP_gia='${req.body.SP_gia}',SP_trongluong='${req.body.SP_trongluong}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id === '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}',SP_khuyenmai='${req.body.SP_khuyenmai}',SP_trongluong='${req.body.SP_trongluong}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id === '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}',SP_trongluong='${req.body.SP_trongluong}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong !== '' && req.body.SP_gia === '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_soluong='${req.body.SP_soluong}',SP_trongluong='${req.body.SP_trongluong}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai === '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_gia='${req.body.SP_gia}',SP_trongluong='${req.body.SP_trongluong}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
+        }else if(req.body.SP_ten !== '' && req.body.SP_soluong === '' && req.body.SP_gia === '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota !== ''){
+            urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_ten='${req.body.SP_ten}',SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}',SP_trongluong='${req.body.SP_trongluong}',SP_mota='${req.body.SP_mota}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten === '' && req.body.SP_soluong !== '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong !== '' && req.body.SP_mota === ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}', SP_soluong='${req.body.SP_soluong}',SP_gia='${req.body.SP_gia}',SP_khuyenmai='${req.body.SP_khuyenmai}',DM_id='${req.body.DM_id}',SP_trongluong='${req.body.SP_trongluong}' WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }else if(req.body.SP_ten === '' && req.body.SP_soluong !== '' && req.body.SP_gia !== '' && req.body.SP_khuyenmai !== '' && req.body.DM_id !== '' && req.body.SP_trongluong === '' && req.body.SP_mota !== ''){
@@ -569,21 +617,23 @@ class SellerUpdateProductController {
         }else if(req.body.SP_ten == '' && req.body.SP_soluong == '' && req.body.SP_gia == '' && req.body.SP_khuyenmai == '' && req.body.DM_id == '' && req.body.SP_trongluong == '' && req.body.SP_mota == ''){
             urlImage = `UPDATE sanpham SET SP_image='${req.body.SP_image}'WHERE NB_id = '${req.body.NB_id}' AND SP_id = '${req.body.SP_id}'`;
         }
-        Promise.all([ mydb.query(urlImage)])
-        .then(([result])=>{
-            res.json(
-                {
-                    update: true,
-                }
-            );
-        })
-        .catch((err)=>{
-            res.json(
-                {
-                    update: false,
-                }
-            );
-        })
+        if(urlImage !== undefined){
+            Promise.all([ mydb.query(urlImage)])
+            .then(([result])=>{
+                res.json(
+                    {
+                        update: true,
+                    }
+                );
+            })
+            .catch((err)=>{
+                res.json(
+                    {
+                        update: false,
+                    }
+                );
+            })
+        }
     }
     }
 
