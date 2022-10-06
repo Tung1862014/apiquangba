@@ -115,7 +115,15 @@ class SellerProductController {
             })
             paths = paths.substring(0, paths.lastIndexOf(','));
             req.body.image = paths;  
-            Promise.all([ mydb.query(`INSERT INTO sanpham(NB_id, SP_ten, SP_soluong, SP_gia, SP_image, SP_khuyenmai, SP_trongluong, SP_mota, SP_trangthai, DM_id) VALUES ('${req.body.NB_id}','${req.body.SP_ten}','${req.body.SP_soluong}','${req.body.SP_gia}','${req.body.image}','${req.body.SP_khuyenmai}','${req.body.SP_trongluong}','${req.body.SP_mota}','1', '${req.body.DM_id}')`)])  
+            Promise.all([ mydb.query(`INSERT INTO sanpham(NB_id, SP_ten, SP_soluong, SP_gia, SP_image, SP_khuyenmai, SP_trongluong, SP_mota, SP_trangthai, DM_id) VALUES ('${req.body.NB_id}','${req.body.SP_ten}','${req.body.SP_soluong}','${req.body.SP_gia}','${req.body.image}','${req.body.SP_khuyenmai}','${req.body.SP_trongluong}','${req.body.SP_mota}','1', '${req.body.DM_id}')`)])
+            .then(([result]) => {
+                res.json({
+                    result: true,
+                })
+            })
+            .catch((err) => {
+               
+            })
          }
         
             // .then(([result])=>{
