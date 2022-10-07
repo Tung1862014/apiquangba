@@ -6,6 +6,8 @@ const upload = require('../middleware/upload');
 
 const productController = require('../app/controllers/ProductController');
 
+router.get('/show/suggestions/user/all', productController.ShowSuggestionsUser);
+
 router.get('/show/suggestions/all', productController.ShowSuggestions);
 
 router.get('/show/promotion/all', productController.ShowPromotion);
