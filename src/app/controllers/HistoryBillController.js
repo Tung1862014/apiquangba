@@ -15,45 +15,56 @@ class HistoryBillController {
         console.log(req.query.ND_id);
         //console.log(req.query.NB_id);
         let url;
-        if(req.query.DH_trangthai === 'all'){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.DH_trangthai === 'waitForConfirmation'){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=1 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.DH_trangthai === 'waitInLine'){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=2 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.DH_trangthai === 'deliveryInProgress'){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=3 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.DH_trangthai === 'delivered'){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=4 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.DH_trangthai === 'cancelled'){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=5 ORDER by ttdh.TTDH_id DESC`;
+        if(req.query.keyword !== ''){
+            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND dh.DH_id='${req.query.keyword}' ORDER by ttdh.TTDH_id DESC`;
+        }else{
+            if(req.query.DH_trangthai === 'all'){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL ORDER by ttdh.TTDH_id DESC`;
+            }else if(req.query.DH_trangthai === 'waitForConfirmation'){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=1 ORDER by ttdh.TTDH_id DESC`;
+            }else if(req.query.DH_trangthai === 'waitInLine'){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=2 ORDER by ttdh.TTDH_id DESC`;
+            }else if(req.query.DH_trangthai === 'deliveryInProgress'){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=3 ORDER by ttdh.TTDH_id DESC`;
+            }else if(req.query.DH_trangthai === 'delivered'){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=4 ORDER by ttdh.TTDH_id DESC`;
+            }else if(req.query.DH_trangthai === 'cancelled'){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.ND_id='${req.query.ND_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=5 ORDER by ttdh.TTDH_id DESC`;
+            }
         }
+        
         Promise.all([ mydb.query(url)])
         .then(([results])=>{
-            for(let i=0; i<results.length; i++){
-                Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id='${results[i].SP_id}'`)])
-                    .then(([product]) => {
-                        results[i].product = product[0];
-                        if(i === results.length-1){
-                            for(let j=0; j<results.length; j++){
-                                Promise.all([ mydb.query(`SELECT mts.MTS_id, mts.MTS_chitiet, mts.MTS_diachi, mts.MTS_id, mts.MTS_image, mts.MTS_logo, mts.MTS_ten, nd.ND_sdt FROM motashop as mts, nguoidung as nd WHERE mts.NB_id = nd.ND_id AND mts.NB_id='${results[j].NB_id}'`)])
-                                    .then(([seller]) => {
-                                        results[j].seller = seller[0];
-                                        if(j === results.length-1){
-                                            res.json({
-                                                results: results,      
-                                            })
-                                        }
-                                    })
-                                    .catch((err) => {
-                                        console.log('loi show nha');
-                                    })
+            if(results.length > 0){
+                for(let i=0; i<results.length; i++){
+                    Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id='${results[i].SP_id}'`)])
+                        .then(([product]) => {
+                            results[i].product = product[0];
+                            if(i === results.length-1){
+                                for(let j=0; j<results.length; j++){
+                                    Promise.all([ mydb.query(`SELECT mts.MTS_id, mts.MTS_chitiet, mts.MTS_diachi, mts.MTS_id, mts.MTS_image, mts.MTS_logo, mts.MTS_ten, nd.ND_sdt FROM motashop as mts, nguoidung as nd WHERE mts.NB_id = nd.ND_id AND mts.NB_id='${results[j].NB_id}'`)])
+                                        .then(([seller]) => {
+                                            results[j].seller = seller[0];
+                                            if(j === results.length-1){
+                                                res.json({
+                                                    results: results,      
+                                                })
+                                            }
+                                        })
+                                        .catch((err) => {
+                                            console.log('loi show nha');
+                                        })
+                                }
                             }
-                        }
-                    })
-                    .catch((err) => {
-                        console.log('loi show');
-                    })
+                        })
+                        .catch((err) => {
+                            console.log('loi show');
+                        })
+                }
+            }else{
+                res.json({
+                    results: results,      
+                })
             }
            
         })
