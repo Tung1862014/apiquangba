@@ -8,6 +8,8 @@ const cartController = require('../app/controllers/CartController');
 
 router.get('/cart/show/all', cartController.ShowAllProduct);
 
+router.get('/cart/show/number/product', cartController.ShowNumberProduct);
+
 router.delete('/delete/product', cartController.DeleteProduct);
 
 router.put('/update/number/product', cartController.UpdateNumber);
