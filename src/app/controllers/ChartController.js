@@ -59,8 +59,8 @@ class ChartController {
         //         )
         //     )
         let arr = [];
-        
-         Promise.all([ mydb.query(`SELECT * FROM donhang WHERE NB_id='${req.query.NB_id}' `)])
+        console.log('date', req.query.ngdi);
+         Promise.all([mydb.query(`SELECT * FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay BETWEEN '${req.query.ngdi}' AND '${req.query.ngde}'`)])
             .then(([results]) =>{
                 let numbers = [];
                 let turnovers = [];
@@ -75,10 +75,10 @@ class ChartController {
                             YMD = year + '-0' + month + '-' + day;
                         } else if (month < 10 && day < 10) {
                             YMD =  year + '-0' + month + '0' + day;
-                        } else if (month > 10 && day < 10) {
+                        } else if (month >= 10 && day < 10) {
                             YMD =  year + '-' + month + '0' + day;
-                        } else if (month > 10 && day >= 10) {
-                            YMD = year + '-' + month + day;
+                        } else if (month >= 10 && day >= 10) {
+                            YMD = year + '-' + month + '-' + day;
                         } else {
                             YMD = year + '-' + month + '-' + day;
                         }
