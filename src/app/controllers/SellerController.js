@@ -73,9 +73,9 @@ class SellerController {
             .then(([result])=>{
                 Promise.all([ mydb.query(`SELECT count(DH_id) as statusconfirm FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_trangthai='1'`)])
                 .then(([statusconfirm])=>{
-                    Promise.all([ mydb.query(`SELECT count(DH_id) as statusdelivered FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_trangthai='3'`)])
+                    Promise.all([ mydb.query(`SELECT count(DH_id) as statusdelivered FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_trangthai='4'`)])
                         .then(([statusdelivered])=>{
-                            Promise.all([ mydb.query(`SELECT count(DH_id) as statuscancelOrder FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_trangthai='4'`)])
+                            Promise.all([ mydb.query(`SELECT count(DH_id) as statuscancelOrder FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_trangthai='5'`)])
                                 .then(([statuscancelOrder])=>{
                                     Promise.all([ mydb.query(`SELECT count(SP_id) as statusoutOfStock FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai='0'`)])
                                         .then(([statusoutOfStock])=>{

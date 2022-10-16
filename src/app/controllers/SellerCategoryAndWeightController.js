@@ -43,15 +43,32 @@ class SellerCategoryAndWeightController {
 
     categoryAdd(req, res, next){
         // console.log(req.body.DM_danhmuc);
-        Promise.all([ mydb.query(`INSERT INTO danhmuc(NB_id, DM_danhmuc) VALUES ('${req.body.NB_id}', '${req.body.DM_danhmuc}')`)])
+        Promise.all([ mydb.query(`SELECT * FROM danhmuc WHERE DM_danhmuc='${req.body.DM_danhmuc}' AND NB_id='${req.body.NB_id}'`)])
             .then(([result])=>{
-                res.json({
-                    category: true,
-                });
+                console.log('result',result.length);
+                if(result.length>0){
+                    res.json({
+                        category: false,
+                        warning: true,
+                    })
+                }else{
+                    Promise.all([ mydb.query(`INSERT INTO danhmuc(NB_id, DM_danhmuc) VALUES ('${req.body.NB_id}', '${req.body.DM_danhmuc}')`)])
+                        .then(([result])=>{
+                            res.json({
+                                category: true,
+                            });
+                        })
+                        .catch((err) =>{
+                            res.json({
+                                category: false,
+                            });
+                    })
+                } 
             })
             .catch((err) =>{
                 res.json({
                     category: false,
+                    err: true,
                 });
             })
     }
