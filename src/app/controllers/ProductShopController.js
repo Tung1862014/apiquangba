@@ -47,60 +47,67 @@ class ProductShopController {
         console.log(req.query.sort);
         console.log(req.query.price);
         let queryString;
-        if(req.query.DM_id == 'all' && req.query.sort == 'all' && req.query.price == 'gia'){
+        if(req.query.DM_id === 'all' && req.query.sort === 'all' && req.query.price === 'gia'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' ORDER by SP_id DESC`;
-        }else if(req.query.DM_id == 'all' && req.query.sort == 'all' && req.query.price == 'lowtohigh'){
+        }else if(req.query.DM_id === 'all' && req.query.sort === 'all' && req.query.price === 'lowtohigh'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' ORDER by SP_gia ASC`;
-        }else if(req.query.DM_id == 'all' && req.query.sort == 'all' && req.query.price == 'hightolow'){
+        }else if(req.query.DM_id === 'all' && req.query.sort === 'all' && req.query.price === 'hightolow'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' ORDER by SP_gia DESC`;
-        }else if(req.query.DM_id == 'all' && req.query.sort == 'selling' && req.query.price == 'gia'){
+        }else if(req.query.DM_id === 'all' && req.query.sort === 'selling' && req.query.price === 'gia'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_soluongban > 0 ORDER by SP_id DESC`;
-        }else if(req.query.DM_id == 'all' && req.query.sort == 'promotion' && req.query.price == 'gia'){
+        }else if(req.query.DM_id === 'all' && req.query.sort === 'promotion' && req.query.price === 'gia'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_khuyenmai > 0 ORDER by SP_id DESC`;
-        }else if(req.query.DM_id == 'all' && req.query.sort == 'selling' && req.query.price == 'lowtohigh'){
+        }else if(req.query.DM_id === 'all' && req.query.sort === 'selling' && req.query.price === 'lowtohigh'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_soluongban > 0 ORDER by SP_gia ASC`;
-        }else if(req.query.DM_id == 'all' && req.query.sort == 'selling' && req.query.price == 'hightolow'){
+        }else if(req.query.DM_id === 'all' && req.query.sort === 'selling' && req.query.price === 'hightolow'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_soluongban > 0 ORDER by SP_gia DESC`;
-        }else if(req.query.DM_id == 'all' && req.query.sort == 'promotion' && req.query.price == 'lowtohigh'){
+        }else if(req.query.DM_id === 'all' && req.query.sort === 'promotion' && req.query.price === 'lowtohigh'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_khuyenmai > 0 ORDER by SP_gia ASC`;
-        }else if(req.query.DM_id == 'all' && req.query.sort == 'promotion' && req.query.price == 'hightolow'){
+        }else if(req.query.DM_id === 'all' && req.query.sort === 'promotion' && req.query.price === 'hightolow'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_khuyenmai > 0 ORDER by SP_gia DESC`;
-        }else if(req.query.DM_id != 'all' && req.query.sort == 'all' && req.query.price == 'gia'){
+        }else if(req.query.DM_id !== 'all' && req.query.sort == 'all' && req.query.price == 'gia'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' ORDER by SP_id DESC`;
-        }else if(req.query.DM_id != 'all' && req.query.sort == 'selling' && req.query.price == 'gia'){
+        }else if(req.query.DM_id !== 'all' && req.query.sort == 'selling' && req.query.price == 'gia'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_soluongban > 0 ORDER by SP_id DESC`;
-        }else if(req.query.DM_id != 'all' && req.query.sort == 'promotion' && req.query.price == 'gia'){
+        }else if(req.query.DM_id !== 'all' && req.query.sort == 'promotion' && req.query.price == 'gia'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_khuyenmai > 0 ORDER by SP_id DESC`;
-        }else if(req.query.DM_id != 'all' && req.query.sort == 'all' && req.query.price == 'lowtohigh'){
+        }else if(req.query.DM_id !== 'all' && req.query.sort == 'all' && req.query.price == 'lowtohigh'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}'  ORDER by SP_gia ASC`;
-        }else if(req.query.DM_id != 'all' && req.query.sort == 'all' && req.query.price == 'hightolow'){
+        }else if(req.query.DM_id !== 'all' && req.query.sort == 'all' && req.query.price == 'hightolow'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}'  ORDER by SP_gia DESC`;
-        }else if(req.query.DM_id != 'all' && req.query.sort == 'selling' && req.query.price == 'lowtohigh'){
+        }else if(req.query.DM_id !== 'all' && req.query.sort == 'selling' && req.query.price == 'lowtohigh'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_soluongban > 0 ORDER by SP_gia ASC`;
-        }else if(req.query.DM_id != 'all' && req.query.sort == 'promotion' && req.query.price == 'lowtohigh'){
+        }else if(req.query.DM_id !== 'all' && req.query.sort == 'promotion' && req.query.price == 'lowtohigh'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_khuyenmai > 0 ORDER by SP_gia ASC`;
-        }else if(req.query.DM_id != 'all' && req.query.sort == 'selling' && req.query.price == 'hightolow'){
+        }else if(req.query.DM_id !== 'all' && req.query.sort === 'selling' && req.query.price === 'hightolow'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_soluongban > 0 ORDER by SP_gia DESC`;
-        }else if(req.query.DM_id != 'all' && req.query.sort == 'promotion' && req.query.price == 'hightolow'){
+        }else if(req.query.DM_id !== 'all' && req.query.sort === 'promotion' && req.query.price === 'hightolow'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_khuyenmai > 0 ORDER by SP_gia DESC`;
         }
         Promise.all([ mydb.query(queryString)])
             .then(([results])=>{
-                for(let i=0; i< results.length; i++){
-                    Promise.all([ mydb.query(`SELECT sum(DG_sosao) as star, count(DG_id) as num FROM danhgia WHERE NB_id='${req.query.NB_id}' AND SP_id='${results[i].SP_id}'`)])
-                        .then(([numstar]) => {
-                            console.log(numstar[0].star);
-                            results[i].star = Math.round(numstar[0].star / numstar[0].num);
-                            if(i === results.length-1){
-                                res.json({
-                                    results: results,
-                                })
-                            }
-                        })
-                        .catch((err) =>{
-                            console.log('loi star');
-                        })
-                }        
+                if(results.length > 0){
+                    for(let i=0; i< results.length; i++){
+                        Promise.all([ mydb.query(`SELECT sum(DG_sosao) as star, count(DG_id) as num FROM danhgia WHERE NB_id='${req.query.NB_id}' AND SP_id='${results[i].SP_id}'`)])
+                            .then(([numstar]) => {
+                                console.log(numstar[0].star);
+                                results[i].star = Math.round(numstar[0].star / numstar[0].num);
+                                if(i === results.length-1){
+                                    res.json({
+                                        results: results,
+                                    })
+                                }
+                            })
+                            .catch((err) =>{
+                                console.log('loi star');
+                            })
+                    }        
+                }else{
+                    res.json({
+                        results: results,
+                    })
+                }
+                
             })
             .catch((err) => {
                 console.log('loi show');

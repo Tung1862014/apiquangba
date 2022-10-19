@@ -75,9 +75,9 @@ class ChartController {
                         if (month < 10 && day >= 10) {
                             YMD = year + '-0' + month + '-' + day;
                         } else if (month < 10 && day < 10) {
-                            YMD =  year + '-0' + month + '0' + day;
+                            YMD =  year + '-0' + month + '-0' + day;
                         } else if (month >= 10 && day < 10) {
-                            YMD =  year + '-' + month + '0' + day;
+                            YMD =  year + '-' + month + '-0' + day;
                         } else if (month >= 10 && day >= 10) {
                             YMD = year + '-' + month + '-' + day;
                         } else {
