@@ -63,72 +63,82 @@ class ChartController {
         console.log('date ngde', req.query.ngde);
          Promise.all([mydb.query(`SELECT * FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay BETWEEN '${req.query.ngdi}' AND '${req.query.ngde}'`)])
             .then(([results]) =>{
+
                 let numbers = [];
                 let turnovers = [];
-                for(let i=0; i<results.length; i++){
-                    let YMD='';
-                    let DateChart = new Date(results[i].DH_ngay);
-                        let day = DateChart.getDate();
-                        let month = DateChart.getMonth() + 1;
-                        let year = DateChart.getFullYear();
-
-                        if (month < 10 && day >= 10) {
-                            YMD = year + '-0' + month + '-' + day;
-                        } else if (month < 10 && day < 10) {
-                            YMD =  year + '-0' + month + '-0' + day;
-                        } else if (month >= 10 && day < 10) {
-                            YMD =  year + '-' + month + '-0' + day;
-                        } else if (month >= 10 && day >= 10) {
-                            YMD = year + '-' + month + '-' + day;
-                        } else {
-                            YMD = year + '-' + month + '-' + day;
-                        }
-                        //console.log(YMD);
-                        if(arr[0] === undefined){
-                            arr = [...arr,YMD];
-                        }else{
-                            for(let j=0; j < arr.length; j++){
-                                if(arr[j] !== (YMD)){
-                                    if(j === arr.length-1){
-                                        arr = [...arr,YMD];
+                if(results.length > 0){
+                    for(let i=0; i<results.length; i++){
+                        let YMD='';
+                        let DateChart = new Date(results[i].DH_ngay);
+                            let day = DateChart.getDate();
+                            let month = DateChart.getMonth() + 1;
+                            let year = DateChart.getFullYear();
+    
+                            if (month < 10 && day >= 10) {
+                                YMD = year + '-0' + month + '-' + day;
+                            } else if (month < 10 && day < 10) {
+                                YMD =  year + '-0' + month + '-0' + day;
+                            } else if (month >= 10 && day < 10) {
+                                YMD =  year + '-' + month + '-0' + day;
+                            } else if (month >= 10 && day >= 10) {
+                                YMD = year + '-' + month + '-' + day;
+                            } else {
+                                YMD = year + '-' + month + '-' + day;
+                            }
+                            //console.log(YMD);
+                            if(arr[0] === undefined){
+                                arr = [...arr,YMD];
+                            }else{
+                                for(let j=0; j < arr.length; j++){
+                                    if(arr[j] !== (YMD)){
+                                        if(j === arr.length-1){
+                                            arr = [...arr,YMD];
+                                        }
                                     }
                                 }
                             }
-                        }
+                    }
+                    
+                    for(let i=0; i < arr.length; i++){
+                        console.log('day', arr[i]);
+                        Promise.all([ mydb.query(`SELECT sum(DH_tongtien) as money FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay='${arr[i]}'`)])
+                            .then(([money]) =>{
+                               
+                                turnovers =  [...turnovers,money[0].money];
+                               
+                                Promise.all([ mydb.query(`SELECT COUNT(DH_id) as orders FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay='${arr[i]}'`)])
+                                    .then(([orders]) =>{
+                                        //console.log('tong tien', turnovers);
+                                        numbers = [...numbers, orders[0].orders];
+                                        if(i === arr.length-1){
+                                            console.log('arr', arr);
+                                            console.log('chartListTurnover', turnovers);
+                                            console.log('chartListNumber', numbers);
+                                            res.json({
+                                                arr: arr,
+                                                turnovers: turnovers,
+                                                numbers: numbers,
+                                            })
+                                        }
+                                    })
+                                    .catch((err) =>{
+                                        console.log('loi nha');
+                                    })
+                            })
+                            .catch((err) =>{
+                                console.log('loi');
+                            })
+                        
+                            
+                    }
+                }else{
+                    res.json({
+                        arr: [],
+                        turnovers: [],
+                        numbers: [],
+                    })
                 }
                 
-                for(let i=0; i < arr.length; i++){
-                    console.log('day', arr[i]);
-                    Promise.all([ mydb.query(`SELECT sum(DH_tongtien) as money FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay='${arr[i]}'`)])
-                        .then(([money]) =>{
-                           
-                            turnovers =  [...turnovers,money[0].money];
-                           
-                            Promise.all([ mydb.query(`SELECT COUNT(DH_id) as orders FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay='${arr[i]}'`)])
-                                .then(([orders]) =>{
-                                    //console.log('tong tien', turnovers);
-                                    numbers = [...numbers, orders[0].orders];
-                                    if(i === arr.length-1){
-                                        console.log('arr', arr);
-                                        console.log('chartListTurnover', turnovers);
-                                        console.log('chartListNumber', numbers);
-                                        res.json({
-                                            arr: arr,
-                                            turnovers: turnovers,
-                                            numbers: numbers,
-                                        })
-                                    }
-                                })
-                                .catch((err) =>{
-                                    console.log('loi nha');
-                                })
-                        })
-                        .catch((err) =>{
-                            console.log('loi');
-                        })
-                    
-                        
-                }
             }
                 // res.json({numbers,results}),
             )
