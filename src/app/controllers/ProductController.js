@@ -24,14 +24,16 @@ class ProductController {
                         console.log('arr',arr);
                         if(arr !== ''){
                             for(let i = 0; i < arr.length; i++){
-                                Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${arr[i]}'`)])
+                                Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${arr[i]}' AND SP_trangthai != '2'`)])
                                     .then(([results])=>{
-                                        result[i]= results[0];
-                                        if(i == arr.length - 1){
-                                            res.json({
-                                                results: result,
-                                                suggestions: true,
-                                            });
+                                        if(results[0] !== undefined){
+                                            result[i]= results[0];
+                                            if(i == arr.length - 1){
+                                                res.json({
+                                                    results: result,
+                                                    suggestions: true,
+                                                });
+                                            }
                                         }
                                         //console.log(results);
                                     })
@@ -159,7 +161,7 @@ class ProductController {
                                                     console.log('filterIdproduct',filterIdproduct);
                                                     if(filterIdproduct[0] !== undefined){
                                                         for(let v = 0; v < filterIdproduct.length; v++){
-                                                            Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${filterIdproduct[v]}'`)])
+                                                            Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${filterIdproduct[v]}' AND SP_trangthai != '2'`)])
                                                                 .then(([product])=>{
                                                                     result[v]= product[0];
                                                                     if( v == filterIdproduct.length - 1){

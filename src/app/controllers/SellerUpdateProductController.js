@@ -793,10 +793,8 @@ class SellerUpdateProductController {
     }
 
     productDelete(req, res, next){
-        Promise.all([mydb.query(`DELETE FROM sanpham WHERE SP_id='${req.body.SP_id}'`)])
+        Promise.all([mydb.query(`UPDATE sanpham SET SP_trangthai=2 WHERE SP_id='${req.body.SP_id}'`)])
         .then(([result]) =>{
-            Promise.all([mydb.query(`DELETE FROM motasanpham WHERE SP_id='${req.body.SP_id}'`)])
-            Promise.all([mydb.query(`DELETE FROM hinhanh WHERE SP_id='${req.body.SP_id}'`)])
             res.json(
                 {
                     delete: true,

@@ -47,7 +47,7 @@ class SellerProductController {
               })
            })
        }else{
-            Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE NB_id='${req.body.NB_id}' ORDER by SP_id DESC`)])
+            Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE NB_id='${req.body.NB_id}'AND SP_trangthai!='2' ORDER by SP_id DESC`)])
             .then(([result])=>{
                 Promise.all([ mydb.query(`SELECT count(SP_id) as status FROM sanpham WHERE NB_id='${req.body.NB_id}' AND SP_trangthai='0'`)])
                 .then(([status])=>{

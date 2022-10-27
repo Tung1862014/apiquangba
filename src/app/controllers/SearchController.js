@@ -85,13 +85,13 @@ class SearchController {
         //     queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_khuyenmai > 0 ORDER by SP_gia DESC`;
         // }
         if(req.query.pricefrom != 0 && req.query.priceto != 0){
-            queryString = `SELECT * FROM sanpham WHERE SP_ten like '%${req.query.keyword}%' AND SP_gia BETWEEN '${req.query.pricefrom}' AND '${req.query.priceto}' ORDER by SP_id DESC`;
+            queryString = `SELECT * FROM sanpham WHERE SP_ten like '%${req.query.keyword}%' AND SP_gia BETWEEN '${req.query.pricefrom}' AND '${req.query.priceto}' AND SP_trangthai != 2 ORDER by SP_id DESC`;
         }else if(req.query.pricefrom != 0 && req.query.priceto == 0){
-            queryString = `SELECT * FROM sanpham WHERE SP_ten like '%${req.query.keyword}%' AND SP_gia >= '${req.query.pricefrom}' ORDER by SP_id DESC`;
+            queryString = `SELECT * FROM sanpham WHERE SP_ten like '%${req.query.keyword}%' AND SP_gia >= '${req.query.pricefrom}'AND SP_trangthai != 2 ORDER by SP_id DESC`;
         }else if(req.query.pricefrom == 0 && req.query.priceto != 0){
-            queryString = `SELECT * FROM sanpham WHERE SP_ten like '%${req.query.keyword}%' AND SP_gia BETWEEN 0 AND '${req.query.priceto}' ORDER by SP_id DESC`;
+            queryString = `SELECT * FROM sanpham WHERE SP_ten like '%${req.query.keyword}%' AND SP_gia BETWEEN 0 AND '${req.query.priceto}' AND SP_trangthai != 2 ORDER by SP_id DESC`;
         }else{
-            queryString = `SELECT * FROM sanpham WHERE SP_ten like '%${req.query.keyword}%' ORDER by SP_gia DESC`;
+            queryString = `SELECT * FROM sanpham WHERE SP_ten like '%${req.query.keyword}%' AND SP_trangthai != 2 ORDER by SP_gia DESC`;
         }
 
         console.log('queryString', queryString);

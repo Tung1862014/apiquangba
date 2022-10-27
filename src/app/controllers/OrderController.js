@@ -27,7 +27,7 @@ class OrderController {
         //console.log(req.body.ND_ttqhpx,req.body.ND_diachigiaohang,req.body.ND_id);
         let url;
         if(req.body.ND_diachiGH !== '' && req.body.ND_chitiet !== ''){
-            url = `UPDATE nguoidung SET ND_ttqhpx= '${req.body.ND_diachiGH}', ND_chitiet= '${req.body.ND_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
+            url = `UPDATE nguoidung SET ND_diachiGH= '${req.body.ND_diachiGH}', ND_chitiet= '${req.body.ND_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
         }else if(req.body.ND_diachiGH !== '' && req.body.ND_chitiet === ''){
             url = `UPDATE nguoidung SET ND_diachiGH= '${req.body.ND_diachiGH}' WHERE ND_id='${req.body.ND_id}'`;
         }else if(req.body.ND_diachiGH === '' && req.body.ND_chitiet !== ''){
