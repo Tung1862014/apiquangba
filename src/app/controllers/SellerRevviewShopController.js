@@ -20,7 +20,7 @@ class SellerDetailBillController {
             .then(([result])=>{
                 if(result[0] !== undefined){
                     for(let i=0; i<result.length; i++){
-                        Promise.all([ mydb.query(`SELECT dh.DH_id, sp.SP_ten, sp.SP_image, nd.ND_hoten, nd.ND_sdt  FROM sanpham as sp, danhgia as dg, nguoidung as nd, donhang as dh WHERE sp.SP_id = dg.SP_id AND nd.ND_id = dg.ND_id AND dg.DH_id = dh.DH_id AND dg.ND_id='${result[i].ND_id}' AND dg.SP_id ='${result[i].SP_id}'`)])
+                        Promise.all([ mydb.query(`SELECT dh.DH_id, sp.SP_ten, sp.SP_image, nd.ND_hoten, nd.ND_sdt, sp.SP_trangthai  FROM sanpham as sp, danhgia as dg, nguoidung as nd, donhang as dh WHERE sp.SP_id = dg.SP_id AND nd.ND_id = dg.ND_id AND dg.DH_id = dh.DH_id AND dg.ND_id='${result[i].ND_id}' AND dg.SP_id ='${result[i].SP_id}'`)])
                         .then(([product]) => {
                             result[i].product = product;
                             if(i === result.length-1){

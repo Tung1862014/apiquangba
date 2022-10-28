@@ -54,13 +54,13 @@ class CustomerController {
         // console.log(req.body.userName)
         let url;
         if(req.body.seller){
-            url =`SELECT ND_id FROM nguoidung WHERE ND_username='${req.body.ND_username}' AND ND_quyen=1`;
+            url =`SELECT ND_id FROM nguoidung WHERE ND_username='${req.body.ND_username}' AND ND_quyen=1 `;
         }else{
-            url =`SELECT ND_id FROM nguoidung WHERE ND_username='${req.body.ND_username}' AND ND_quyen=2`;
+            url =`SELECT ND_id FROM nguoidung WHERE ND_username='${req.body.ND_username}' AND ND_quyen=2 `;
         }
         Promise.all([mydb.query(url)])
         .then(([result]) =>{
-            if(result){
+            if(result.length > 0){
                 //let user = result[0];
                 let url2;
                 if(req.body.seller){
@@ -74,7 +74,8 @@ class CustomerController {
                             res.json({
                                 account:true,
                                 pass: true,
-                                result: result[0]
+                                result: result[0],
+                                status: results[0].ND_trangthai
                             })
                         }else{
                             res.json({
