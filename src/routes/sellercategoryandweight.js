@@ -32,6 +32,8 @@ router.put('/weight/update',sellerCategoryAndWeightController.weightUpdate);
 
 router.delete('/weight/delete',sellerCategoryAndWeightController.weightDelete);
 
+router.post('/product/show/product/id',sellerCategoryAndWeightController.productShowAll);
+
 // router.post('/product/add/image',uploadProductImage.array('image'),sellerProductController.productAddImage);
 
 

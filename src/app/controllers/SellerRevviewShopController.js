@@ -131,6 +131,46 @@ class SellerDetailBillController {
         }
     }
 
+    billReviewsShowAllNameProduct(req, res, next){
+        let arr = [];
+        let products = [];
+        Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE NB_id='${req.query.NB_id}'ORDER by DG_id DESC`)])
+            .then(([result])=>{
+                if(result[0] !== undefined){
+                    for(let i=0; i<result.length; i++){
+                        if (!arr.includes(result[i].SP_id)) {
+                            arr.push(result[i].SP_id);
+                        }  
+                    } 
+                    if(arr[0] !== undefined){
+                        for(let j=0; j<arr.length; j++){
+                            Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${arr[j]}'`)])
+                                .then(([product]) => {
+                                    products[j] = product[0];
+                                    if(j === arr.length-1){
+                                        res.json({
+                                            result: products,
+                                        });
+                                    }
+                                })
+                                .catch((err)=>{
+                                    console.log('loi nha');
+                                })
+                        }
+                    }
+                }else{
+                    res.json({
+                        result: result,
+                    });
+                }
+            })
+            .catch((err) =>{
+                res.send({
+                    seller: false,
+                })
+            })
+    }
+
 }
 
 module.exports = new SellerDetailBillController();

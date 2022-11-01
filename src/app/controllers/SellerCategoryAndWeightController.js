@@ -147,6 +147,29 @@ class SellerCategoryAndWeightController {
                 });
             })
     }
+
+    productShowAll(req, res, next) {
+        Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE NB_id='${req.body.NB_id}'AND SP_trangthai!='2' AND DM_id='${req.body.DM_id}' ORDER by SP_id DESC`)])
+             .then(([result])=>{
+                 Promise.all([ mydb.query(`SELECT count(SP_id) as status FROM sanpham WHERE NB_id='${req.body.NB_id}' AND SP_trangthai='0'`)])
+                 .then(([status])=>{
+                     Promise.all([ mydb.query(`SELECT count(SP_id) as number FROM sanpham WHERE NB_id='${req.body.NB_id}'`)])
+                         .then(([number])=>{
+                             res.json({
+                                 result: result,
+                                 status: status,
+                                 number: number
+                             });
+                         })
+                 })
+             })
+             .catch((err) =>{
+                console.log('loi');
+                 res.send({
+                     seller: false,
+                 })
+             })
+     }
     
 }
 
