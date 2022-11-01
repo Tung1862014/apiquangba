@@ -220,11 +220,11 @@ class AdminController {
         // console.log(req.query.ND_trangthai);
         let url;
         if(req.query.ND_trangthai === 'trangthaiaction'){
-            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai FROM nguoidung WHERE ND_quyen=2 AND ND_trangthai=1 ORDER by ND_id DESC`;
+            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai, ND_ghichu FROM nguoidung WHERE ND_quyen=2 AND ND_trangthai=1 ORDER by ND_id DESC`;
         }else if(req.query.ND_trangthai === 'trangthaihanche'){
-            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai FROM nguoidung WHERE ND_quyen=2 AND ND_trangthai=0 ORDER by ND_id DESC`;
+            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai, ND_ghichu FROM nguoidung WHERE ND_quyen=2 AND ND_trangthai=0 ORDER by ND_id DESC`;
         }else{
-            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai FROM nguoidung WHERE ND_quyen=2 ORDER by ND_id DESC`;
+            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai, ND_ghichu FROM nguoidung WHERE ND_quyen=2 ORDER by ND_id DESC`;
         }
         Promise.all([ mydb.query(url)])
             .then(([results]) => {
@@ -280,6 +280,23 @@ class AdminController {
         
     }
 
+    //UpdateNote
+    UpdateNoteCustomer(req, res, next){
+        console.log('id', req.body.ND_id);
+        console.log('ghi chu', req.body.ND_ghichu);
+        Promise.all([ mydb.query(`UPDATE nguoidung SET ND_ghichu='${req.body.ND_ghichu}' WHERE ND_id='${req.body.ND_id}'  `)])
+            .then(([notes]) => {
+                res.json({
+                    update: true,
+                })
+            })
+            .catch((err) => {
+                res.json({
+                    update: false,
+                })
+            })
+    } 
+
     SearchCustomer(req, res, next) {
         Promise.all([ mydb.query(`SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai FROM nguoidung WHERE ND_hoten LIKE '%${req.query.name}%' AND ND_quyen=2 ORDER by ND_id DESC`)])
         .then(([results]) => {
@@ -311,11 +328,11 @@ class AdminController {
         // console.log(req.query.ND_trangthai);
         let url;
         if(req.query.ND_trangthai === 'trangthaiaction'){
-            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai FROM nguoidung WHERE ND_quyen=1 AND ND_trangthai=1 ORDER by ND_id DESC`;
+            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai, ND_ghichu FROM nguoidung WHERE ND_quyen=1 AND ND_trangthai=1 ORDER by ND_id DESC`;
         }else if(req.query.ND_trangthai === 'trangthaihanche'){
-            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai FROM nguoidung WHERE ND_quyen=1 AND ND_trangthai=0 ORDER by ND_id DESC`;
+            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai, ND_ghichu FROM nguoidung WHERE ND_quyen=1 AND ND_trangthai=0 ORDER by ND_id DESC`;
         }else{
-            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai FROM nguoidung WHERE ND_quyen=1 ORDER by ND_id DESC`;
+            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai, ND_ghichus FROM nguoidung WHERE ND_quyen=1 ORDER by ND_id DESC`;
         }
         Promise.all([ mydb.query(url)])
             .then(([results]) => {
