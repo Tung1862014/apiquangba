@@ -66,16 +66,22 @@ class OrderController {
     AddOrderProduct(req, res, next){
         console.log('ND_id',req.body.NB_id);
         console.log('DH_tongtien', req.body.DH_tongtien);
+        console.log('TTDH_gia', req.body.TTDH_gia);
+        console.log('TTDH_phantram', req.body.TTDH_phantram);
         Promise.all([ mydb.query(`INSERT INTO donhang(DH_id,ND_id, NB_id, DH_tongtien, DH_trangthai, DH_loaithanhtoan, DH_diachi, DH_phivanchuyen, DH_ngay, DH_trangthaiTT) VALUES('${req.body.DH_id}','${req.body.ND_id}', '${req.body.NB_id}', '${req.body.DH_tongtien}',1,'${req.body.DH_loaithanhtoan}','${req.body.DH_diachi}','${req.body.DH_phivanchuyen}','${req.body.DH_ngay}','${req.body.DH_trangthaiTT}')`)])
         .then(([results])=>{
             //console.log('results',results);
-            Promise.all([ mydb.query(`UPDATE thongtindonhang SET DH_id='${req.body.DH_id}' WHERE ND_id= '${req.body.ND_id}' AND NB_id='${req.body.NB_id}' AND  DH_id IS NULL`)])
-            .then(([result])=>{
-                res.send(result);
-            })
-            .catch((err) =>{
-                console.log('loi up');
-            })
+           for(let i=0; i< req.body.SP_id.length; i++){
+                Promise.all([ mydb.query(`UPDATE thongtindonhang SET DH_id='${req.body.DH_id}', TTDH_gia='${req.body.TTDH_gia[i]}', TTDH_phantram='${req.body.TTDH_phantram[i]}' WHERE ND_id= '${req.body.ND_id}' AND NB_id='${req.body.NB_id}' AND SP_id='${req.body.SP_id[i]}' AND DH_id IS NULL ORDER by TTDH_id DESC`)])
+                .then(([result])=>{
+                    if(i === req.body.TTDH_gia.length-1){
+                        res.send(result);
+                    }
+                })
+                .catch((err) =>{
+                    console.log('loi up');
+                })
+           }
         })
         .catch((err) =>{
             console.log('loi in');

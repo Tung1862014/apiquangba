@@ -135,10 +135,32 @@ class ProductDetailController {
     ShowAllProduct(req, res, next){
         //console.log(req.query.NB_id);
         Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' ORDER by SP_id DESC`)])
-            .then((results)=>{
-                res.json({
-                    results: results[0],
-                })
+            .then(([results])=>{
+               if(results.length>0){
+                for(let i=0; i<results.length; i++){
+                    Promise.all([ mydb.query(`SELECT * FROM khuyenmai WHERE SP_id='${results[i].SP_id}' ORDER by SP_id DESC`)])
+                        .then(([promotion]) => {
+                            if(promotion.length > 0){
+                                results[i].promotion = promotion[0];
+                            }else{
+                                results[i].promotion = 0;
+                            }
+
+                            if(i === results.length-1){
+                                res.json({
+                                    results: results,
+                                })
+                            }
+                        })
+                        .catch((error) =>{
+                            console.log('loi show nha');
+                        })
+                }
+               }else{
+                    res.json({
+                        results: results,
+                    })
+               }
             })
             .catch((err) => {
                 console.log('loi show');
