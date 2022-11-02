@@ -42,9 +42,24 @@ class CartController {
                                             .then(([seller]) => {
                                                 results[j].seller = seller[0];
                                                 if(j === results.length-1){
-                                                    res.json({
-                                                        results: results,
-                                                    })
+                                                    for(let t=0; t<results.length; t++){
+                                                        Promise.all([ mydb.query(`SELECT * FROM khuyenmai WHERE SP_id='${results[t].SP_id}'`)])
+                                                            .then(([promotion]) => {
+                                                                if(promotion.length > 0){
+                                                                    results[t].promotion = promotion[0];
+                                                                }else{
+                                                                    results[t].promotion = 0;
+                                                                }
+                                                                if(t === results.length-1){
+                                                                    res.json({
+                                                                        results: results,
+                                                                    })
+                                                                }
+                                                            })
+                                                            .catch((err) => {
+                                                                console.log('loi show nha');
+                                                            })
+                                                    }
                                                 }
                                             })
                                             .catch((err) => {

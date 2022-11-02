@@ -29,12 +29,30 @@ class ProductDetailController {
                                                     Promise.all([ mydb.query(`SELECT * FROM motashop WHERE NB_id='${results[0].NB_id}'`)])
                                                         .then(([shop])=>{
                                                             results[0].shop = shop;
-                                                            res.json({
-                                                                results: results,
-                                                                evaluation: evaluation,
-                                                                evaluationNum: evaluation.length,
-                                                                evaluationStar: Math.round(num/evaluation.length),
-                                                            });
+                                                            Promise.all([ mydb.query(`SELECT * FROM khuyenmai WHERE SP_id='${req.query.SP_id}'`)])
+                                                                .then(([promotion])=>{
+                                                                    
+                                                                    if(promotion.length > 0) {
+                                                                        res.json({
+                                                                            results: results,
+                                                                            evaluation: evaluation,
+                                                                            evaluationNum: evaluation.length,
+                                                                            evaluationStar: Math.round(num/evaluation.length),
+                                                                            promotion: promotion,
+                                                                        });
+                                                                    }else{
+                                                                        res.json({
+                                                                            results: results,
+                                                                            evaluation: evaluation,
+                                                                            evaluationNum: evaluation.length,
+                                                                            evaluationStar: Math.round(num/evaluation.length),
+                                                                            promotion: promotion,
+                                                                        });
+                                                                    }
+                                                                })
+                                                                .catch((error)=>{
+                                                                    console.log('loi anh nha');
+                                                                })
                                                         })
                                                         .catch((error)=>{
                                                             console.log('loi anh nha');
@@ -63,12 +81,30 @@ class ProductDetailController {
                                     Promise.all([ mydb.query(`SELECT * FROM motashop WHERE NB_id='${results[0].NB_id}'`)])
                                         .then(([shop])=>{
                                             results[0].shop = shop;
-                                            res.json({
-                                                results: results,
-                                                evaluation: '',
-                                                evaluationNum: '',
-                                                evaluationStar: '',
-                                            });
+                                            Promise.all([ mydb.query(`SELECT * FROM khuyenmai WHERE SP_id='${req.query.SP_id}'`)])
+                                            .then(([promotion])=>{
+                                                                    
+                                                if(promotion.length > 0) {
+                                                    res.json({
+                                                        results: results,
+                                                        evaluation: evaluation,
+                                                        evaluationNum: evaluation.length,
+                                                        evaluationStar: Math.round(num/evaluation.length),
+                                                        promotion: promotion,
+                                                    });
+                                                }else{
+                                                    res.json({
+                                                        results: results,
+                                                        evaluation: evaluation,
+                                                        evaluationNum: evaluation.length,
+                                                        evaluationStar: Math.round(num/evaluation.length),
+                                                        promotion: promotion,
+                                                    });
+                                                }
+                                            })
+                                            .catch((error)=>{
+                                                console.log('loi anh nha');
+                                            })
                                         })
                                         .catch((error)=>{
                                             console.log('loi anh nha');
