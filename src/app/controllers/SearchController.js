@@ -109,9 +109,25 @@ class SearchController {
                                 console.log(numstar[0].star);
                                 results[i].star = Math.round(numstar[0].star / numstar[0].num);
                                 if(i === results.length-1){
-                                    res.json({
-                                        results: results,
-                                    })
+                                    for(let j=0; j< results.length; j++){
+                                        Promise.all([ mydb.query(`SELECT * FROM khuyenmai WHERE SP_id='${results[j].SP_id}' ORDER by SP_id DESC`)])
+                                            .then(([promotion]) => {
+                                                if(promotion.length > 0){
+                                                    results[j].promotion = promotion[0];
+                                                }else{
+                                                    results[j].promotion = 0;
+                                                }
+
+                                                if(j === results.length-1){
+                                                    res.json({
+                                                        results: results,
+                                                    })
+                                                }
+                                            })
+                                            .catch((error) =>{
+                                                console.log('loi show nha');
+                                            })
+                                    }
                                 }
                             })
                             .catch((err) =>{
