@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 // const multer = require('multer');
 const upload = require('../middleware/customers')
+const uploadAdverties = require('../middleware/adverties')
 // var upload = multer({ dest:'../images/' });
 
 const adminController = require('../app/controllers/AdminController');
@@ -36,6 +37,8 @@ router.get('/search/seller',adminController.SearchSeller);
 // router.put('/update/address', adminController.UpdateAddress);
 
 router.get('/show/advertise', adminController.ShowAdvertise);
+router.post('/delete/advertise', adminController.DeleteAdvertise);
+router.post('/add/advertise',uploadAdverties.array('image'), adminController.AddAdvertise);
 
 
 module.exports = router;

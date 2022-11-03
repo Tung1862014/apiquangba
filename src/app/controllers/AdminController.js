@@ -433,6 +433,48 @@ class AdminController {
                 console.log('loi nha nhe');
             })
     }
+
+    //[]
+    DeleteAdvertise(req, res, next){
+        Promise.all([ mydb.query(`DELETE FROM quangba WHERE QB_id='${req.body.QB_id}'`)])
+            .then(([advertise]) => {
+                res.json({
+                    advertise: true,
+                })
+            })
+            .catch((err) => {
+                console.log('loi nha nhe');
+                res.json({
+                    advertise: false,
+                })
+            })
+    }
+    AddAdvertise(req, res, next){
+
+        if(req.files){
+            let paths ='';
+             //res.json(req.files)
+            const arr =  req.files;
+            arr.forEach(function(e, index, arr){
+               paths = paths + process.env.URL_IMAGE_ADVERTIES+ e.filename +',';
+            })
+            paths = paths.substring(0, paths.lastIndexOf(','));
+            req.body.QB_image = paths;
+            Promise.all([ mydb.query(`INSERT INTO quangba (QB_tieude,QB_mota,QB_image) VALUES ('${req.body.QB_tieude}', '${req.body.QB_mota}', '${req.body.QB_image}')`)])
+            .then(([advertise]) => {
+                res.json({
+                    advertise: true,
+                })
+            })
+            .catch((err) => {
+                console.log('loi nha nhe');
+                res.json({
+                    advertise: false,
+                })
+            })
+        }
+        
+    }
     
 }
 
