@@ -17,11 +17,33 @@ class SellerUpdateProductController {
         .then(([result])=>{
             Promise.all([ mydb.query(`SELECT * FROM danhmuc WHERE DM_id='${result[0].DM_id}'`)])
             .then(([category])=>{
-                res.json({
-                    result: result,
-                    category: category,
-                });
+                Promise.all([ mydb.query(`SELECT * FROM khuyenmai WHERE SP_id='${req.body.SP_id}'`)])
+                .then(([promotion])=>{
+                    if(promotion.length > 0){
+                        res.json({
+                            result: result,
+                            category: category,
+                            promotion: promotion,
+                        });
+                    }else{
+                        res.json({
+                            result: result,
+                            category: category,
+                            promotion: 0,
+                        });
+                    }
+                })
+                .catch((err) =>{
+                    res.send({
+                        seller: false,
+                    })
+                 })
             })
+            .catch((err) =>{
+                res.send({
+                    seller: false,
+                })
+             })
          })
          .catch((err) =>{
             res.send({
@@ -31,27 +53,26 @@ class SellerUpdateProductController {
       
     }
 
-    productShowDescribe(req, res, next) {
-        Promise.all([ mydb.query(`SELECT * FROM motasanpham WHERE SP_id='${req.body.SP_id}'`)])
-        .then(([result])=>{
-            if(result){
-                console.log(result[0].TL_id);
-                Promise.all([ mydb.query(`SELECT * FROM trongluong WHERE TL_id='${result[0].TL_id}'`)])
-                .then(([weight])=>{
-                    //console.log(weight[0].TL_trongluong);
-                    res.json({
-                        result: result,
-                        weight: weight,
-                    });
-                })
-            }
-         })
-         .catch((err) =>{
-            res.send({
-                seller: false,
-            })
-         })
-    }
+    // productShowDescribe(req, res, next) {
+    //     Promise.all([ mydb.query(`SELECT * FROM motasanpham WHERE SP_id='${req.body.SP_id}'`)])
+    //     .then(([result])=>{
+    //         if(result){
+    //             console.log(result[0].TL_id);
+    //             Promise.all([ mydb.query(`SELECT * FROM trongluong WHERE TL_id='${result[0].TL_id}'`)])
+    //             .then(([weight])=>{
+    //                 //console.log(weight[0].TL_trongluong);
+    //                 res.json({
+    //                     result: result,
+    //                     weight: weight,
+    //                 });
+    //             })
+
+    //         }
+    //      })
+    //      .catch((err) =>{
+    //         console.log('loi describe');
+    //      })
+    // }
 
     productShowImage(req, res, next) {
         Promise.all([ mydb.query(`SELECT * FROM hinhanh WHERE SP_id='${req.body.SP_id}'`)])
@@ -712,21 +733,50 @@ class SellerUpdateProductController {
     }
     }
 
-
-    productUpdateDescribe(req, res, next){
+    //[PUT] update/promotion
+    productUpdatePromotion(req, res, next){
         let urlImage;
-        if(req.body.TL_id === ''){
-            urlImage = `UPDATE motasanpham SET MTSP_noidung WHERE SP_id='${req.body.SP_id}'`;
-        }else{
-            urlImage = `UPDATE motasanpham SET TL_id='${req.body.TL_id}', MTSP_noidung='${req.body.MTSP_noidung}' WHERE SP_id='${req.body.SP_id}'`;
-        }
-        Promise.all([ mydb.query(urlImage)])
+        Promise.all([ mydb.query(`SELECT * FROM khuyenmai WHERE SP_id='${req.body.SP_id}'`)])
         .then(([result])=>{
-            res.json(
-                {
-                    update: true,
+            if(result.length > 0){
+                if(req.body.KM_tungay !== '' && req.body.KM_denngay !== '' && req.body.KM_phantram !== ''){
+                    urlImage = `UPDATE khuyenmai SET KM_tungay='${req.body.KM_tungay}', KM_denngay='${req.body.KM_denngay}', KM_phantram='${req.body.KM_phantram}' WHERE SP_id='${req.body.SP_id}'`;
+                }else  if(req.body.KM_tungay !== '' && req.body.KM_denngay !== '' && req.body.KM_phantram === ''){
+                    urlImage = `UPDATE khuyenmai SET KM_tungay='${req.body.KM_tungay}', KM_denngay='${req.body.KM_denngay}' WHERE SP_id='${req.body.SP_id}'`;
                 }
-            );
+                Promise.all([ mydb.query(urlImage)])
+                .then(([result])=>{
+                    res.json(
+                        {
+                            update: true,
+                        }
+                    );
+                })
+                .catch((err)=>{
+                    res.json(
+                        {
+                            update: false,
+                        }
+                    );
+                })
+            }else{
+                Promise.all([ mydb.query(`INSERT INTO khuyenmai(SP_id, KM_tungay, KM_denngay, KM_phantram) VALUES ('${req.body.SP_id}', '${req.body.KM_tungay}', '${req.body.KM_denngay}', '${req.body.KM_phantram}')`)])              
+                .then(([result])=>{
+                    res.json(
+                        {
+                            update: true,
+                        }
+                    );
+                })
+                .catch((err)=>{
+                    res.json(
+                        {
+                            update: false,
+                        }
+                    );
+                })
+            
+            }
         })
         .catch((err)=>{
             res.json(
@@ -735,6 +785,7 @@ class SellerUpdateProductController {
                 }
             );
         })
+        
     }
 
     productUpdateImgeSubPhoto1(req, res, next){

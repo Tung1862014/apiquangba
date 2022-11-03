@@ -25,7 +25,7 @@ router.post('/product/add',uploadProduct.array('image'),sellerProductController.
 
 router.post('/product/add/image',uploadProductImage.array('image'),sellerProductController.productAddImage);
 
-router.post('/product/add/describe',sellerProductController.productAddDescribe);
+router.post('/product/add/promotion',sellerProductController.productAddPromotion);
 
 router.get('/product/show/weight',sellerProductController.productShowWeight);
 

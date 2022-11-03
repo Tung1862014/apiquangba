@@ -105,7 +105,7 @@ class SellerProductController {
 
     productAdd(req, res, next) {
         //const formData = req.body;
-        console.log( req.body.NB_id,  req.body.SP_ten,  req.body.SP_soluong,  req.body.SP_gia,  req.body.SP_khuyenmai,  req.body.DM_id);
+        console.log( req.body.NB_id,  req.body.SP_ten,  req.body.SP_soluong,  req.body.SP_gia,  req.body.DM_id);
         if(req.files){
             let paths ='';
              res.json(req.files)
@@ -115,7 +115,7 @@ class SellerProductController {
             })
             paths = paths.substring(0, paths.lastIndexOf(','));
             req.body.image = paths;  
-            Promise.all([ mydb.query(`INSERT INTO sanpham(NB_id, SP_ten, SP_soluong, SP_gia, SP_image, SP_khuyenmai, SP_trongluong, SP_mota, SP_trangthai, DM_id) VALUES ('${req.body.NB_id}','${req.body.SP_ten}','${req.body.SP_soluong}','${req.body.SP_gia}','${req.body.image}','${req.body.SP_khuyenmai}','${req.body.SP_trongluong}','${req.body.SP_mota}','1', '${req.body.DM_id}')`)])
+            Promise.all([ mydb.query(`INSERT INTO sanpham(NB_id, SP_ten, SP_soluong, SP_gia, SP_image, SP_trongluong, SP_mota, SP_trangthai, DM_id) VALUES ('${req.body.NB_id}','${req.body.SP_ten}','${req.body.SP_soluong}','${req.body.SP_gia}','${req.body.image}','${req.body.SP_trongluong}','${req.body.SP_mota}','1', '${req.body.DM_id}')`)])
             .then(([result]) => {
                 res.json({
                     result: true,
@@ -138,12 +138,11 @@ class SellerProductController {
             // })
     }
 
-    productAddDescribe(req, res, next){
+    productAddPromotion(req, res, next){
         Promise.all([ mydb.query(`SELECT MAX(SP_id) as max FROM sanpham WHERE NB_id = '${req.body.NB_id}'`)])  
         .then(([max])=>{
             console.log('max: ' + JSON.stringify(max[0].max));
-            Promise.all([ mydb.query(`INSERT INTO motasanpham(NB_id, SP_id, TL_id, MTSP_noidung) VALUES ('${req.body.NB_id}', '${max[0].max}', '${req.body.TL_trongluong}', '${req.body.MTSP_noidung}')`)]) 
-                
+            Promise.all([ mydb.query(`INSERT INTO khuyenmai(SP_id, KM_tungay, KM_denngay, KM_phantram) VALUES ('${max[0].max}', '${req.body.KM_tungay}', '${req.body.KM_denngay}', '${req.body.KM_phantram}')`)])              
                 res.json({
                     sellerAdd: true,
                 })

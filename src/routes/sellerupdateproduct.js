@@ -21,7 +21,7 @@ const sellerUpdateProductController = require('../app/controllers/SellerUpdatePr
 
 router.post('/product/show/image',sellerUpdateProductController.productShowImage);
 
-router.post('/product/show/describe',sellerUpdateProductController.productShowDescribe);
+// router.post('/product/show/describe',sellerUpdateProductController.productShowDescribe);
 
 router.post('/product/show',sellerUpdateProductController.productShow);
 
@@ -29,7 +29,7 @@ router.post('/product/update',sellerUpdateProductController.productUpdateNoImge)
 
 router.post('/product/update/image',uploadProduct.array('image'),sellerUpdateProductController.productUpdateImge);
 
-router.post('/product/update/describe',sellerUpdateProductController.productUpdateDescribe);
+router.put('/product/update/promotion',sellerUpdateProductController.productUpdatePromotion);
 
 router.post('/product/update/image/subphoto1',uploadProductImage.array('image'),sellerUpdateProductController.productUpdateImgeSubPhoto1);
 
