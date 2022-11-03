@@ -332,7 +332,7 @@ class AdminController {
         }else if(req.query.ND_trangthai === 'trangthaihanche'){
             url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai, ND_ghichu FROM nguoidung WHERE ND_quyen=1 AND ND_trangthai=0 ORDER by ND_id DESC`;
         }else{
-            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai, ND_ghichus FROM nguoidung WHERE ND_quyen=1 ORDER by ND_id DESC`;
+            url = `SELECT ND_id, ND_hoten, ND_image, ND_email, ND_diachi, ND_ngay, ND_trangthai, ND_ghichu FROM nguoidung WHERE ND_quyen=1 ORDER by ND_id DESC`;
         }
         Promise.all([ mydb.query(url)])
             .then(([results]) => {
@@ -412,6 +412,26 @@ class AdminController {
         .catch((err) => {
             console.log('loi');
         })
+    }
+
+    //[GET] /show/advertise
+    ShowAdvertise(req, res, next){
+        Promise.all([ mydb.query(`SELECT * FROM quangba`)])
+            .then(([advertise]) => {
+                Promise.all([ mydb.query(`SELECT count(QB_id) as numbers FROM quangba`)])
+                    .then(([numbers]) => {
+                        res.json({
+                            advertise: advertise,
+                            numbers: numbers[0],
+                        })
+                    })
+                    .catch((err) => {
+                        console.log('loi nha nhe');
+                    })
+            })
+            .catch((err) => {
+                console.log('loi nha nhe');
+            })
     }
     
 }

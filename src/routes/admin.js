@@ -35,5 +35,7 @@ router.get('/search/seller',adminController.SearchSeller);
 
 // router.put('/update/address', adminController.UpdateAddress);
 
+router.get('/show/advertise', adminController.ShowAdvertise);
+
 
 module.exports = router;
