@@ -99,12 +99,13 @@ class ProductController {
     }
 
     ShowSuggestionsUser(req, res, next){
+        
         Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE DG_sosao BETWEEN 4 AND 5 AND ND_id= '${req.query.ND_id}'`)])
         .then(([star]) => {                          
             let idProduct=[];
             if(star.length > 0){
                 for (let i = 0; i < star.length; i++){
-                    if (!idProduct.includes(star[i].SP_id)) {
+                    if (!idProduct.includes(star[i].SP_id)) { //lấy id sản phẩm có đánh giá cao của người dùng
                         idProduct.push(star[i].SP_id);
                     }     
                 }
@@ -116,10 +117,12 @@ class ProductController {
                 let pointProduct = [];
                 let filterIdproduct = [];
                 let starProduct=[];
+              
                 //let checkIdproduct = false;
                 if(idProduct !== ''){
                     for(let i = 0; i < idProduct.length; i++){
-                        Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE SP_id = '${idProduct[i]}' AND DG_sosao BETWEEN 4 AND 5 AND ND_id != '${req.query.ND_id}'`)])
+                        //tập hợp tất cả các đánh giá có id sản phẩm idProduct
+                        Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE SP_id = '${idProduct[i]}' AND DG_sosao BETWEEN 4 AND 5 AND ND_id != '${req.query.ND_id}' limit 10`)])
                             .then(([results])=>{
                                 result.push(results);
                                 if(i == idProduct.length - 1){
@@ -136,34 +139,15 @@ class ProductController {
                                     if(idUser[0] !== undefined){
                                         for(let l=0; l < idUser.length; l++){
                                             console.log('idUser',idUser[l]);
-                                            Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE DG_sosao BETWEEN 4 AND 5 AND ND_id='${idUser[l]}'`)])
+                                            //tập hợp tất cả các đánh giá của người dùng láng giềng
+                                            Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE ND_id='${idUser[l]}'`)])
                                                 .then(([resultuse]) =>{
-                                                    allUser[l] = resultuse;
+                                                    allUser[l] = resultuse; //lấy thống tin đánh giá để tạo ra ma trận
                                                     for(let t=0; t < resultuse.length; t++){
-                                                        console.log('resultuse id',resultuse[t].SP_id);
-                                                        // for(let k=0; k < idProduct.length; k++){                                                      
-                                                        //     if(resultuse[t].SP_id == idProduct[k]){
-                                                        //         checkIdproduct = true;
-                                                        //     }
-                                                        //     if(k == idProduct.length-1){                                                         
-                                                        //         if(checkIdproduct == false){
-                                                        //             if (!filterIdproduct.includes(resultuse[t].SP_id)){
-                                                        //                 filterIdproduct.push(resultuse[t].SP_id); 
-                                                        //             }                                                                                                                             
-                                                        //         }
-                                                        //         checkIdproduct = false;
-                                                        //     }
-                                                        // }
-                                                        
-                                                        if (!filterIdproduct.includes(resultuse[t].SP_id)){
-                                                            filterIdproduct.push(resultuse[t].SP_id); 
-                                                        }  
+                                                        console.log('resultuse id',resultuse[t].SP_id);      
                                                     }
-                                                    // for(let p=0; p<idProduct.length; p++){
-                                                    //     if (!filterIdproduct.includes(idProduct[p])){
-                                                    //         filterIdproduct.push(idProduct[p]); 
-                                                    //     } 
-                                                    // }
+                                                    
+                                                    //tập hợp các id sản phẩm của người dùng láng giềng
                                                     if(l === idUser.length - 1){
                                                         for(let w=0; w<allUser.length; w++){
                                                             for(let q=0; q<allUser[w].length; q++){
@@ -174,38 +158,75 @@ class ProductController {
                                                         }
                                                     }
 
-                                                    for(let z=0; z<allIdProduct.length; z++){                                                                                            
+                                                    //lấy mảng các số sao theo từng sản phẩm
+                                                    for(let z=0; z<allIdProduct.length; z++){   //id sản phẩm                                                                                    
                                                         for(let g=0; g<allUser.length; g++){
                                                             for(let h=0; h<allUser[g].length; h++){                                                         
                                                                  if(allIdProduct[z] == allUser[g][h].SP_id){                                                                   
-                                                                     starProduct.push(allUser[g][h].DG_sosao);                                                                  
-                                                                //     if(g == allUser.length -1){   
-                                                                //         console.log(`ttt allIdProduct${z}`, allIdProduct[z]);                                                                      
-                                                                //         let sum = starProduct/(starProduct.length);
-                                                                         pointProduct[z] =starProduct;
-                                                                        starProduct=[];
-                                                                //     }
+                                                                     starProduct.push(allUser[g][h].DG_sosao); //tập hợp số sao của một sản phẩm                                                                                                                              
                                                                  }
+                                                                 
+                                                            }
+                                                            if(g == allUser.length -1){
+                                                                pointProduct[z] =starProduct; //thành ma trận
+                                                                starProduct=[];
                                                             }
                                                         }
                                                     }
                                                     console.log('pointProduct',pointProduct);
                                                     
-                                                    console.log('filterIdproduct',filterIdproduct);
+                                                   
                                                      //console.log('allUser',allUser[0][0]);
 
-            
-                                                   
+                                                     //tính số sao trunh bình
+                                                     let mediumStar = 0;                                  
+                                                     for(let u=0; u<allIdProduct.length; u++){ // id sản phẩm
+                                                        for(let y=0; y<pointProduct[u].length; y++){ //số sao
+                                                            mediumStar += pointProduct[u][y];
+                                                            if(y == pointProduct[u].length-1){
+                                                                let resultStar = mediumStar/(pointProduct[u].length); // tính trung bình điểm
+                                                                if(resultStar >= 4){
+                                                                    if (!filterIdproduct.includes(allIdProduct[u])){
+                                                                        filterIdproduct.push(allIdProduct[u]); 
+                                                                    } 
+                                                                }
+                                                                console.log(`pointProduct ${u}: `,resultStar);
+                                                                mediumStar = 0;
+                                                            }
+                                                        }
+                                                     }
+                                                     console.log(`idUser`, idUser);
+                                                     console.log('allIdProduct',allIdProduct);
+                                                     console.log('filterIdproduct',filterIdproduct);
+
+                                                   //lấy thông tin sản phẩm
                                                     if(filterIdproduct[0] !== undefined){
                                                         for(let v = 0; v < filterIdproduct.length; v++){
                                                             Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${filterIdproduct[v]}' AND SP_trangthai != '2'`)])
                                                                 .then(([product])=>{
                                                                     result[v]= product[0];
                                                                     if( v == filterIdproduct.length - 1){
-                                                                        res.json({
-                                                                            results: result,
-                                                                            suggestions: true,
-                                                                        });
+                                                                        for(let r = 0; r < filterIdproduct.length; r++){
+                                                                            Promise.all([ mydb.query(`SELECT * FROM khuyenmai WHERE SP_id = '${filterIdproduct[r]}'`)])
+                                                                                .then(([promotion])=>{
+                                                                                    if(promotion.length > 0){
+                                                                                        result[r].promotion= promotion[0];
+                                                                                    }else{
+                                                                                        result[r].promotion= 0;
+                                                                                    }
+
+                                                                                    if(r == filterIdproduct.length - 1){
+                                                                                        res.json({
+                                                                                            results: result,
+                                                                                            suggestions: true,
+                                                                                        });
+                                                                                    }
+                                                                                })
+                                                                                .catch((err) => {
+
+                                                                                })
+                                                                        }
+                                                                        
                                                                     }
                                                                     //console.log(results);
                                                                 })

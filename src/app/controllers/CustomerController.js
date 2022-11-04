@@ -75,7 +75,8 @@ class CustomerController {
                                 account:true,
                                 pass: true,
                                 result: result[0],
-                                status: results[0].ND_trangthai
+                                status: results[0].ND_trangthai,
+                                note: results[0].ND_ghichu
                             })
                         }else{
                             res.json({
