@@ -475,6 +475,64 @@ class AdminController {
         }
         
     }
+
+    ShowAllAdverties(req, res, next){
+        Promise.all([ mydb.query(`SELECT * FROM quangba WHERE QB_id='${req.query.QB_id}'`)])
+        .then(([advertise]) => {
+            res.json({
+                advertise: advertise,
+            })
+        })
+        .catch((err) => {
+            console.log('loi nha nhe');
+            res.json({
+                advertise: null,
+            })
+        })
+    }
+
+    //[PUT] /update/advertise/image
+    UpdateAdvertiseImage(req, res, next){
+        if(req.files){
+            let paths ='';
+             //res.json(req.files)
+            const arr =  req.files;
+            arr.forEach(function(e, index, arr){
+               paths = paths + process.env.URL_IMAGE_ADVERTIES+ e.filename +',';
+            })
+            paths = paths.substring(0, paths.lastIndexOf(','));
+            req.body.QB_image = paths;
+            Promise.all([ mydb.query(`UPDATE quangba SET QB_tieude='${req.body.QB_tieude}', QB_mota='${req.body.QB_mota}', QB_image='${req.body.QB_image}' WHERE QB_id='${req.body.QB_id}'`)])
+            .then(([advertise]) => {
+                res.json({
+                    update: true,
+                })
+            })
+            .catch((err) => {
+                console.log('loi nha nhe');
+                res.json({
+                    update: false,
+                })
+            })
+        }
+    }
+
+    //[PUT] /update/advertise
+    UpdateAdvertiseNoImage(req, res, next){
+        console.log('QB_id', req.body.QB_id);
+        Promise.all([ mydb.query(`UPDATE quangba SET QB_tieude='${req.body.QB_tieude}', QB_mota='${req.body.QB_mota}' WHERE QB_id='${req.body.QB_id}'`)])
+        .then(([advertise]) => {
+            res.json({
+                update: true,
+            })
+        })
+        .catch((err) => {
+            console.log('loi nha nhe');
+            res.json({
+                update: false,
+            })
+        })
+    }
     
 }
 

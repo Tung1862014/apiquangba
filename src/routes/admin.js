@@ -37,8 +37,16 @@ router.get('/search/seller',adminController.SearchSeller);
 // router.put('/update/address', adminController.UpdateAddress);
 
 router.get('/show/advertise', adminController.ShowAdvertise);
+
 router.post('/delete/advertise', adminController.DeleteAdvertise);
+
 router.post('/add/advertise',uploadAdverties.array('image'), adminController.AddAdvertise);
+
+router.get('/show/all/advertise', adminController.ShowAllAdverties);
+
+router.put('/update/advertise/image',uploadAdverties.array('image'), adminController.UpdateAdvertiseImage);
+
+router.put('/update/advertise', adminController.UpdateAdvertiseNoImage);
 
 
 module.exports = router;
