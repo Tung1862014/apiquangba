@@ -111,7 +111,11 @@ class ProductController {
                 console.log('idProduct',idProduct);
                 let result = [];''
                 let idUser = [];
+                let allUser = [];
+                let allIdProduct = [];
+                let pointProduct = [];
                 let filterIdproduct = [];
+                let starProduct=[];
                 //let checkIdproduct = false;
                 if(idProduct !== ''){
                     for(let i = 0; i < idProduct.length; i++){
@@ -119,6 +123,7 @@ class ProductController {
                             .then(([results])=>{
                                 result.push(results);
                                 if(i == idProduct.length - 1){
+                                    console.log('result',result);
                                     //lấy id nguoi dùng láng giềng
                                     for(let k=0; k < result.length; k++){
                                         for(let t=0; t<result[k].length; t++){ 
@@ -133,6 +138,7 @@ class ProductController {
                                             console.log('idUser',idUser[l]);
                                             Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE DG_sosao BETWEEN 4 AND 5 AND ND_id='${idUser[l]}'`)])
                                                 .then(([resultuse]) =>{
+                                                    allUser[l] = resultuse;
                                                     for(let t=0; t < resultuse.length; t++){
                                                         console.log('resultuse id',resultuse[t].SP_id);
                                                         // for(let k=0; k < idProduct.length; k++){                                                      
@@ -153,12 +159,43 @@ class ProductController {
                                                             filterIdproduct.push(resultuse[t].SP_id); 
                                                         }  
                                                     }
-                                                    for(let p=0; p<idProduct.length; p++){
-                                                        if (!filterIdproduct.includes(idProduct[p])){
-                                                            filterIdproduct.push(idProduct[p]); 
-                                                        } 
+                                                    // for(let p=0; p<idProduct.length; p++){
+                                                    //     if (!filterIdproduct.includes(idProduct[p])){
+                                                    //         filterIdproduct.push(idProduct[p]); 
+                                                    //     } 
+                                                    // }
+                                                    if(l === idUser.length - 1){
+                                                        for(let w=0; w<allUser.length; w++){
+                                                            for(let q=0; q<allUser[w].length; q++){
+                                                                if (!allIdProduct.includes(allUser[w][q].SP_id)){
+                                                                    allIdProduct.push(allUser[w][q].SP_id); 
+                                                                }
+                                                            }
+                                                        }
                                                     }
+
+                                                    for(let z=0; z<allIdProduct.length; z++){                                                                                            
+                                                        for(let g=0; g<allUser.length; g++){
+                                                            for(let h=0; h<allUser[g].length; h++){                                                         
+                                                                 if(allIdProduct[z] == allUser[g][h].SP_id){                                                                   
+                                                                     starProduct.push(allUser[g][h].DG_sosao);                                                                  
+                                                                //     if(g == allUser.length -1){   
+                                                                //         console.log(`ttt allIdProduct${z}`, allIdProduct[z]);                                                                      
+                                                                //         let sum = starProduct/(starProduct.length);
+                                                                         pointProduct[z] =starProduct;
+                                                                        starProduct=[];
+                                                                //     }
+                                                                 }
+                                                            }
+                                                        }
+                                                    }
+                                                    console.log('pointProduct',pointProduct);
+                                                    
                                                     console.log('filterIdproduct',filterIdproduct);
+                                                     //console.log('allUser',allUser[0][0]);
+
+            
+                                                   
                                                     if(filterIdproduct[0] !== undefined){
                                                         for(let v = 0; v < filterIdproduct.length; v++){
                                                             Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${filterIdproduct[v]}' AND SP_trangthai != '2'`)])
