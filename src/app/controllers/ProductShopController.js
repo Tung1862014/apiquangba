@@ -108,7 +108,7 @@ class ProductShopController {
                                                 }else{
                                                     if(req.query.sort === 'promotion'){
                                                         results[j].promotion = 0;
-                                                        results[j].checkpromotion = 'true';
+                                                        results[j].checkpromotion = 'false';
                                                     }else{
                                                         results[j].promotion = 0;
                                                         results[j].checkpromotion = 'false';
