@@ -56,21 +56,21 @@ class ProductShopController {
         }else if(req.query.DM_id === 'all' && req.query.sort === 'selling' && req.query.price === 'gia'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 ORDER by SP_id DESC`;
         }else if(req.query.DM_id === 'all' && req.query.sort === 'promotion' && req.query.price === 'gia'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_khuyenmai > 0 AND SP_trangthai != 2 ORDER by SP_id DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 ORDER by SP_id DESC`;
         }else if(req.query.DM_id === 'all' && req.query.sort === 'selling' && req.query.price === 'lowtohigh'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 ORDER by SP_gia ASC`;
         }else if(req.query.DM_id === 'all' && req.query.sort === 'selling' && req.query.price === 'hightolow'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 ORDER by SP_gia DESC`;
         }else if(req.query.DM_id === 'all' && req.query.sort === 'promotion' && req.query.price === 'lowtohigh'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_khuyenmai > 0 AND SP_trangthai != 2 ORDER by SP_gia ASC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 ORDER by SP_gia ASC`;
         }else if(req.query.DM_id === 'all' && req.query.sort === 'promotion' && req.query.price === 'hightolow'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_khuyenmai > 0 AND SP_trangthai != 2 ORDER by SP_gia DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 ORDER by SP_gia DESC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'all' && req.query.price == 'gia'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_trangthai != 2 ORDER by SP_id DESC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'selling' && req.query.price == 'gia'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 ORDER by SP_id DESC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'promotion' && req.query.price == 'gia'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_khuyenmai > 0 AND SP_trangthai != 2 ORDER by SP_id DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_trangthai != 2 ORDER by SP_id DESC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'all' && req.query.price == 'lowtohigh'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}'  AND SP_trangthai != 2 ORDER by SP_gia ASC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'all' && req.query.price == 'hightolow'){
@@ -78,11 +78,11 @@ class ProductShopController {
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'selling' && req.query.price == 'lowtohigh'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 ORDER by SP_gia ASC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'promotion' && req.query.price == 'lowtohigh'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_khuyenmai > 0 AND SP_trangthai != 2 ORDER by SP_gia ASC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_trangthai != 2 ORDER by SP_gia ASC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort === 'selling' && req.query.price === 'hightolow'){
             queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 ORDER by SP_gia DESC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort === 'promotion' && req.query.price === 'hightolow'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_khuyenmai > 0 AND SP_trangthai != 2 ORDER by SP_gia DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_trangthai != 2 ORDER by SP_gia DESC`;
         }
         Promise.all([ mydb.query(queryString)])
             .then(([results])=>{
@@ -97,12 +97,27 @@ class ProductShopController {
                                         Promise.all([ mydb.query(`SELECT * FROM khuyenmai WHERE SP_id='${results[j].SP_id}' ORDER by SP_id DESC`)])
                                             .then(([promotion]) => {
                                                 if(promotion.length > 0){
-                                                    results[j].promotion = promotion[0];
+                                                    if(req.query.sort === 'promotion'){
+                                                        results[j].promotion = promotion[0];
+                                                        results[j].checkpromotion = 'true';
+                                                    }else{
+                                                        results[j].promotion = promotion[0];
+                                                        results[j].checkpromotion = 'false';
+                                                    }
+                                                   
                                                 }else{
-                                                    results[j].promotion = 0;
+                                                    if(req.query.sort === 'promotion'){
+                                                        results[j].promotion = 0;
+                                                        results[j].checkpromotion = 'true';
+                                                    }else{
+                                                        results[j].promotion = 0;
+                                                        results[j].checkpromotion = 'false';
+                                                    }
+                                                   
                                                 }
 
                                                 if(j === results.length-1){
+                                                    
                                                     res.json({
                                                         results: results,
                                                     })

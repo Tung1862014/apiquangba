@@ -266,32 +266,53 @@ class ProductController {
     }
 
     ShowPromotion(req, res, next){
-        Promise.all([ mydb.query(`SELECT FLOOR(RAND() * 100) AS offset`)])
-            .then(([offset])=>{
-                console.log(offset[0].offset);
-                if(offset[0].offset <=40 ){
-                    Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_khuyenmai > 0 AND SP_id BETWEEN ${offset[0].offset} AND 100 Limit 30`)])
-                        .then((results) =>{
-                            res.json({
-                                results: results[0],
-                            })
-                        })
-                        .catch((err) => {
-                            console.log('loi');
-                        })
-                }else {
-                    Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_khuyenmai > 0 AND SP_khuyenmai BETWEEN 1 AND ${offset[0].offset} ORDER by SP_id DESC Limit 30`)])
-                        .then((results) =>{
-                            res.json({
-                                results: results[0],
-                            })
+        // Promise.all([ mydb.query(`SELECT FLOOR(RAND() * 100) AS offset`)])
+        //     .then(([offset])=>{
+        //         console.log(offset[0].offset);
+        //         if(offset[0].offset <=40 ){
+        //             Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_khuyenmai > 0 AND SP_id BETWEEN ${offset[0].offset} AND 100 Limit 30`)])
+        //                 .then((results) =>{
+        //                     res.json({
+        //                         results: results[0],
+        //                     })
+        //                 })
+        //                 .catch((err) => {
+        //                     console.log('loi');
+        //                 })
+        //         }else {
+        //             Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_khuyenmai > 0 AND SP_khuyenmai BETWEEN 1 AND ${offset[0].offset} ORDER by SP_id DESC Limit 30`)])
+        //                 .then((results) =>{
+        //                     res.json({
+        //                         results: results[0],
+        //                     })
+        //                 })
+        //                 .catch((err) => {
+        //                     console.log('loi');
+        //                 })
+        //         }
+        //     })
+        //     .catch((err) =>{
+        //         console.log('loi');
+        //     })
+
+        Promise.all([ mydb.query(`SELECT * FROM khuyenmai`)])
+            .then(([results]) =>{
+                for(let i = 0; i < results.length; i++){
+                    Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${results[i].SP_id}'`)])
+                        .then(([product]) => {
+                            results[i].product=product[0];
+                            if(i === results.length-1){
+                                res.json({
+                                    results: results,
+                                })
+                            }
                         })
                         .catch((err) => {
                             console.log('loi');
                         })
                 }
             })
-            .catch((err) =>{
+            .catch((err) => {
                 console.log('loi');
             })
        
