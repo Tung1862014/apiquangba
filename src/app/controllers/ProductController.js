@@ -29,10 +29,26 @@ class ProductController {
                                         if(results[0] !== undefined){
                                             result[i]= results[0];
                                             if(i == arr.length - 1){
-                                                res.json({
-                                                    results: result,
-                                                    suggestions: true,
-                                                });
+                                                for(let r = 0; r < arr.length; r++){
+                                                    Promise.all([ mydb.query(`SELECT * FROM khuyenmai WHERE SP_id = '${arr[r]}'`)])
+                                                        .then(([promotion])=>{
+                                                            if(promotion.length > 0){
+                                                                result[r].promotion= promotion[0];
+                                                            }else{
+                                                                result[r].promotion= 0;
+                                                            }
+
+                                                            if(r == arr.length - 1){
+                                                                res.json({
+                                                                    results: result,
+                                                                    suggestions: true,
+                                                                });
+                                                            }
+                                                        })
+                                                        .catch((err) => {
+
+                                                        })
+                                                }                                         
                                             }
                                         }
                                         //console.log(results);
