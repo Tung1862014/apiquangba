@@ -61,7 +61,7 @@ class ChartController {
         let arr = [];
         console.log('date ngdi', req.query.ngdi);
         console.log('date ngde', req.query.ngde);
-         Promise.all([mydb.query(`SELECT * FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay BETWEEN '${req.query.ngdi}' AND '${req.query.ngde}'`)])
+         Promise.all([mydb.query(`SELECT * FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay BETWEEN '${req.query.ngdi}' AND '${req.query.ngde}' AND DH_trangthai=4`)])
             .then(([results]) =>{
 
                 let numbers = [];
