@@ -88,7 +88,7 @@ class HistoryBillController {
 
     //[POST] /evaluate/star/text
     EvaluateStar(req, res, next){
-        //console.log(req.body.ND_id,req.body.DH_id,req.body.SP_id,req.body.DG_sosao,req.body.DG_mota);
+        console.log(req.body.ND_id,req.body.DH_id,req.body.SP_id,req.body.DG_sosao,req.body.DG_mota);
         Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id='${req.body.SP_id}'`)])
             .then(([result]) => {
                 console.log('result',result[0].NB_id);
