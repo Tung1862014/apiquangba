@@ -251,6 +251,7 @@ class ProductController {
                                                                 })
                                                                 .catch((err)=>{
                                                                     res.json({
+                                                                        results: [],
                                                                         suggestions: false,
                                                                     });
                                                                 })
@@ -259,68 +260,24 @@ class ProductController {
                                                 })
                                                 .catch((err) =>{
                                                     console.log('loi ID User');
+                                                    res.json({
+                                                        results: [],
+                                                        suggestions: false,
+                                                    });
                                                 })
                                         }
                                     }
-                                }else if(i == idProduct.length - 1 && result[0][0] === undefined){
-                                    Promise.all([ mydb.query(`SELECT * FROM danhgia WHERE DG_sosao BETWEEN 4 AND 5 AND DG_id BETWEEN 0 AND 100 `)])
-                                    .then(([star]) => {
-                                        let arr=[];
-                                        let result = [];
-                                        for (let i = 0; i < star.length; i++){
-                                            if (!arr.includes(star[i].SP_id)) {
-                                                arr.push(star[i].SP_id);
-                                            }     
-                                        }
-                                        console.log('arr',arr);
-                                        if(arr !== ''){
-                                            for(let i = 0; i < arr.length; i++){
-                                                Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${arr[i]}' AND SP_trangthai != '2'`)])
-                                                    .then(([results])=>{
-                                                        if(results[0] !== undefined){
-                                                            result[i]= results[0];
-                                                            if(i == arr.length - 1){
-                                                                for(let r = 0; r < arr.length; r++){
-                                                                    Promise.all([ mydb.query(`SELECT * FROM khuyenmai WHERE SP_id = '${arr[r]}'`)])
-                                                                        .then(([promotion])=>{
-                                                                            if(promotion.length > 0){
-                                                                                result[r].promotion= promotion[0];
-                                                                            }else{
-                                                                                result[r].promotion= 0;
-                                                                            }
-                
-                                                                            if(r == arr.length - 1){
-                                                                                res.json({
-                                                                                    results: result,
-                                                                                    suggestions: true,
-                                                                                });
-                                                                            }
-                                                                        })
-                                                                        .catch((err) => {
-                
-                                                                        })
-                                                                }                                         
-                                                            }
-                                                        }
-                                                        //console.log(results);
-                                                    })
-                                                    .catch((err)=>{
-                                                        res.json({
-                                                            suggestions: false,
-                                                        });
-                                                    })
-                                            }
-                                        }
-                                        // console.log(result);
-                                    })
-                                    .catch((error) => {
-                                        console.log('loi');
-                                    })
+                                }else if(i == idProduct.length - 1 && result[0][0] === undefined ){
+                                    res.json({
+                                        results: [],
+                                        suggestions: flase,
+                                    });
                                 }
                                 //console.log(results);
                             })
                             .catch((err)=>{
                                 res.json({
+                                    results: [],
                                     suggestions: false,
                                 });
                             })
