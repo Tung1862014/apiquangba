@@ -86,17 +86,20 @@ class ChartController {
                                 YMD = year + '-' + month + '-' + day;
                             }
                             //console.log(YMD);
-                            if(arr[0] === undefined){
-                                arr = [...arr,YMD];
-                            }else{
-                                for(let j=0; j < arr.length; j++){
-                                    if(arr[j] !== (YMD)){
-                                        if(j === arr.length-1){
-                                            arr = [...arr,YMD];
-                                        }
-                                    }
-                                }
+                            if(!arr.includes(YMD)){
+                                arr.push(YMD);
                             }
+                            // if(arr[0] === undefined){
+                            //     arr = [...arr,YMD];
+                            // }else{
+                            //     // for(let j=0; j < arr.length; j++){
+                            //     //     if(arr[j] !== (YMD)){
+                            //     //         if(j === arr.length-1){
+                            //     //             arr = [...arr,YMD];
+                            //     //         }
+                            //     //     }
+                            //     // }                             
+                            // }
                     }
                     
                     for(let i=0; i < arr.length; i++){
