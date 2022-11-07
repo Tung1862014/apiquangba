@@ -18,7 +18,7 @@ class SellerDetailBillController {
         Promise.all([ mydb.query(`SELECT * FROM donhang as dh, motashop as mts WHERE dh.NB_id=mts.NB_id AND dh.NB_id='${req.body.NB_id}' AND dh.DH_id='${req.body.DH_id}'`)])
         .then(([result])=>{
             for(let i=0; i<result.length; i++){
-                Promise.all([ mydb.query(`SELECT  ttdh.TTDH_soluong, ttdh.TTDH_gia, ttdh.TTDH_phantram, sp.SP_ten, sp.SP_image, sp.SP_gia, nd.ND_hoten, nd.ND_sdt  FROM sanpham as sp, thongtindonhang as ttdh, nguoidung as nd WHERE sp.SP_id = ttdh.SP_id AND nd.ND_id = ttdh.ND_id AND DH_id='${result[i].DH_id}'`)])
+                Promise.all([ mydb.query(`SELECT  ttdh.TTDH_soluong, ttdh.TTDH_gia, ttdh.TTDH_phantram, sp.SP_id,sp.SP_soluongban, sp.SP_ten, sp.SP_image, sp.SP_gia, nd.ND_hoten, nd.ND_sdt  FROM sanpham as sp, thongtindonhang as ttdh, nguoidung as nd WHERE sp.SP_id = ttdh.SP_id AND nd.ND_id = ttdh.ND_id AND DH_id='${result[i].DH_id}'`)])
                 .then(([product]) => {
                     result[i].product = product;
                     if(i === result.length-1){
@@ -45,12 +45,24 @@ class SellerDetailBillController {
     }
 
     billDetailPrepare(req, res, next){
-        console.log('req.body.DH_id', req.body.DH_id);
+        console.log('req.body.DH_id', req.body.DH_id, req.body.SP_id, req.body.TTDH_soluong, req.body.SP_soluongban);
         Promise.all([ mydb.query(`UPDATE donhang SET DH_trangthai='${req.body.DH_trangthai}' WHERE NB_id='${req.body.NB_id}' AND DH_id='${req.body.DH_id}'`)])
             .then(([result])=>{
-                res.json({
-                    update: result,
-                })
+                for(let i=0; i<req.body.SP_id.length; i++){
+                    Promise.all([ mydb.query(`UPDATE sanpham SET SP_soluongban='${Number(req.body.TTDH_soluong[i]) +  Number(req.body.SP_soluongban[i])}' WHERE NB_id='${req.body.NB_id}' AND SP_id = '${req.body.SP_id[i]}'`)])
+                        .then(([product]) => {
+                            if(i === req.body.SP_id.length - 1){
+                                res.json({
+                                    update: result,
+                                })
+                            }
+                        })
+                        .catch((err) =>{
+                            res.json({
+                                update: false,
+                            })
+                        })
+                }
             })
             .catch((err) =>{
                 res.json({

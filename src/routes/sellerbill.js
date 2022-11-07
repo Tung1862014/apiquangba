@@ -3,7 +3,7 @@ const router = express.Router();
 
 const sellerBillController = require('../app/controllers/SellerBillController');
 
-router.post('/bill/show/all',sellerBillController.billShowAll);
+router.get('/bill/show/all',sellerBillController.billShowAll);
 
 router.get('/bill/show/number',sellerBillController.ShowNumberBill);
 

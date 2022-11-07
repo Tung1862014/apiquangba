@@ -416,7 +416,7 @@ class AdminController {
 
     //[GET] /show/advertise
     ShowAdvertise(req, res, next){
-        Promise.all([ mydb.query(`SELECT * FROM quangba`)])
+        Promise.all([ mydb.query(`SELECT * FROM quangba ORDER by QB_id DESC`)])
             .then(([advertise]) => {
                 Promise.all([ mydb.query(`SELECT count(QB_id) as numbers FROM quangba`)])
                     .then(([numbers]) => {
