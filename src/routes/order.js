@@ -14,5 +14,7 @@ router.put('/update/address', orderController.UpdateAddress);
 
 router.post('/add/orderproduct', orderController.AddOrderProduct);
 
+router.get('/show/id/order/simulation', orderController.ShowIdSimulation);
+
 
 module.exports = router;

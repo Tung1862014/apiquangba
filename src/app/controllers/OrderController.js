@@ -89,6 +89,18 @@ class OrderController {
         })
         
     }
+
+    ShowIdSimulation(req, res, next){
+        Promise.all([ mydb.query(`SELECT * FROM donhang WHERE DH_id like '%DHSPMP%' ORDER by DH_id DESC`)])
+                .then(([result])=>{
+                    res.json({
+                        result: result
+                    })
+                })
+                .catch((err) =>{
+                    console.log('loi up');
+                })
+    }
 }
 
 module.exports = new OrderController();
