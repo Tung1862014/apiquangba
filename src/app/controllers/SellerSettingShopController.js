@@ -249,14 +249,22 @@ class sellerSettingShopController {
             })
             paths = paths.substring(0, paths.lastIndexOf(','));
             req.body.MTS_image = paths;
-            if(req.body.MTS_chitiet === '' && req.body.MTS_clientId === ''){
+            if(req.body.MTS_chitiet === '' && req.body.MTS_clientId === '' && req.body.MTS_diachi === ''){
                 url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}' WHERE NB_id='${req.body.NB_id}'`;
-            }else if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId === ''){
+            }else if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId === '' && req.body.MTS_diachi === ''){
                 url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}', MTS_chitiet='${req.body.MTS_chitiet}' WHERE NB_id='${req.body.NB_id}'`;
-            }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId !== ''){
+            }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId !== '' && req.body.MTS_diachi === ''){
                 url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}', MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+            }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId === '' && req.body.MTS_diachi !== ''){
+                url = `UPDATE motashop SET MTS_diachi='${req.body.MTS_diachi}', MTS_image='${req.body.MTS_image}' WHERE NB_id='${req.body.NB_id}'`;
+            }else if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId !== '' && req.body.MTS_diachi === ''){
+                url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}', MTS_chitiet='${req.body.MTS_chitiet}', MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+            }else if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId === '' && req.body.MTS_diachi !== ''){
+                url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}', MTS_chitiet='${req.body.MTS_chitiet}', MTS_diachi='${req.body.MTS_diachi}' WHERE NB_id='${req.body.NB_id}'`;
+            }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId !== '' && req.body.MTS_diachi !== ''){
+                url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}', MTS_clientId='${req.body.MTS_clientId}', MTS_diachi='${req.body.MTS_diachi}' WHERE NB_id='${req.body.NB_id}'`;
             }else{
-                url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}',MTS_chitiet='${req.body.MTS_chitiet}', MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+                url = `UPDATE motashop SET MTS_image='${req.body.MTS_image}',MTS_chitiet='${req.body.MTS_chitiet}', MTS_clientId='${req.body.MTS_clientId}', MTS_diachi='${req.body.MTS_diachi}' WHERE NB_id='${req.body.NB_id}'`;
             }
             Promise.all([ mydb.query(url)])
             .then(([result])=>{
@@ -281,14 +289,22 @@ class sellerSettingShopController {
             })
             paths = paths.substring(0, paths.lastIndexOf(','));
             req.body.MTS_logo = paths;
-            if(req.body.MTS_chitiet === '' && req.body.MTS_clientId === ''){
-                url = `UPDATE motashop SET MTS_logo='${req.body.MTS_logo}' WHERE NB_id='${req.body.NB_id}'`;
-            }else if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId === ''){
-                url = `UPDATE motashop SET MTS_logo='${req.body.MTS_logo}',MTS_chitiet='${req.body.MTS_chitiet}' WHERE NB_id='${req.body.NB_id}'`;
-            }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId !== ''){
-                url = `UPDATE motashop SET MTS_logo='${req.body.MTS_logo}',MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+            if(req.body.MTS_chitiet === '' && req.body.MTS_clientId === '' && req.body.MTS_diachi === ''){
+                url = `UPDATE motashop SET  MTS_logo='${req.body.MTS_logo}' WHERE NB_id='${req.body.NB_id}'`;
+            }else if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId === '' && req.body.MTS_diachi === ''){
+                url = `UPDATE motashop SET  MTS_logo='${req.body.MTS_logo}', MTS_chitiet='${req.body.MTS_chitiet}' WHERE NB_id='${req.body.NB_id}'`;
+            }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId !== '' && req.body.MTS_diachi === ''){
+                url = `UPDATE motashop SET  MTS_logo='${req.body.MTS_logo}', MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+            }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId === '' && req.body.MTS_diachi !== ''){
+                url = `UPDATE motashop SET MTS_diachi='${req.body.MTS_diachi}',  MTS_logo='${req.body.MTS_logo}' WHERE NB_id='${req.body.NB_id}'`;
+            }else if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId !== '' && req.body.MTS_diachi === ''){
+                url = `UPDATE motashop SET  MTS_logo='${req.body.MTS_logo}', MTS_chitiet='${req.body.MTS_chitiet}', MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+            }else if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId === '' && req.body.MTS_diachi !== ''){
+                url = `UPDATE motashop SET  MTS_logo='${req.body.MTS_logo}', MTS_chitiet='${req.body.MTS_chitiet}', MTS_diachi='${req.body.MTS_diachi}' WHERE NB_id='${req.body.NB_id}'`;
+            }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId !== '' && req.body.MTS_diachi !== ''){
+                url = `UPDATE motashop SET  MTS_logo='${req.body.MTS_logo}', MTS_clientId='${req.body.MTS_clientId}', MTS_diachi='${req.body.MTS_diachi}' WHERE NB_id='${req.body.NB_id}'`;
             }else{
-                url = `UPDATE motashop SET MTS_logo='${req.body.MTS_logo}', MTS_chitiet='${req.body.MTS_chitiet}', MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+                url = `UPDATE motashop SET  MTS_logo='${req.body.MTS_logo}',MTS_chitiet='${req.body.MTS_chitiet}', MTS_clientId='${req.body.MTS_clientId}', MTS_diachi='${req.body.MTS_diachi}' WHERE NB_id='${req.body.NB_id}'`;
             }
             Promise.all([ mydb.query(url)])
             .then(([result])=>{
@@ -305,12 +321,23 @@ class sellerSettingShopController {
     establishUpdateAddress(req, res, next){
         
         let url;
-        if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId === ''){
+        // if(req.body.MTS_chitiet === '' && req.body.MTS_clientId === '' && req.body.MTS_diachi === ''){
+        //     url = `UPDATE motashop SETWHERE NB_id='${req.body.NB_id}'`;
+        // }else 
+        if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId === '' && req.body.MTS_diachi === ''){
             url = `UPDATE motashop SET MTS_chitiet='${req.body.MTS_chitiet}' WHERE NB_id='${req.body.NB_id}'`;
-        }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId !== ''){
+        }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId !== '' && req.body.MTS_diachi === ''){
             url = `UPDATE motashop SET MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+        }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId === '' && req.body.MTS_diachi !== ''){
+            url = `UPDATE motashop SET MTS_diachi='${req.body.MTS_diachi}'WHERE NB_id='${req.body.NB_id}'`;
+        }else if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId !== '' && req.body.MTS_diachi === ''){
+            url = `UPDATE motashop SET MTS_chitiet='${req.body.MTS_chitiet}', MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+        }else if(req.body.MTS_chitiet !== '' && req.body.MTS_clientId === '' && req.body.MTS_diachi !== ''){
+            url = `UPDATE motashop SET MTS_chitiet='${req.body.MTS_chitiet}', MTS_diachi='${req.body.MTS_diachi}' WHERE NB_id='${req.body.NB_id}'`;
+        }else if(req.body.MTS_chitiet === '' && req.body.MTS_clientId !== '' && req.body.MTS_diachi !== ''){
+            url = `UPDATE motashop SET MTS_clientId='${req.body.MTS_clientId}', MTS_diachi='${req.body.MTS_diachi}' WHERE NB_id='${req.body.NB_id}'`;
         }else{
-            url = `UPDATE motashop SET  MTS_chitiet='${req.body.MTS_chitiet}', MTS_clientId='${req.body.MTS_clientId}' WHERE NB_id='${req.body.NB_id}'`;
+            url = `UPDATE motashop SETMTS_chitiet='${req.body.MTS_chitiet}', MTS_clientId='${req.body.MTS_clientId}', MTS_diachi='${req.body.MTS_diachi}' WHERE NB_id='${req.body.NB_id}'`;
         }
         Promise.all([ mydb.query(url)])
         .then(([result])=>{
