@@ -51,23 +51,11 @@ class CustomerController {
 
     //POST LOGIN
     login(req, res, next){
-        // console.log(req.body.userName)
-        let url;
-        if(req.body.seller){
-            url =`SELECT ND_id FROM nguoidung WHERE ND_username='${req.body.ND_username}' AND ND_quyen=1 `;
-        }else{
-            url =`SELECT ND_id FROM nguoidung WHERE ND_username='${req.body.ND_username}' AND ND_quyen=2 `;
-        }
+        let url =`SELECT ND_id FROM nguoidung WHERE ND_username='${req.body.ND_username}'`;
         Promise.all([mydb.query(url)])
         .then(([result]) =>{
-            if(result.length > 0){
-                //let user = result[0];
-                let url2;
-                if(req.body.seller){
-                    url2=`SELECT * FROM nguoidung WHERE ND_id='${result[0].ND_id}' AND ND_quyen=1`;
-                }else{
-                    url2=`SELECT * FROM nguoidung WHERE ND_id='${result[0].ND_id}' AND ND_quyen=2`;
-                }
+            if(result.length > 0){      
+                let url2=`SELECT * FROM nguoidung WHERE ND_id='${result[0].ND_id}'`;
                 Promise.all([mydb.query(url2)])
                     .then(([results]) => {
                         if(results[0].ND_password === req.body.ND_password){
@@ -76,7 +64,8 @@ class CustomerController {
                                 pass: true,
                                 result: result[0],
                                 status: results[0].ND_trangthai,
-                                note: results[0].ND_ghichu
+                                note: results[0].ND_ghichu,
+                                permission: results[0].ND_quyen
                             })
                         }else{
                             res.json({
