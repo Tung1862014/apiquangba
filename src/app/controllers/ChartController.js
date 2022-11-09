@@ -63,7 +63,7 @@ class ChartController {
         console.log('date ngde', req.query.ngde);
          Promise.all([mydb.query(`SELECT * FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay BETWEEN '${req.query.ngdi}' AND '${req.query.ngde}' AND DH_trangthai=4`)])
             .then(([results]) =>{
-
+                console.log('date results', results.length);
                 let numbers = [];
                 let turnovers = [];
                 if(results.length > 0){
@@ -104,12 +104,12 @@ class ChartController {
                     
                     for(let i=0; i < arr.length; i++){
                         console.log('day', arr[i]);
-                        Promise.all([ mydb.query(`SELECT sum(DH_tongtien) as money FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay='${arr[i]}'`)])
+                        Promise.all([ mydb.query(`SELECT sum(DH_tongtien) as money FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay='${arr[i]}' AND DH_trangthai=4`)])
                             .then(([money]) =>{
                                
                                 turnovers =  [...turnovers,money[0].money];
                                
-                                Promise.all([ mydb.query(`SELECT COUNT(DH_id) as orders FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay='${arr[i]}'`)])
+                                Promise.all([ mydb.query(`SELECT COUNT(DH_id) as orders FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay='${arr[i]}' AND DH_trangthai=4`)])
                                     .then(([orders]) =>{
                                         //console.log('tong tien', turnovers);
                                         numbers = [...numbers, orders[0].orders];

@@ -10,11 +10,18 @@ class OrderController {
     
     //[GET]  /user/show
     ShowAllUser(req, res, next){
-        Promise.all([ mydb.query(`SELECT ND_hoten, ND_sdt, ND_diachiGH, ND_chitiet FROM nguoidung WHERE ND_id='${req.query.ND_id}'`)])
+        Promise.all([ mydb.query(`SELECT nd.ND_hoten, nd.ND_sdt, kh.DC_diachiGH, kh.DC_chitiet FROM nguoidung as nd, khachhang as kh WHERE nd.ND_id=kh.ND_id AND nd.ND_id='${req.query.ND_id}'`)])
             .then(([results]) => {
-                res.json({
-                    results: results[0],
-                })
+                if(results.length > 0){
+                    res.json({
+                        results: results[0],
+                    })
+                }else{
+                    res.json({
+                        results: '',
+                    })
+                }
+                console.log('results', results);
             })
             .catch((err) => {
                 console.log('loi');
@@ -25,27 +32,52 @@ class OrderController {
     //[UPDATE]  /update/address
     UpdateAddress(req, res, next){
         //console.log(req.body.ND_ttqhpx,req.body.ND_diachigiaohang,req.body.ND_id);
-        let url;
-        if(req.body.ND_diachiGH !== '' && req.body.ND_chitiet !== ''){
-            url = `UPDATE nguoidung SET ND_diachiGH= '${req.body.ND_diachiGH}', ND_chitiet= '${req.body.ND_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
-        }else if(req.body.ND_diachiGH !== '' && req.body.ND_chitiet === ''){
-            url = `UPDATE nguoidung SET ND_diachiGH= '${req.body.ND_diachiGH}' WHERE ND_id='${req.body.ND_id}'`;
-        }else if(req.body.ND_diachiGH === '' && req.body.ND_chitiet !== ''){
-            url = `UPDATE nguoidung SET ND_chitiet= '${req.body.ND_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
-        }
-        Promise.all([ mydb.query(url)])
-            .then(([results]) => {
-                console.log('thanh cong');
-                res.json({
-                    update: true,
-                })
+        Promise.all([ mydb.query(`SELECT * FROM khachhang WHERE ND_id='${req.body.ND_id}'`)])
+        .then(([results]) => {
+            if(results.length > 0){
+                let url;
+                if(req.body.ND_diachiGH !== '' && req.body.ND_chitiet !== ''){
+                    url = `UPDATE khachhang SET DC_diachiGH= '${req.body.DC_diachiGH}', DC_chitiet= '${req.body.ND_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
+                }else if(req.body.ND_diachiGH !== '' && req.body.ND_chitiet === ''){
+                    url = `UPDATE khachhang SET DC_diachiGH= '${req.body.DC_diachiGH}' WHERE ND_id='${req.body.ND_id}'`;
+                }else if(req.body.ND_diachiGH === '' && req.body.ND_chitiet !== ''){
+                    url = `UPDATE khachhang SET DC_chitiet= '${req.body.DC_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
+                }
+                Promise.all([ mydb.query(url)])
+                    .then(([results]) => {
+                        console.log('thanh cong');
+                        res.json({
+                            update: true,
+                        })
+                    })
+                    .catch((err) => {
+                        console.log('loi');
+                        res.json({
+                            update: false,
+                        })
+                    })
+            }else{
+                Promise.all([ mydb.query(`INSERT INTO khachhang(ND_id, DC_diachiGH, DC_chitiet) VALUES ('${req.body.ND_id}','${req.body.DC_diachiGH}', '${req.body.DC_chitiet}')`)])
+                    .then(([results])=>{
+                        res.json({
+                            update: true,
+                        })
+                    })
+                    .catch((err) =>{
+                        console.log('loi');
+                        res.json({
+                            update: false,
+                        })
+                    }) 
+            }
+        })
+        .catch((err) => {
+            console.log('loi');
+            res.json({
+                update: false,
             })
-            .catch((err) => {
-                console.log('loi');
-                res.json({
-                    update: false,
-                })
-            })
+        })
+        
     }
 
     //[delete]  delete/product

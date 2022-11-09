@@ -111,17 +111,17 @@ class SellerBillController {
 
     ShowNumberBill(req, res, next){
         if(req.query.tungay !== '' && req.query.denngay !== ''){
-            Promise.all([ mydb.query(`SELECT count(DH_id) as statusconfirm FROM donhang WHERE NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}'  AND DH_trangthai='1'`)])
+            Promise.all([ mydb.query(`SELECT count(DH_id) as statusconfirm FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}'  AND DH_trangthai='1'`)])
             .then(([statusconfirm])=>{
-                Promise.all([ mydb.query(`SELECT count(DH_id) as statusconfirmed FROM donhang WHERE NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND DH_trangthai='2'`)])
+                Promise.all([ mydb.query(`SELECT count(DH_id) as statusconfirmed FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND DH_trangthai='2'`)])
                 .then(([statusconfirmed])=>{
-                    Promise.all([ mydb.query(`SELECT count(DH_id) as statustransport FROM donhang WHERE NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND DH_trangthai='3'`)])
+                    Promise.all([ mydb.query(`SELECT count(DH_id) as statustransport FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND DH_trangthai='3'`)])
                         .then(([statustransport])=>{
-                            Promise.all([ mydb.query(`SELECT count(DH_id) as statusdelivered FROM donhang WHERE NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND DH_trangthai='4'`)])
+                            Promise.all([ mydb.query(`SELECT count(DH_id) as statusdelivered FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND DH_trangthai='4'`)])
                             .then(([statusdelivered])=>{
-                                Promise.all([ mydb.query(`SELECT count(DH_id) as statuscancelOrder FROM donhang WHERE NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND DH_trangthai='5'`)])
+                                Promise.all([ mydb.query(`SELECT count(DH_id) as statuscancelOrder FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND DH_trangthai='5'`)])
                                     .then(([statuscancelOrder])=>{
-                                        Promise.all([ mydb.query(`SELECT count(DH_id) as number FROM donhang WHERE NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}'`)])
+                                        Promise.all([ mydb.query(`SELECT count(DH_id) as number FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}'`)])
                                         .then(([number])=>{
                                             res.json({
                                                 statusconfirm: statusconfirm,
