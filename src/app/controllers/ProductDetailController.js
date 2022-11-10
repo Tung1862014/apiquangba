@@ -17,7 +17,7 @@ class ProductDetailController {
                         let num = 0;
                         if(evaluation[0] !== undefined){
                             for(let i = 0; i < evaluation.length; i++){
-                                Promise.all([ mydb.query(`SELECT ND_hoten, ND_username, ND_image, ND_email, ND_diachi, ND_ngay, ND_sdt FROM nguoidung WHERE ND_id = '${evaluation[i].ND_id}'`)])
+                                Promise.all([ mydb.query(`SELECT ND_hoten, ND_username, ND_image, ND_email, ND_diachi, ND_ngayDK, ND_sdt FROM nguoidung WHERE ND_id = '${evaluation[i].ND_id}'`)])
                                     .then(([user])=>{
                                         //console.log(user[0]);
                                         num = num + evaluation[i].DG_sosao;
@@ -70,7 +70,7 @@ class ProductDetailController {
                                     })    
                             }
                         }else{
-                            Promise.all([ mydb.query(`SELECT ND_hoten, ND_username, ND_image, ND_email, ND_diachi, ND_ngay, ND_sdt FROM nguoidung WHERE ND_id = '${results[0].ND_id}'`)])
+                            Promise.all([ mydb.query(`SELECT ND_hoten, ND_username, ND_image, ND_email, ND_diachi, ND_ngayDK, ND_sdt FROM nguoidung WHERE ND_id = '${results[0].ND_id}'`)])
                             .then(([user])=>{
                                 //console.log(user[0]);
                                 //num = num + evaluation[i].DG_sosao;

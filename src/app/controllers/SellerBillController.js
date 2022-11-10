@@ -17,37 +17,45 @@ class SellerBillController {
        console.log('traangthai tungay: '+ req.query.tungay);
        console.log('traangthai denngay: '+ req.query.denngay);
        let url;
-        if(req.query.DH_trangthai === 'WaitConfirm' && req.query.tungay  === '' && req.query.denngay === ''){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=1 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.DH_trangthai === 'Confirmed' && req.query.tungay  === '' && req.query.denngay === ''){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=2 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.DH_trangthai === 'Transport' && req.query.tungay  === '' && req.query.denngay === ''){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=3 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.DH_trangthai === 'Delivered' && req.query.tungay  === '' && req.query.denngay === ''){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=4 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.DH_trangthai === 'CancelOrder' && req.query.tungay  === '' && req.query.denngay === ''){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=5 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.tungay  === '' && req.query.denngay === ''){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND ttdh.DH_id IS NOT NULL ORDER by ttdh.TTDH_id DESC`;
-        }else 
-        if(req.query.DH_trangthai === 'WaitConfirm' && req.query.tungay  !== '' && req.query.denngay !== ''){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=1 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.DH_trangthai === 'Confirmed' && req.query.tungay  !== '' && req.query.denngay !== ''){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=2 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.DH_trangthai === 'Transport' && req.query.tungay  !== '' && req.query.denngay !== ''){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=3 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.DH_trangthai === 'Delivered' && req.query.tungay  !== '' && req.query.denngay !== ''){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND ttdh.DH_id IS NOT NULL AND DH_trangthai=4 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.DH_trangthai === 'CancelOrder' && req.query.tungay  !== '' && req.query.denngay !== ''){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}'  AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}'AND ttdh.DH_id IS NOT NULL AND DH_trangthai=5 ORDER by ttdh.TTDH_id DESC`;
-        }else if(req.query.tungay  !== '' && req.query.denngay !== ''){
-            url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND ttdh.DH_id IS NOT NULL ORDER by ttdh.TTDH_id DESC`;
-        }
+       if(req.query.tungay  === '' && req.query.denngay === ''){
+            if(req.query.DH_trangthai === 'WaitConfirm' ){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND ttdh.DH_id IS NOT NULL AND dh.DH_trangthai=1 ORDER by ttdh.TTDH_id DESC`;
+            }else if(req.query.DH_trangthai === 'Confirmed' ){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND ttdh.DH_id IS NOT NULL AND dh.DH_trangthai=2 ORDER by ttdh.TTDH_id DESC`;
+            }else if(req.query.DH_trangthai === 'Transport' ){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND ttdh.DH_id IS NOT NULL AND dh.DH_trangthai=3 ORDER by ttdh.TTDH_id DESC`;
+            }else if(req.query.DH_trangthai === 'Delivered' ){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND ttdh.DH_id IS NOT NULL AND dh.DH_trangthai=4 ORDER by ttdh.TTDH_id DESC`;
+            }else if(req.query.DH_trangthai === 'CancelOrder' ){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND ttdh.DH_id IS NOT NULL AND dh.DH_trangthai=5 ORDER by ttdh.TTDH_id DESC`;
+            }else{
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND ttdh.DH_id IS NOT NULL ORDER by ttdh.TTDH_id DESC`;
+            }
+       }else{
+        
+            if(req.query.DH_trangthai === 'WaitConfirm' && req.query.tungay  !== '' && req.query.denngay !== ''){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND ttdh.DH_id IS NOT NULL AND dh.DH_trangthai=1 ORDER by ttdh.TTDH_id DESC`;
+            }else if(req.query.DH_trangthai === 'Confirmed' && req.query.tungay  !== '' && req.query.denngay !== ''){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND ttdh.DH_id IS NOT NULL AND dh.DH_trangthai=2 ORDER by ttdh.TTDH_id DESC`;
+            }else if(req.query.DH_trangthai === 'Transport' && req.query.tungay  !== '' && req.query.denngay !== ''){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND ttdh.DH_id IS NOT NULL AND dh.DH_trangthai=3 ORDER by ttdh.TTDH_id DESC`;
+            }else if(req.query.DH_trangthai === 'Delivered' && req.query.tungay  !== '' && req.query.denngay !== ''){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND ttdh.DH_id IS NOT NULL AND dh.DH_trangthai=4 ORDER by ttdh.TTDH_id DESC`;
+            }else if(req.query.DH_trangthai === 'CancelOrder' && req.query.tungay  !== '' && req.query.denngay !== ''){
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}'  AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}'AND ttdh.DH_id IS NOT NULL AND dh.DH_trangthai=5 ORDER by ttdh.TTDH_id DESC`;
+            }else{
+                url = `SELECT * FROM thongtindonhang as ttdh, donhang as dh WHERE ttdh.DH_id = dh.DH_id AND ttdh.NB_id='${req.query.NB_id}' AND dh.DH_ngay BETWEEN '${req.query.tungay}' AND '${req.query.denngay}' AND ttdh.DH_id IS NOT NULL ORDER by ttdh.TTDH_id DESC`;
+            }
+       }
+        
         let idOder = [];
-        let result = []
+        let result = [];
+        console.log('url: ', url);
         Promise.all([ mydb.query(url)])
             .then(([results]) =>{
+                console.log('results', results[[0]]);
                 if(results[0] !== undefined){
+                    console.log('results tttttttttt');
                     for(let t = 0; t < results.length; t++){
                         //console.log(`results${t}`, results[t].DH_id);
                         if(!idOder.includes(results[t].DH_id)){
@@ -77,21 +85,27 @@ class SellerBillController {
                                                         }
                                                     })
                                                     .catch((err) =>{
-                                                        console.log('loi')
+                                                        console.log('loi');
+                                                        res.json({
+                                                            result: '',                                         
+                                                        });
                                                     })
                                                     }
                                                 }
                                         })
                                         .catch((err) =>{
-                                            console.log('loi cc')
+                                            console.log('loi cc');
+                                            res.json({
+                                                result: '',                                         
+                                            });
                                         })
                                     }
                                 }
                             })
                             .catch((err) =>{
-                                res.send({
-                                    seller: false,
-                                })
+                                res.json({
+                                    result: '',                                         
+                                });
                             })
                         } 
                 }else{
@@ -105,6 +119,9 @@ class SellerBillController {
              )
             .catch((err) =>{
                 console.log('loi TTDH');
+                res.json({
+                    result: '',                                         
+                });
             })
        // }   
     }
