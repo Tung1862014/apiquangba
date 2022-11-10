@@ -39,6 +39,7 @@ app.use(passport.session());
 // );
 
 app.use(express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, 'images')));
 app.use(express.static(path.join(__dirname, 'uploadSellerProduct')));
 app.use(express.static(path.join(__dirname, 'uploadSellerProductImage')));
 app.use(express.static(path.join(__dirname, 'video')));

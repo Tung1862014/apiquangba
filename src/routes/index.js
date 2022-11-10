@@ -23,6 +23,7 @@ const homeRoute = require('./home');
  const adminRoute = require('./admin');
 // const supplierRoute = require('./supplier');
 const chartRoute = require('./chart');
+const uploadRoute = require('./uploads');
 
 function route(app) {
     // app.use('/supplier', supplierRoute);
@@ -50,6 +51,7 @@ function route(app) {
     app.use('/home', homeRoute);
 
     app.use('/chart', chartRoute);
+    app.use('/uploads', uploadRoute);
 
     // app.get('/', function (req, res, next) {
     //     console.log('Request URL:')
