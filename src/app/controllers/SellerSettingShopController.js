@@ -146,7 +146,7 @@ class sellerSettingShopController {
     establishShow(req, res, next){
         Promise.all([ mydb.query(`SELECT * FROM motashop WHERE NB_id='${req.body.NB_id}'`)])
          .then(([result])=>{
-            Promise.all([ mydb.query(`SELECT ND_ngay, ND_sdt FROM nguoidung WHERE ND_id='${req.body.NB_id}'`)])
+            Promise.all([ mydb.query(`SELECT ND_ngayDK, ND_sdt FROM nguoidung WHERE ND_id='${req.body.NB_id}'`)])
                 .then(([user])=>{
                     res.json({
                         result: result[0],

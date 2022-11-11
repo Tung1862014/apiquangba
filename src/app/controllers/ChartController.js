@@ -61,6 +61,18 @@ class ChartController {
         let arr = [];
         console.log('date ngdi', req.query.ngdi);
         console.log('date ngde', req.query.ngde);
+        function handleTestDate(fromValue, toValue) {
+            //console.log('handleTestDate', promotion);
+            let datefrom = new Date(fromValue);
+            let dateto = new Date(toValue);
+                if (datefrom >= dateto) {
+                    return true;
+                } else {
+                    return false;
+                }
+                // console.log('date1', date1); 
+            
+        }
          Promise.all([mydb.query(`SELECT * FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay BETWEEN '${req.query.ngdi}' AND '${req.query.ngde}' AND DH_trangthai=4`)])
             .then(([results]) =>{
                 console.log('date results', results.length);
@@ -100,6 +112,18 @@ class ChartController {
                             //     //     }
                             //     // }                             
                             // }
+                    }
+                    console.log('day arr', arr);
+
+                    for(let i=0; i<arr.length-1; i++){
+                        for(let j=i+1; j < arr.length; j++){
+                            if(handleTestDate(arr[i],arr[j])){
+                                console.log(`arr${i}: `, arr[j]);
+                                let temp = arr[i];
+                                arr[i]= arr[j];
+                                arr[j] = temp;
+                            }
+                        }
                     }
                     
                     for(let i=0; i < arr.length; i++){
