@@ -12,7 +12,7 @@ class OrderController {
     ShowAllUser(req, res, next){
         Promise.all([ mydb.query(`SELECT nd.ND_hoten, nd.ND_sdt, kh.DC_diachiGH, kh.DC_chitiet FROM nguoidung as nd, khachhang as kh WHERE nd.ND_id=kh.ND_id AND nd.ND_id='${req.query.ND_id}'`)])
             .then(([results]) => {
-                if(results.length > 0){
+                if(results[0] !== undefined){
                     res.json({
                         results: results[0],
                     })
@@ -31,16 +31,16 @@ class OrderController {
 
     //[UPDATE]  /update/address
     UpdateAddress(req, res, next){
-        //console.log(req.body.ND_ttqhpx,req.body.ND_diachigiaohang,req.body.ND_id);
+        console.log(req.body.ND_id,req.body.DC_diachiGH,req.body.DC_chitiet);
         Promise.all([ mydb.query(`SELECT * FROM khachhang WHERE ND_id='${req.body.ND_id}'`)])
         .then(([results]) => {
             if(results.length > 0){
                 let url;
-                if(req.body.ND_diachiGH !== '' && req.body.ND_chitiet !== ''){
-                    url = `UPDATE khachhang SET DC_diachiGH= '${req.body.DC_diachiGH}', DC_chitiet= '${req.body.ND_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
-                }else if(req.body.ND_diachiGH !== '' && req.body.ND_chitiet === ''){
+                if(req.body.DC_diachiGH !== '' && req.body.DC_chitiet !== ''){
+                    url = `UPDATE khachhang SET DC_diachiGH= '${req.body.DC_diachiGH}', DC_chitiet= '${req.body.DC_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
+                }else if(req.body.DC_diachiGH !== '' && req.body.DC_chitiet === ''){
                     url = `UPDATE khachhang SET DC_diachiGH= '${req.body.DC_diachiGH}' WHERE ND_id='${req.body.ND_id}'`;
-                }else if(req.body.ND_diachiGH === '' && req.body.ND_chitiet !== ''){
+                }else if(req.body.DC_diachiGH === '' && req.body.DC_chitiet !== ''){
                     url = `UPDATE khachhang SET DC_chitiet= '${req.body.DC_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
                 }
                 Promise.all([ mydb.query(url)])
