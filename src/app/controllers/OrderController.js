@@ -100,7 +100,7 @@ class OrderController {
         console.log('DH_tongtien', req.body.DH_tongtien);
         console.log('TTDH_gia', req.body.TTDH_gia);
         console.log('TTDH_phantram', req.body.TTDH_phantram);
-        Promise.all([ mydb.query(`INSERT INTO donhang(DH_id,ND_id, NB_id, DH_tongtien, DH_trangthai, DH_loaithanhtoan, DH_diachi, DH_phivanchuyen, DH_ngay, DH_trangthaiTT) VALUES('${req.body.DH_id}','${req.body.ND_id}', '${req.body.NB_id}', '${req.body.DH_tongtien}',1,'${req.body.DH_loaithanhtoan}','${req.body.DH_diachi}','${req.body.DH_phivanchuyen}','${req.body.DH_ngay}','${req.body.DH_trangthaiTT}')`)])
+        Promise.all([ mydb.query(`INSERT INTO donhang(DH_id,ND_id, NB_id, DH_tongtien, DH_trangthai, DH_loaithanhtoan, DH_diachi, DH_phivanchuyen, DH_ngay, DH_trangthaiTT, DH_ghichu) VALUES('${req.body.DH_id}','${req.body.ND_id}', '${req.body.NB_id}', '${req.body.DH_tongtien}',1,'${req.body.DH_loaithanhtoan}','${req.body.DH_diachi}','${req.body.DH_phivanchuyen}','${req.body.DH_ngay}','${req.body.DH_trangthaiTT}','${req.body.DH_ghichu}')`)])
         .then(([results])=>{
             //console.log('results',results);
            for(let i=0; i< req.body.SP_id.length; i++){

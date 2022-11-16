@@ -138,7 +138,7 @@ class HistoryBillController {
     //[PUT] /update/status/bill
     CancelBill(req, res, next){
         console.log('bill', req.body.DH_id);
-        Promise.all([ mydb.query(`UPDATE donhang SET DH_trangthai = 5 WHERE DH_id='${req.body.DH_id}'`)])
+        Promise.all([ mydb.query(`UPDATE donhang SET DH_trangthai = 5, DH_ghichuhuy='${req.body.DH_ghichuhuy}' WHERE DH_id='${req.body.DH_id}'`)])
             .then(([result]) =>{
                 res.json({
                     result: result,
