@@ -39,14 +39,35 @@ class CustomerController {
                  }else{
                     console.log('loi image')
                 }
-                Promise.all([mydb.query(`INSERT INTO nguoidung( ND_hoten, ND_username, ND_password, ND_image, ND_email, ND_diachi, ND_ngay, ND_sdt, ND_quyen) VALUES (
+                Promise.all([mydb.query(`INSERT INTO nguoidung( ND_hoten, ND_username, ND_password, ND_image, ND_email, ND_diachi, ND_ngayDK, ND_sdt, ND_quyen) VALUES (
                     '${formData.ND_hoten}','${formData.ND_username}','${formData.ND_password}','${formData.image}','${formData.ND_email}','${formData.ND_diachi}','${formData.ND_ngay}','${formData.ND_sdt}','2'
-                    )`)])        
+                    )`)])
+                    .then(([results]) => {
+                        Promise.all([mydb.query(`SELECT MAX(ND_id) as num FROM nguoidung`)])
+                        .then(([num]) => {
+                            console.log('num: ', num);
+                            Promise.all([mydb.query(`INSERT INTO khachhang(ND_NG_id) VALUES ('${num[0].num}')`)])
+                            .then(([num]) => {
+                                        
+                            })
+                            .catch((err) => {
+                                console.log('loi num');
+                            })    
+                        })
+                        .catch((err) => {
+                            console.log('loi max');
+                        })
+                    })
+                    .catch((err) => {
+                        console.log('loi nhaaaaa');
+                    })       
             }
          })
          .catch((err) => {
              res.send('Loi khong tim user')
-         })   
+         })
+         
+        
     }
 
     //POST LOGIN

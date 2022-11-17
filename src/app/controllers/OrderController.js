@@ -119,6 +119,16 @@ class OrderController {
             console.log('loi in');
         
         })
+
+        for(let i=0; i< req.body.SP_id.length; i++){
+            Promise.all([ mydb.query(`DELETE FROM giohang WHERE ND_id= '${req.body.ND_id}' AND SP_id='${req.body.SP_id[i]}'`)])
+            .then(([result])=>{
+                    
+            })
+            .catch((err) =>{
+                    
+            })
+        }
         
     }
 

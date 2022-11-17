@@ -201,6 +201,37 @@ class ProductDetailController {
         .catch((err) =>{
             console.log('loi dh', err);
         })
+
+        Promise.all([ mydb.query(`SELECT * FROM giohang WHERE ND_id='${req.body.ND_id}' AND SP_id='${req.body.SP_id}'`)])
+        .then(([result]) => {
+            //console.log(typeof result[1].DH_id);
+            if(result[0] != undefined){
+                Promise.all([ mydb.query(`UPDATE giohang SET TTGH_soluong='${req.body.TTDH_soluong+result[0].TTGH_soluong}' WHERE ND_id='${req.body.ND_id}' AND SP_id='${req.body.SP_id}'`)])
+                .then(([info]) => {
+                    res.send({
+                        info: info,
+                        result: true
+                    })
+                })
+                .catch((err) =>{
+                    console.log('loi');
+                })
+            }else{
+                Promise.all([ mydb.query(`INSERT INTO giohang( SP_id, ND_id, TTGH_soluong) VALUES ('${req.body.SP_id}','${req.body.ND_id}','${req.body.TTDH_soluong}')`)])
+                .then(([info]) => {
+                    res.send({
+                        info: info,
+                        result:true
+                    })
+                })
+                .catch((err) =>{
+                    console.log('loi');
+                })
+            }
+        })
+        .catch((err) =>{
+            console.log('loi dh', err);
+        })
        
     }
 }

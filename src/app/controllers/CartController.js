@@ -96,11 +96,37 @@ class CartController {
                 console.log('field');
                 res.send(result);
             })
+
+            Promise.all([ mydb.query(`SELECT * FROM thongtindonhang WHERE TTDH_id='${req.body.TTDH_id}'`)])
+            .then(([result]) => {
+                console.log('successfully: ', result[0]);
+                Promise.all([ mydb.query(`UPDATE giohang SET TTGH_soluong='${req.body.TTDH_soluong}' WHERE SP_id='${result[0].SP_id}' AND ND_id='${result[0].ND_id}'`)])
+                .then(([results]) => {
+                    console.log('successfully');
+                })
+                .catch((err) => {
+                    console.log('field ffff');   
+                })
+            })
+            .catch((err) => {
+                console.log('loi cart');
+            })
+            
     }
 
     //[delete]  delete/product
     DeleteProduct(req, res, next){
         console.log(req.body.TTDH_id);
+        Promise.all([ mydb.query(`SELECT * FROM thongtindonhang WHERE TTDH_id='${req.body.TTDH_id}'`)])
+        .then(([result])=>{
+            Promise.all([ mydb.query(`DELETE FROM giohang WHERE SP_id='${result[0].SP_id}' AND ND_id='${result[0].ND_id}'`)])
+            .then(([results])=>{
+                
+            })
+            .catch((err) =>{
+               
+            })
+        })
         Promise.all([ mydb.query(`DELETE FROM thongtindonhang WHERE TTDH_id=${req.body.TTDH_id}`)])
             .then(([results])=>{
                 res.json({
@@ -112,6 +138,10 @@ class CartController {
                     results: false,
                 });
             })
+
+
+           
+            
        
     }
 }
