@@ -10,7 +10,7 @@ class OrderController {
     
     //[GET]  /user/show
     ShowAllUser(req, res, next){
-        Promise.all([ mydb.query(`SELECT nd.ND_hoten, nd.ND_sdt, kh.DC_diachiGH, kh.DC_chitiet FROM nguoidung as nd, khachhang as kh WHERE nd.ND_id=kh.ND_id AND nd.ND_id='${req.query.ND_id}'`)])
+        Promise.all([ mydb.query(`SELECT nd.ND_hoten, nd.ND_sdt, kh.DC_diachiGH, kh.DC_chitiet FROM nguoidung as nd, diachigiaohang as kh WHERE nd.ND_id=kh.ND_id AND nd.ND_id='${req.query.ND_id}'`)])
             .then(([results]) => {
                 if(results[0] !== undefined){
                     res.json({
@@ -32,16 +32,16 @@ class OrderController {
     //[UPDATE]  /update/address
     UpdateAddress(req, res, next){
         console.log(req.body.ND_id,req.body.DC_diachiGH,req.body.DC_chitiet);
-        Promise.all([ mydb.query(`SELECT * FROM khachhang WHERE ND_id='${req.body.ND_id}'`)])
+        Promise.all([ mydb.query(`SELECT * FROM diachigiaohang WHERE ND_id='${req.body.ND_id}'`)])
         .then(([results]) => {
             if(results.length > 0){
                 let url;
                 if(req.body.DC_diachiGH !== '' && req.body.DC_chitiet !== ''){
-                    url = `UPDATE khachhang SET DC_diachiGH= '${req.body.DC_diachiGH}', DC_chitiet= '${req.body.DC_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
+                    url = `UPDATE diachigiaohang SET DC_diachiGH= '${req.body.DC_diachiGH}', DC_chitiet= '${req.body.DC_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
                 }else if(req.body.DC_diachiGH !== '' && req.body.DC_chitiet === ''){
-                    url = `UPDATE khachhang SET DC_diachiGH= '${req.body.DC_diachiGH}' WHERE ND_id='${req.body.ND_id}'`;
+                    url = `UPDATE diachigiaohang SET DC_diachiGH= '${req.body.DC_diachiGH}' WHERE ND_id='${req.body.ND_id}'`;
                 }else if(req.body.DC_diachiGH === '' && req.body.DC_chitiet !== ''){
-                    url = `UPDATE khachhang SET DC_chitiet= '${req.body.DC_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
+                    url = `UPDATE diachigiaohang SET DC_chitiet= '${req.body.DC_chitiet}' WHERE ND_id='${req.body.ND_id}'`;
                 }
                 Promise.all([ mydb.query(url)])
                     .then(([results]) => {
