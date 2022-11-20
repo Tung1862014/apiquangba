@@ -48,41 +48,41 @@ class ProductShopController {
         console.log(req.query.price);
         let queryString;
         if(req.query.DM_id === 'all' && req.query.sort === 'all' && req.query.price === 'gia'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 ORDER by SP_id DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_id DESC`;
         }else if(req.query.DM_id === 'all' && req.query.sort === 'all' && req.query.price === 'lowtohigh'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 ORDER by SP_gia ASC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_gia ASC`;
         }else if(req.query.DM_id === 'all' && req.query.sort === 'all' && req.query.price === 'hightolow'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 ORDER by SP_gia DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_gia DESC`;
         }else if(req.query.DM_id === 'all' && req.query.sort === 'selling' && req.query.price === 'gia'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 ORDER by SP_id DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_id DESC`;
         }else if(req.query.DM_id === 'all' && req.query.sort === 'promotion' && req.query.price === 'gia'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 ORDER by SP_id DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_id DESC`;
         }else if(req.query.DM_id === 'all' && req.query.sort === 'selling' && req.query.price === 'lowtohigh'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 ORDER by SP_gia ASC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_gia ASC`;
         }else if(req.query.DM_id === 'all' && req.query.sort === 'selling' && req.query.price === 'hightolow'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 ORDER by SP_gia DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_gia DESC`;
         }else if(req.query.DM_id === 'all' && req.query.sort === 'promotion' && req.query.price === 'lowtohigh'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 ORDER by SP_gia ASC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_gia ASC`;
         }else if(req.query.DM_id === 'all' && req.query.sort === 'promotion' && req.query.price === 'hightolow'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 ORDER by SP_gia DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_gia DESC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'all' && req.query.price == 'gia'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_trangthai != 2 ORDER by SP_id DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_id DESC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'selling' && req.query.price == 'gia'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 ORDER by SP_id DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_id DESC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'promotion' && req.query.price == 'gia'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_trangthai != 2 ORDER by SP_id DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_id DESC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'all' && req.query.price == 'lowtohigh'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}'  AND SP_trangthai != 2 ORDER by SP_gia ASC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}'  AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_gia ASC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'all' && req.query.price == 'hightolow'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}'  AND SP_trangthai != 2 ORDER by SP_gia DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}'  AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_gia DESC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'selling' && req.query.price == 'lowtohigh'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 ORDER by SP_gia ASC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_gia ASC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort == 'promotion' && req.query.price == 'lowtohigh'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_trangthai != 2 ORDER by SP_gia ASC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_gia ASC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort === 'selling' && req.query.price === 'hightolow'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 ORDER by SP_gia DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_soluongban > 0 AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_gia DESC`;
         }else if(req.query.DM_id !== 'all' && req.query.sort === 'promotion' && req.query.price === 'hightolow'){
-            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_trangthai != 2 ORDER by SP_gia DESC`;
+            queryString = `SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND DM_id='${req.query.DM_id}' AND SP_trangthai != 2 AND SP_trangthai != 0 ORDER by SP_gia DESC`;
         }
         Promise.all([ mydb.query(queryString)])
             .then(([results])=>{

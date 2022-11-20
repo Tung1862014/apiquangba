@@ -338,7 +338,23 @@ class SellerUpdateProductController {
                 );
             })
         }
-        
+        if(req.body.SP_soluong !== ''){
+            Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${req.body.SP_id}'`)])
+            .then(([result])=>{
+                if(result[0].SP_soluongban < req.body.SP_soluong){
+                    Promise.all([ mydb.query(`UPDATE sanpham SET SP_trangthai='1' WHERE SP_id = '${req.body.SP_id}'`)])
+                    .then(([result])=>{
+                        
+                    })
+                    .catch((err)=>{
+                       console.log('loi number sell');
+                    })
+                }
+            })
+            .catch((err)=>{
+                console.log('loi number sell nha');
+            })
+        } 
     }
 
     productUpdateImge(req, res, next){
@@ -563,6 +579,24 @@ class SellerUpdateProductController {
                 );
             })
         }
+
+        if(req.body.SP_soluong !== ''){
+            Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${req.body.SP_id}'`)])
+            .then(([result])=>{
+                if(result[0].SP_soluongban < req.body.SP_soluong){
+                    Promise.all([ mydb.query(`UPDATE sanpham SET SP_trangthai='1' WHERE SP_id = '${req.body.SP_id}'`)])
+                    .then(([result])=>{
+                        
+                    })
+                    .catch((err)=>{
+                       console.log('loi number sell');
+                    })
+                }
+            })
+            .catch((err)=>{
+                console.log('loi number sell nha');
+            })
+        } 
     }
     }
 

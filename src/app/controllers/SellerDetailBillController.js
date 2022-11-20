@@ -45,13 +45,29 @@ class SellerDetailBillController {
     }
 
     billDetailPrepare(req, res, next){
-        console.log('req.body.DH_id', req.body.DH_id, req.body.SP_id, req.body.TTDH_soluong, req.body.SP_soluongban);
+        //console.log('req.body.DH_id', req.body.DH_id, req.body.SP_id, req.body.TTDH_soluong, req.body.SP_soluongban);
         Promise.all([ mydb.query(`UPDATE donhang SET DH_trangthai='${req.body.DH_trangthai}', DH_ghichuhuy='${req.body.DH_ghichuhuy}' WHERE NB_id='${req.body.NB_id}' AND DH_id='${req.body.DH_id}'`)])
             .then(([result])=>{
                 if( req.body.SP_id !== 0){
                     for(let i=0; i<req.body.SP_id.length; i++){
                         Promise.all([ mydb.query(`UPDATE sanpham SET SP_soluongban='${Number(req.body.TTDH_soluong[i]) +  Number(req.body.SP_soluongban[i])}' WHERE NB_id='${req.body.NB_id}' AND SP_id = '${req.body.SP_id[i]}'`)])
                             .then(([product]) => {
+                                Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE NB_id='${req.body.NB_id}' AND SP_id = '${req.body.SP_id[i]}'`)])
+                                    .then(([products]) => {
+                                        if(products[0].SP_soluongban === products[0].SP_soluong){
+                                            Promise.all([ mydb.query(`UPDATE sanpham SET SP_trangthai='0' WHERE NB_id='${req.body.NB_id}' AND SP_id = '${req.body.SP_id[i]}'`)])
+                                                .then(([status]) => {
+
+                                                })
+                                                .catch((err) => {
+                                                    console.log('loi update');
+                                                })
+                                        }
+                                    })
+                                    .catch((err) => {
+                                        console.log('loi select');
+                                    })
+
                                 if(i === req.body.SP_id.length - 1){
                                     res.json({
                                         update: result,

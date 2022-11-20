@@ -24,9 +24,9 @@ class ProductController {
                         console.log('arr',arr);
                         if(arr !== ''){
                             for(let i = 0; i < arr.length; i++){
-                                Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${arr[i]}' AND SP_trangthai != '2'`)])
+                                Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${arr[i]}' AND SP_trangthai != '2' AND SP_trangthai != '0'`)])
                                     .then(([results])=>{
-                                        if(results[0] !== undefined){
+                                        
                                             result[i]= results[0];
                                             if(i == arr.length - 1){
                                                 for(let r = 0; r < arr.length; r++){
@@ -50,7 +50,7 @@ class ProductController {
                                                         })
                                                 }                                         
                                             }
-                                        }
+                                        
                                         //console.log(results);
                                     })
                                     .catch((err)=>{
@@ -221,7 +221,7 @@ class ProductController {
                                                    //lấy thông tin sản phẩm
                                                     if(filterIdproduct[0] !== undefined){
                                                         for(let v = 0; v < filterIdproduct.length; v++){
-                                                            Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${filterIdproduct[v]}' AND SP_trangthai != '2'`)])
+                                                            Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE SP_id = '${filterIdproduct[v]}' AND SP_trangthai != '2' AND SP_trangthai != '0'`)])
                                                                 .then(([product])=>{
                                                                     result[v]= product[0];
                                                                     if( v == filterIdproduct.length - 1){

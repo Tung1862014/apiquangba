@@ -134,7 +134,7 @@ class ProductDetailController {
     //[GET]  /show/all
     ShowAllProduct(req, res, next){
         //console.log(req.query.NB_id);
-        Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' ORDER by SP_id DESC`)])
+        Promise.all([ mydb.query(`SELECT * FROM sanpham WHERE NB_id='${req.query.NB_id}' AND SP_trangthai != '2'  AND SP_trangthai != '0'  ORDER by SP_id DESC`)])
             .then(([results])=>{
                if(results.length>0){
                 for(let i=0; i<results.length; i++){
