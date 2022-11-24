@@ -48,5 +48,15 @@ router.put('/update/advertise/image',uploadAdverties.array('image'), adminContro
 
 router.put('/update/advertise', adminController.UpdateAdvertiseNoImage);
 
+// router.put('/update/address', adminController.UpdateAddress);
+
+router.get('/show/link/advertise', adminController.ShowLinkAdvertise);
+
+router.post('/add/link/advertise',adminController.AddLinkAdvertise);
+
+router.put('/update/link/advertise', adminController.UpdateLinkAdvertise);
+
+router.delete('/delete/link/advertise', adminController.DeleteLinkAdvertise);
+
 
 module.exports = router;

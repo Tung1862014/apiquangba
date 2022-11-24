@@ -533,6 +533,61 @@ class AdminController {
             })
         })
     }
+
+
+    ShowLinkAdvertise(req, res, next){
+        Promise.all([ mydb.query(`SELECT * FROM link WHERE QB_id = '${req.query.QB_id}'`)])
+            .then(([result]) => {
+                res.json({
+                    result: result,
+                })
+            })
+            .catch((err) => {
+                console.log('loi nha nhe');
+            })
+    }
+
+    AddLinkAdvertise(req, res, next){
+        Promise.all([ mydb.query(`INSERT INTO link(QB_id, LI_tieude, LI_link) VALUES ('${req.body.QB_id}', '${req.body.LI_tieude}', '${req.body.LI_link}')`)])
+            .then(([result])=>{
+                res.json({
+                    linkAdd: true,
+                });
+            })
+            .catch((err) =>{
+                res.json({
+                    linkAdd: false,
+                });
+        })
+    }
+
+    UpdateLinkAdvertise(req, res, next){
+        Promise.all([ mydb.query(`UPDATE link SET LI_tieude='${req.body.LI_tieude}', LI_link='${req.body.LI_link}'  WHERE LI_id = '${req.body.LI_id}'`)])
+            .then(([result])=>{
+                res.json({
+                    linkUpdate: true,
+                });
+            })
+            .catch((err) =>{
+                res.json({
+                    linkUpdate: false,
+                });
+            })
+    }
+
+    DeleteLinkAdvertise(req, res, next){
+        Promise.all([ mydb.query(`DELETE FROM link WHERE LI_id = '${req.body.LI_id}'`)])
+            .then(([result])=>{
+                res.json({
+                    linkDelete: true,
+                });
+            })
+            .catch((err) =>{
+                res.json({
+                    linkDelete: false,
+                });
+            })
+    }
     
 }
 
