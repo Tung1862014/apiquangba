@@ -11,4 +11,6 @@ const chartController = require('../app/controllers/ChartController');
 
 router.get('/', chartController.index);
 
+router.get('/table/statistical', chartController.ChartTableStatistical);
+
 module.exports = router;
