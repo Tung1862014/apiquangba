@@ -536,7 +536,7 @@ class AdminController {
 
 
     ShowLinkAdvertise(req, res, next){
-        Promise.all([ mydb.query(`SELECT * FROM link WHERE QB_id = '${req.query.QB_id}'`)])
+        Promise.all([ mydb.query(`SELECT * FROM link WHERE QB_id = '${req.query.QB_id}' ORDER by LI_id DESC`)])
             .then(([result]) => {
                 res.json({
                     result: result,
