@@ -194,11 +194,53 @@ class ChartController {
         let turnovers = [];
 
         if(req.query.type === 'tuan'){
-           
+            const datefrom = new Date(req.query.ngdi);
             const dateto = new Date(req.query.ngde);
-            const day = dateto.getDate();
-            
-            for(let i = 0; i < Number(day); i++){
+            const dayfrom = datefrom.getDate();
+            const dayto = dateto.getDate();
+            const monthfrom = datefrom.getMonth() + 1;
+            const monthto = dateto.getMonth() + 1;
+            const yearfrom = datefrom.getFullYear();
+            const yearthto = dateto.getFullYear();
+
+            let dateValue = Number(dayfrom);
+            let monthValue = Number(monthfrom);
+            let DateNowValue = new Date(req.query.ngdi);
+            let yearNowValue = new Date(req.query.ngdi);
+            let sumday = 1;
+            let test = 1;
+            let li = 1;
+            let ln = 1;
+            while (test == 1){
+
+                if(Number(yearNowValue.getFullYear()) < Number(yearthto)){
+                     sumday += 1;
+                     const date = new Date(req.query.ngdi);
+                     date.setDate(date.getDate() + ln);
+                     yearNowValue = date;
+                     ln++;
+                }else if( Number(yearNowValue.getMonth() + 1) < Number(monthto)){
+                     sumday += 1;
+                     const date = new Date(req.query.ngdi);
+                     date.setDate(date.getDate() + li);
+                     console.log('monthValue < Number(monthto): ',date, yearNowValue.getMonth() + 1);
+                     yearNowValue = date;
+                    // numberDate = date;
+                    //DateNowValue = date;
+                    li++;
+                }else if( Number(yearNowValue.getDate()) <  Number(dayto) ){
+                    sumday += 1;
+                    //console.log('monthValue = Number(monthto)', monthValue);
+                    yearNowValue.setDate(yearNowValue.getDate() + 1);
+                    yearNowValue = yearNowValue;
+                }else{
+                    test = 0;
+                }
+
+            }
+
+            console.log('sumday', sumday);
+            for(let i = 0; i < sumday; i++){
                 const date = new Date(req.query.ngdi);
                 date.setDate(date.getDate() + i);
                 let YMD='';
@@ -258,100 +300,7 @@ class ChartController {
                 })  
             }
                     
-        }else if(req.query.type == 'statistical'){
-            let datefrom = new Date(req.query.ngdi);
-            let dateto = new Date(req.query.ngde);
-            let monthFrom = datefrom.getMonth() + 1;
-            let monthTo = dateto.getMonth() + 1;
-            console.log('req.query.type: ', monthFrom, monthTo);
-
-            if(monthFrom.toString() == monthTo.toString()){
-                Promise.all([mydb.query(`SELECT * FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay BETWEEN '${req.query.ngdi}' AND '${req.query.ngde}' AND DH_trangthai=4`)])
-                .then(([results]) =>{
-                    console.log('date results', results.length);
-                    
-                    if(results.length > 0){
-                        for(let i=0; i<results.length; i++){
-                            let YMD='';
-                            let DateChart = new Date(results[i].DH_ngay);
-                                let day = DateChart.getDate();
-                                let month = DateChart.getMonth() + 1;
-                                let year = DateChart.getFullYear();
-        
-                                if (month < 10 && day >= 10) {
-                                    YMD = year + '-0' + month + '-' + day;
-                                } else if (month < 10 && day < 10) {
-                                    YMD =  year + '-0' + month + '-0' + day;
-                                } else if (month >= 10 && day < 10) {
-                                    YMD =  year + '-' + month + '-0' + day;
-                                } else if (month >= 10 && day >= 10) {
-                                    YMD = year + '-' + month + '-' + day;
-                                } else {
-                                    YMD = year + '-' + month + '-' + day;
-                                }
-                                //console.log(YMD);
-                                if(!arr.includes(YMD)){
-                                    arr.push(YMD);
-                                }
-                        }
-                        console.log('day arr', arr);
-    
-                        for(let i=0; i<arr.length-1; i++){
-                            for(let j=i+1; j < arr.length; j++){
-                                if(handleTestDate(arr[i],arr[j])){
-                                    console.log(`arr${i}: `, arr[j]);
-                                    let temp = arr[i];
-                                    arr[i]= arr[j];
-                                    arr[j] = temp;
-                                }
-                            }
-                        }
-
-                        for(let i=0; i < arr.length; i++){
-                            console.log('day', arr[i]);
-                            Promise.all([ mydb.query(`SELECT sum(DH_tongtien) as money FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay='${arr[i]}' AND DH_trangthai=4`)])
-                                .then(([money]) =>{
-                                   
-                                    turnovers =  [...turnovers,money[0].money];
-                                   
-                                    Promise.all([ mydb.query(`SELECT COUNT(DH_id) as orders FROM donhang WHERE NB_id='${req.query.NB_id}' AND DH_ngay='${arr[i]}' AND DH_trangthai=4`)])
-                                        .then(([orders]) =>{
-                                            //console.log('tong tien', turnovers);
-                                            numbers = [...numbers, orders[0].orders];
-                                            if(i === arr.length-1){
-                                                console.log('arr', arr);
-                                                console.log('chartListTurnover', turnovers);
-                                                console.log('chartListNumber', numbers);
-                                                res.json({
-                                                    arr: arr,
-                                                    turnovers: turnovers,
-                                                    numbers: numbers,
-                                                })
-                                            }
-                                        })
-                                        .catch((err) =>{
-                                            console.log('loi nha');
-                                        })
-                                })
-                                .catch((err) =>{
-                                    console.log('loi');
-                                })         
-                        }
-                        
-                    }else{
-                        res.json({
-                            arr: [],
-                            turnovers: [],
-                            numbers: [],
-                        })
-                    }
-                    
-                }
-            )
         }else{
-
-        }
-       }else{
         const date = new Date();
         const dayValue = new Date();
         const year = date.getFullYear();
