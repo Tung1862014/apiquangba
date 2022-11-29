@@ -588,7 +588,153 @@ class AdminController {
                 });
             })
     }
+
+
+    //BackUp
     
+    BackupShowUser(req, res, next){
+        Promise.all([ mydb.query(`SELECT * FROM nguoidung`)])
+        .then(([users]) => {
+            Promise.all([ mydb.query(`SELECT * FROM sanpham`)])
+            .then(([products]) => {
+                Promise.all([ mydb.query(`SELECT * FROM hinhanh`)])
+                .then(([images]) => {
+                    Promise.all([ mydb.query(`SELECT * FROM khuyenmai`)])
+                    .then(([promotions]) => {
+                        Promise.all([ mydb.query(`SELECT * FROM motashop`)])
+                        .then(([shops]) => {
+                            Promise.all([ mydb.query(`SELECT * FROM giohang`)])
+                            .then(([carts]) => {
+                                Promise.all([ mydb.query(`SELECT * FROM donhang`)])
+                                .then(([orders]) => {
+                                    Promise.all([ mydb.query(`SELECT * FROM thongtindonhang`)])
+                                    .then(([infoorders]) => {
+                                        Promise.all([ mydb.query(`SELECT * FROM khachhang`)])
+                                        .then(([customers]) => {
+                                            Promise.all([ mydb.query(`SELECT * FROM diachigiaohang`)])
+                                            .then(([delivery]) => {
+                                                Promise.all([ mydb.query(`SELECT * FROM chugianhang`)])
+                                                .then(([sellers]) => {
+                                                    Promise.all([ mydb.query(`SELECT * FROM quangba`)])
+                                                    .then(([advertises]) => {
+                                                        Promise.all([ mydb.query(`SELECT * FROM link`)])
+                                                        .then(([links]) => {
+                                                            res.json({
+                                                                users: users,
+                                                                products: products,
+                                                                images: images,
+                                                                promotions: promotions,
+                                                                shops: shops,
+                                                                carts: carts,
+                                                                orders: orders,
+                                                                infoorders: infoorders,
+                                                                customers: customers,
+                                                                delivery: delivery,
+                                                                sellers: sellers,
+                                                                advertises: advertises,
+                                                                links: links,
+                                                            })
+                                                        })
+                                                        .catch((err) => {
+                                                            console.log('loi nha nhe');
+                                                        })
+                                                    })
+                                                    .catch((err) => {
+                                                        console.log('loi nha nhe');
+                                                    })
+                                                })
+                                                .catch((err) => {
+                                                    console.log('loi nha nhe');
+                                                })
+                                            })
+                                            .catch((err) => {
+                                                console.log('loi nha nhe');
+                                            })
+                                        })
+                                        .catch((err) => {
+                                            console.log('loi nha nhe');
+                                        })
+                                    })
+                                    .catch((err) => {
+                                        console.log('loi nha nhe');
+                                    })
+                                })
+                                .catch((err) => {
+                                    console.log('loi nha nhe');
+                                })
+                            })
+                            .catch((err) => {
+                                console.log('loi nha nhe');
+                            })
+                        })
+                        .catch((err) => {
+                            console.log('loi nha nhe');
+                        })
+                    })
+                    .catch((err) => {
+                        console.log('loi nha nhe');
+                    })
+                })
+                .catch((err) => {
+                    console.log('loi nha nhe');
+                })
+            })
+            .catch((err) => {
+                console.log('loi nha nhe');
+            })
+        })
+        .catch((err) => {
+            console.log('loi nha nhe');
+        })
+    }
+
+    BackupShowProduct(req, res, next){
+
+    }
+
+    BackupShowImage(req, res, next){
+
+    }
+
+    BackupShowPromotion(req, res, next){
+
+    }
+
+    BackupShowShop(req, res, next){
+
+    }
+
+    BackupShowCart(req, res, next){
+
+    }
+
+    BackupShowOder(req, res, next){
+
+    }
+
+    BackupShowInfomationOrder(req, res, next){
+
+    }
+
+    BackupShowCustomer(req, res, next){
+
+    }
+
+    BackupShowDeliveryAddress(req, res, next){
+
+    }
+
+    BackupShowSeller(req, res, next){
+
+    }
+
+    BackupShowAdvertise(req, res, next){
+
+    }
+
+    BackupShowLink(req, res, next){
+
+    }
 }
 
 module.exports = new AdminController();

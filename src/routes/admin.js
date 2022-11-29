@@ -58,5 +58,34 @@ router.put('/update/link/advertise', adminController.UpdateLinkAdvertise);
 
 router.delete('/delete/link/advertise', adminController.DeleteLinkAdvertise);
 
+// router.put('/update/address', adminController.UpdateAddress);
+
+router.get('/backup/show/user', adminController.BackupShowUser);
+
+router.get('/backup/show/product', adminController.BackupShowProduct);
+
+router.get('/backup/show/image', adminController.BackupShowImage);
+
+router.get('/backup/show/promotion', adminController.BackupShowPromotion);
+
+router.get('/backup/show/shop', adminController.BackupShowShop);
+
+router.get('/backup/show/cart', adminController.BackupShowCart);
+
+router.get('/backup/show/order', adminController.BackupShowOder);
+
+router.get('/backup/show/infomation/order', adminController.BackupShowInfomationOrder);
+
+router.get('/backup/show/customer', adminController.BackupShowCustomer);
+
+router.get('/backup/show/delivery/address', adminController.BackupShowDeliveryAddress);
+
+router.get('/backup/show/seller', adminController.BackupShowSeller);
+
+router.get('/backup/show/advertise', adminController.BackupShowAdvertise);
+
+router.get('/backup/show/link', adminController.BackupShowLink);
+
+
 
 module.exports = router;
