@@ -4,6 +4,7 @@ const fs = require('fs');
 const dbConn = require('../../config/db');
 const Database = require('../../config/Database');
 
+
 let mydb = new Database(dbConn);
 
 class AdminController {

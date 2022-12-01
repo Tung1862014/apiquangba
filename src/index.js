@@ -7,12 +7,15 @@ const methodOverride = require('method-override');
 const passportSetup = require("./passport");
 const passport = require('passport');
 
+const exportDB = require('./exportDB');
+
 const cors = require('cors');
 
 const route = require('./routes');
 
 const db = require('./config/db');
 
+exportDB.handleBackUp();
 //connect to DB
 function connect() {
     db.connect((err) =>{
@@ -24,6 +27,16 @@ function connect() {
 };
 
 connect();
+
+// mysqldump({
+//     host: process.env.DB_HOST,
+//     user: process.env.DB_USERNAME,
+//     password: "",
+//     database: process.env.DB_DATABASE_NAME,
+//     dest: './uploads/dump.sql',
+// }, function(err) {
+//   // create data.sql file;
+// });
 
 
 app.use(cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 }));
@@ -43,6 +56,7 @@ app.use(express.static(path.join(__dirname, 'images')));
 app.use(express.static(path.join(__dirname, 'uploadSellerProduct')));
 app.use(express.static(path.join(__dirname, 'uploadSellerProductImage')));
 app.use(express.static(path.join(__dirname, 'video')));
+app.use(express.static(path.join('D:\nodejs\apiquangba')));
 
 app.use(cors());
 
@@ -62,4 +76,5 @@ route(app);
 
 app.listen(process.env.PORT||5000, () => {
   console.log(`Example app listening on port ${process.env.PORT||5000}`);
+  console.log(`__dirname`, __dirname);
 })

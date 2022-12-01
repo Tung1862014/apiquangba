@@ -39,8 +39,8 @@ class CustomerController {
                  }else{
                     console.log('loi image')
                 }
-                Promise.all([mydb.query(`INSERT INTO nguoidung( ND_hoten, ND_username, ND_password, ND_image, ND_email, ND_diachi, ND_ngayDK, ND_sdt, ND_quyen) VALUES (
-                    '${formData.ND_hoten}','${formData.ND_username}','${formData.ND_password}','${formData.image}','${formData.ND_email}','${formData.ND_diachi}','${formData.ND_ngay}','${formData.ND_sdt}','2'
+                Promise.all([mydb.query(`INSERT INTO nguoidung( ND_hoten, ND_username, ND_password, ND_image, ND_email, ND_diachi, ND_ngayDK, ND_sdt, ND_quyen, ND_trangthai) VALUES (
+                    '${formData.ND_hoten}','${formData.ND_username}','${formData.ND_password}','${formData.image}','${formData.ND_email}','${formData.ND_diachi}','${formData.ND_ngay}','${formData.ND_sdt}','2','1'
                     )`)])
                     .then(([results]) => {
                         Promise.all([mydb.query(`SELECT MAX(ND_id) as num FROM nguoidung`)])
