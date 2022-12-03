@@ -351,14 +351,14 @@ class sellerSettingShopController {
     }
 
     showShop(req, res, next){
-        Promise.all([ mydb.query(`SELECT * FROM motashop WHERE NB_id='${req.query.NB_id}'`)])
+        Promise.all([ mydb.query(`SELECT * FROM motashop as mts, nguoidung as nd WHERE mts.NB_id = nd.ND_id AND mts.NB_id='${req.query.NB_id}'`)])
             .then(([results]) => {
                 res.json({
                     results: results[0],
                 })
             })
             .catch((err) => {
-                console.log('loi');
+                console.log('loi nha');
             })
     }
 }

@@ -10,7 +10,7 @@ const  handleBackUp = () => {
               password: "",
               database: process.env.DB_DATABASE_NAME,
         },
-        dumpToFile: './dump.sql',
+        dumpToFile: './backup.sql',
       });
       
 }
