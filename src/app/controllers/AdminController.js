@@ -3,6 +3,7 @@ const fs = require('fs');
 
 const dbConn = require('../../config/db');
 const Database = require('../../config/Database');
+const  md5 = require('md5');
 
 
 let mydb = new Database(dbConn);
@@ -11,7 +12,7 @@ class AdminController {
 
     //[POST]  /login
     loginAdmin(req, res, next){
-        console.log(req.body.ND_username, req.body.ND_password);
+        console.log(md5(req.body.ND_username), req.body.ND_password);
         Promise.all([mydb.query(`SELECT ND_id, ND_hoten, ND_password, ND_image, ND_email, ND_diachi, ND_sdt, ND_ngayDK FROM nguoidung WHERE ND_username='${req.body.ND_username}' AND ND_quyen=0`) ])
         .then(([ result]) =>{
             if(result[0] !== undefined){

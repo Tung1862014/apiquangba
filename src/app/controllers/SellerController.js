@@ -8,6 +8,7 @@ const fs = require("fs");
 
 const dbConn = require('../../config/db');
 const Database = require('../../config/Database');
+const  md5 = require('md5');
 
 let mydb = new Database(dbConn);
 
@@ -48,9 +49,9 @@ class SellerController {
                         Promise.all([mydb.query(`SELECT MAX(ND_id) as num FROM nguoidung`)])
                         .then(([num]) => {
                             console.log('num: ', num);
-                            Promise.all([mydb.query(`INSERT INTO chugianhang(ND_id) VALUES ('${num[0].num}')`)])
+                            Promise.all([mydb.query(`INSERT INTO chugianhang(NB_id, ND_id) VALUES ('${num[0].num}', '${num[0].num}')`)])
                             .then(([result]) => {
-                                console.log('success');         
+                                console.log('success');
                             })
                             .catch((err) => {
                                 console.log('loi num');

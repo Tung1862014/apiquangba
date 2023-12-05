@@ -10,21 +10,17 @@
 # SCHEMA DUMP FOR TABLE: admin
 # ------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `admin` (
-  `AD_id` int(11) NOT NULL AUTO_INCREMENT,
-  `ND_id` int(11) NOT NULL,
-  PRIMARY KEY (`AD_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS `admin` (`ND_id` int(11) NOT NULL) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: chugianhang
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `chugianhang` (
-  `NB_id` int(11) NOT NULL AUTO_INCREMENT,
+  `NB_id` int(11) NOT NULL,
   `ND_id` int(11) NOT NULL,
   PRIMARY KEY (`NB_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: danhgia
@@ -42,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `danhgia` (
   `DG_ngayDG` date NOT NULL,
   `DG_ngayCN` date NOT NULL,
   PRIMARY KEY (`DG_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 46 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 49 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: danhmuc
@@ -53,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `danhmuc` (
   `NB_id` int(11) NOT NULL,
   `DM_danhmuc` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`DM_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 18 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: diachigiaohang
@@ -106,17 +102,17 @@ CREATE TABLE IF NOT EXISTS `hinhanh` (
   `SP_id` int(11) NOT NULL,
   `HA_image` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`HA_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 238 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 247 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: khachhang
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `khachhang` (
-  `ND_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ND_id` int(11) NOT NULL,
   `ND_NG_id` int(11) NOT NULL,
   PRIMARY KEY (`ND_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 16 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: khuyenmai
@@ -129,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `khuyenmai` (
   `KM_denngay` date NOT NULL,
   `KM_phantram` int(11) NOT NULL,
   PRIMARY KEY (`KM_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 37 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: link
@@ -141,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `link` (
   `LI_tieude` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `LI_link` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`LI_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 38 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: motashop
@@ -177,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `nguoidung` (
   `ND_trangthai` int(11) NOT NULL,
   `ND_ghichu` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`ND_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 16 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: quangba
@@ -189,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `quangba` (
   `QB_mota` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `QB_image` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`QB_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 8 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: sanpham
@@ -208,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `sanpham` (
   `SP_trangthai` int(11) NOT NULL,
   `DM_id` int(11) NOT NULL,
   PRIMARY KEY (`SP_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 81 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 84 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: thongtindonhang
@@ -224,16 +220,16 @@ CREATE TABLE IF NOT EXISTS `thongtindonhang` (
   `TTDH_gia` int(11) NOT NULL,
   `TTDH_phantram` int(11) NOT NULL,
   PRIMARY KEY (`TTDH_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 462 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 505 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: admin
 # ------------------------------------------------------------
 
 INSERT INTO
-  `admin` (`AD_id`, `ND_id`)
+  `admin` (`ND_id`)
 VALUES
-  (1, 1);
+  (1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: chugianhang
@@ -242,23 +238,23 @@ VALUES
 INSERT INTO
   `chugianhang` (`NB_id`, `ND_id`)
 VALUES
-  (1, 2);
+  (2, 2);
 INSERT INTO
   `chugianhang` (`NB_id`, `ND_id`)
 VALUES
-  (2, 3);
+  (3, 3);
 INSERT INTO
   `chugianhang` (`NB_id`, `ND_id`)
 VALUES
-  (3, 4);
+  (4, 4);
 INSERT INTO
   `chugianhang` (`NB_id`, `ND_id`)
 VALUES
-  (4, 5);
+  (5, 5);
 INSERT INTO
   `chugianhang` (`NB_id`, `ND_id`)
 VALUES
-  (5, 6);
+  (6, 6);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: danhgia
@@ -364,7 +360,7 @@ VALUES
     7,
     4,
     'Sản phẩm chưa giống hình lắm, vị sản phẩm khá sản nhưng hơi mặn. Mong shop có thể khắc phục.',
-    '',
+    'Cám ơn bạn đã gớp ý. Chúng tôi sẽ sớm khắc phục.',
     '2022-03-15',
     '0000-00-00'
   );
@@ -1408,6 +1404,84 @@ VALUES
     '2022-11-30',
     '0000-00-00'
   );
+INSERT INTO
+  `danhgia` (
+    `DG_id`,
+    `DH_id`,
+    `SP_id`,
+    `NB_id`,
+    `ND_id`,
+    `DG_sosao`,
+    `DG_mota`,
+    `DG_traloi`,
+    `DG_ngayDG`,
+    `DG_ngayCN`
+  )
+VALUES
+  (
+    46,
+    'DHSPMP222',
+    4,
+    2,
+    7,
+    4,
+    'sản phẩm khá vừa ăn',
+    'Cảm ơn bạn đã góp ý. Gian hàng sẽ sớm khắc phục.',
+    '2022-12-11',
+    '2022-12-11'
+  );
+INSERT INTO
+  `danhgia` (
+    `DG_id`,
+    `DH_id`,
+    `SP_id`,
+    `NB_id`,
+    `ND_id`,
+    `DG_sosao`,
+    `DG_mota`,
+    `DG_traloi`,
+    `DG_ngayDG`,
+    `DG_ngayCN`
+  )
+VALUES
+  (
+    47,
+    'DHSPMP206',
+    65,
+    2,
+    9,
+    5,
+    'Sản phẩm chất lượng',
+    'cảm ơn bạn đã đánh giá. Thanks.',
+    '2022-12-11',
+    '0000-00-00'
+  );
+INSERT INTO
+  `danhgia` (
+    `DG_id`,
+    `DH_id`,
+    `SP_id`,
+    `NB_id`,
+    `ND_id`,
+    `DG_sosao`,
+    `DG_mota`,
+    `DG_traloi`,
+    `DG_ngayDG`,
+    `DG_ngayCN`
+  )
+VALUES
+  (
+    48,
+    'DHSPMP231',
+    61,
+    2,
+    7,
+    5,
+    'sản phaam5 chất lượng',
+    'Cảm ơn',
+    '2022-12-12',
+    '0000-00-00'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: danhmuc
@@ -1480,7 +1554,7 @@ VALUES
   (
     1,
     7,
-    'Hồ Chí Minh,Quận 11,Phường 14',
+    'Hồ Chí Minh,Quận 10,Phường 13',
     '123/234 hẻm 3456'
   );
 INSERT INTO
@@ -5601,12 +5675,12 @@ VALUES
     9,
     2,
     260000,
-    3,
+    4,
     1,
     '123/65 hẻm 234,Phường 13,Quận 10,Hồ Chí Minh',
     40000,
-    '2022-12-04',
-    1,
+    '2022-12-05',
+    2,
     'Giao hàng nhớ gọi điện trước 15 phút',
     'undefined'
   );
@@ -5661,14 +5735,284 @@ VALUES
     14,
     2,
     370000,
-    2,
+    4,
     1,
     '123 hẻm 345,Phường Hiệp Thành,Quận 12,Hồ Chí Minh',
     50001,
-    '2022-12-05',
-    1,
+    '2022-12-06',
+    2,
     'Giao hàng nhớ gọi điện trước 15 phút',
     'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP221',
+    11,
+    2,
+    470000,
+    4,
+    1,
+    '56/124 hẻm 98,Phường 14,Quận 10,Hồ Chí Minh',
+    55001,
+    '2022-12-07',
+    2,
+    'Giao hàng nhớ gọi trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP222',
+    7,
+    2,
+    403000,
+    4,
+    1,
+    '123/234 hẻm 3456,Phường 14,Quận 11,Hồ Chí Minh',
+    50001,
+    '2022-12-08',
+    2,
+    '',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP223',
+    10,
+    2,
+    303000,
+    4,
+    1,
+    '123/234/ hẻm 90,Phường 13,Quận 10,Hồ Chí Minh',
+    47500,
+    '2022-12-08',
+    2,
+    'Giao hàng nhớ gọi điện trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP224',
+    11,
+    2,
+    268000,
+    4,
+    1,
+    '56/124 hẻm 98,Phường 14,Quận 10,Hồ Chí Minh',
+    45000,
+    '2022-12-09',
+    2,
+    'Giao hàng nhớ goi trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP225',
+    12,
+    2,
+    413000,
+    4,
+    1,
+    '235/ 34 ,Phường Hiệp Thành,Quận 12,Hồ Chí Minh',
+    55000,
+    '2022-12-09',
+    2,
+    'Giao hàng nhớ gọi trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP226',
+    14,
+    2,
+    295000,
+    4,
+    1,
+    '123 hẻm 345,Phường Hiệp Thành,Quận 12,Hồ Chí Minh',
+    50001,
+    '2022-12-09',
+    2,
+    'Giao hàng nhớ gọi trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP227',
+    8,
+    2,
+    360000,
+    4,
+    1,
+    '123/456 hẻm 122 ,Phường Long Bình,Quận 9,Hồ Chí Minh',
+    45000,
+    '2022-12-09',
+    2,
+    'Giao hàng nhớ gọi trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP228',
+    9,
+    2,
+    265000,
+    4,
+    1,
+    '123/65 hẻm 234,Phường 13,Quận 10,Hồ Chí Minh',
+    40000,
+    '2022-12-10',
+    2,
+    'Giao hàng nhớ gọi trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP229',
+    10,
+    2,
+    378000,
+    4,
+    1,
+    '123/234/ hẻm 90,Phường 13,Quận 10,Hồ Chí Minh',
+    40000,
+    '2022-12-10',
+    2,
+    'Giao hàng nhớ gọi trước 15 phút',
+    ''
   );
 INSERT INTO
   `donhang` (
@@ -5699,6 +6043,216 @@ VALUES
     2,
     'Giao hàng gọi trước 15 phút',
     'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP230',
+    7,
+    3,
+    280000,
+    5,
+    1,
+    '123/234 hẻm 3456,Phường 13,Quận 10,Hồ Chí Minh',
+    40000,
+    '2022-12-11',
+    1,
+    'Giao hàng nhớ gọi trước 15 phút',
+    'Khách hàng hủy đơn.'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP231',
+    7,
+    2,
+    463000,
+    4,
+    1,
+    '123/234 hẻm 3456,Phường 13,Quận 10,Hồ Chí Minh',
+    45000,
+    '2022-12-11',
+    2,
+    'Giao hàng nhớ gọi trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP232',
+    7,
+    6,
+    280000,
+    5,
+    1,
+    '123/234 hẻm 3456,Phường 12,Quận 10,Hồ Chí Minh',
+    40000,
+    '2022-12-11',
+    1,
+    'Giao hàng nhớ gọi trước 15 phút',
+    'Khách hàng hủy đơn.'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP233',
+    7,
+    2,
+    353000,
+    3,
+    1,
+    '123/234 hẻm 3456,Phường 12,Quận 10,Hồ Chí Minh',
+    40000,
+    '2022-12-11',
+    1,
+    'Giao hàng nhớ gọi trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP234',
+    9,
+    3,
+    280000,
+    5,
+    1,
+    '123/65 hẻm 234,Phường 13,Quận 10,Hồ Chí Minh',
+    40000,
+    '2022-12-11',
+    1,
+    'Giao hàng nhớ gọi trước 15 phút',
+    'Khách hàng hủy đơn.'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP235',
+    9,
+    2,
+    378000,
+    2,
+    1,
+    '123/65 hẻm 234,Phường 13,Quận 10,Hồ Chí Minh',
+    45000,
+    '2022-12-11',
+    1,
+    'Giao hàng nhớ gọi trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'DHSPMP236',
+    7,
+    2,
+    493000,
+    5,
+    1,
+    '123/234 hẻm 3456,Phường 12,Quận 10,Hồ Chí Minh',
+    50001,
+    '2022-12-12',
+    1,
+    'Giao hàng hàng nhớ gọi trước `15 phút',
+    'Khách hàng hủy đơn.'
   );
 INSERT INTO
   `donhang` (
@@ -9737,6 +10291,36 @@ INSERT INTO
   )
 VALUES
   (
+    'LLUDGL',
+    7,
+    2,
+    353000,
+    2,
+    2,
+    '123/234 hẻm 3456,Phường 12,Quận 10,Hồ Chí Minh',
+    40000,
+    '2022-12-12',
+    2,
+    'Gao hàng nhớ gọi trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
     'LLULF3',
     13,
     5,
@@ -10048,6 +10632,96 @@ VALUES
     '2022-01-28',
     2,
     'Giao hàng ngoài giờ hành chính, nhớ gọi trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'LLUNEL',
+    9,
+    2,
+    293000,
+    2,
+    2,
+    '123/65 hẻm 234,Phường 13,Quận 10,Hồ Chí Minh',
+    50001,
+    '2022-12-11',
+    2,
+    'Giao hàng nhớ gọi trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'LLUNEQ',
+    7,
+    2,
+    270000,
+    3,
+    2,
+    '123/234 hẻm 3456,Phường 12,Quận 10,Hồ Chí Minh',
+    40000,
+    '2022-12-11',
+    1,
+    'Giao hàng nhớ gọi trước 15 phút',
+    'undefined'
+  );
+INSERT INTO
+  `donhang` (
+    `DH_id`,
+    `ND_id`,
+    `NB_id`,
+    `DH_tongtien`,
+    `DH_trangthai`,
+    `DH_loaithanhtoan`,
+    `DH_diachi`,
+    `DH_phivanchuyen`,
+    `DH_ngay`,
+    `DH_trangthaiTT`,
+    `DH_ghichu`,
+    `DH_ghichuhuy`
+  )
+VALUES
+  (
+    'LLUNME',
+    7,
+    2,
+    393000,
+    3,
+    2,
+    '123/234 hẻm 3456,Phường 13,Quận 10,Hồ Chí Minh',
+    45000,
+    '2022-12-11',
+    1,
+    'Giao hàng nhớ gọi trước 15 phút',
     'undefined'
   );
 INSERT INTO
@@ -11705,6 +12379,22 @@ VALUES
 # DATA DUMP FOR TABLE: giohang
 # ------------------------------------------------------------
 
+INSERT INTO
+  `giohang` (`SP_id`, `ND_id`, `TTGH_soluong`)
+VALUES
+  (61, 7, 1);
+INSERT INTO
+  `giohang` (`SP_id`, `ND_id`, `TTGH_soluong`)
+VALUES
+  (30, 7, 2);
+INSERT INTO
+  `giohang` (`SP_id`, `ND_id`, `TTGH_soluong`)
+VALUES
+  (49, 7, 1);
+INSERT INTO
+  `giohang` (`SP_id`, `ND_id`, `TTGH_soluong`)
+VALUES
+  (32, 7, 2);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: hinhanh
@@ -13582,6 +14272,78 @@ VALUES
     80,
     'http://localhost:5000/product/1666964234203-4b9fa88d13276acdee1651907e46e26c.jfif'
   );
+INSERT INTO
+  `hinhanh` (`HA_id`, `SP_id`, `HA_image`)
+VALUES
+  (
+    238,
+    81,
+    'http://localhost:5000/product/1670723205051-0ec01a9451441190fc682eaf1f09e119.jfif'
+  );
+INSERT INTO
+  `hinhanh` (`HA_id`, `SP_id`, `HA_image`)
+VALUES
+  (
+    239,
+    81,
+    'http://localhost:5000/product/1670723205353-f9959bac33e8ab08ac7c02e4f45471af_tn.jfif'
+  );
+INSERT INTO
+  `hinhanh` (`HA_id`, `SP_id`, `HA_image`)
+VALUES
+  (
+    240,
+    81,
+    'http://localhost:5000/product/1670723205555-575323ffcc1c3f476a809833f585afc1_tn.jfif'
+  );
+INSERT INTO
+  `hinhanh` (`HA_id`, `SP_id`, `HA_image`)
+VALUES
+  (
+    241,
+    82,
+    'http://localhost:5000/product/1670725908648-575323ffcc1c3f476a809833f585afc1_tn.jfif'
+  );
+INSERT INTO
+  `hinhanh` (`HA_id`, `SP_id`, `HA_image`)
+VALUES
+  (
+    242,
+    82,
+    'http://localhost:5000/product/1670725908929-09859e00592d7a3ea8d418368de656d6_tn.jfif'
+  );
+INSERT INTO
+  `hinhanh` (`HA_id`, `SP_id`, `HA_image`)
+VALUES
+  (
+    243,
+    82,
+    'http://localhost:5000/product/1670725909137-a15ab447253972a514657e710c1ab2fd.jfif'
+  );
+INSERT INTO
+  `hinhanh` (`HA_id`, `SP_id`, `HA_image`)
+VALUES
+  (
+    244,
+    83,
+    'http://localhost:5000/product/1670728283099-575323ffcc1c3f476a809833f585afc1_tn.jfif'
+  );
+INSERT INTO
+  `hinhanh` (`HA_id`, `SP_id`, `HA_image`)
+VALUES
+  (
+    245,
+    83,
+    'http://localhost:5000/product/1670728283401-9fa33cb348377de54219722cb89803c0.jfif'
+  );
+INSERT INTO
+  `hinhanh` (`HA_id`, `SP_id`, `HA_image`)
+VALUES
+  (
+    246,
+    83,
+    'http://localhost:5000/product/1670728283595-a15ab447253972a514657e710c1ab2fd.jfif'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: khachhang
@@ -13590,31 +14352,31 @@ VALUES
 INSERT INTO
   `khachhang` (`ND_id`, `ND_NG_id`)
 VALUES
-  (1, 7);
+  (7, 7);
 INSERT INTO
   `khachhang` (`ND_id`, `ND_NG_id`)
 VALUES
-  (2, 8);
+  (8, 8);
 INSERT INTO
   `khachhang` (`ND_id`, `ND_NG_id`)
 VALUES
-  (3, 9);
+  (9, 9);
 INSERT INTO
   `khachhang` (`ND_id`, `ND_NG_id`)
 VALUES
-  (4, 10);
+  (10, 10);
 INSERT INTO
   `khachhang` (`ND_id`, `ND_NG_id`)
 VALUES
-  (5, 11);
+  (11, 11);
 INSERT INTO
   `khachhang` (`ND_id`, `ND_NG_id`)
 VALUES
-  (6, 12);
+  (12, 12);
 INSERT INTO
   `khachhang` (`ND_id`, `ND_NG_id`)
 VALUES
-  (7, 13);
+  (13, 13);
 INSERT INTO
   `khachhang` (`ND_id`, `ND_NG_id`)
 VALUES
@@ -13623,6 +14385,18 @@ INSERT INTO
   `khachhang` (`ND_id`, `ND_NG_id`)
 VALUES
   (15, 15);
+INSERT INTO
+  `khachhang` (`ND_id`, `ND_NG_id`)
+VALUES
+  (16, 16);
+INSERT INTO
+  `khachhang` (`ND_id`, `ND_NG_id`)
+VALUES
+  (17, 17);
+INSERT INTO
+  `khachhang` (`ND_id`, `ND_NG_id`)
+VALUES
+  (18, 18);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: khuyenmai
@@ -13988,6 +14762,36 @@ INSERT INTO
   )
 VALUES
   (36, 79, '2022-10-18', '2022-12-26', 5);
+INSERT INTO
+  `khuyenmai` (
+    `KM_id`,
+    `SP_id`,
+    `KM_tungay`,
+    `KM_denngay`,
+    `KM_phantram`
+  )
+VALUES
+  (37, 81, '2022-12-11', '2022-12-31', 10);
+INSERT INTO
+  `khuyenmai` (
+    `KM_id`,
+    `SP_id`,
+    `KM_tungay`,
+    `KM_denngay`,
+    `KM_phantram`
+  )
+VALUES
+  (38, 82, '2022-12-01', '2022-12-30', 10);
+INSERT INTO
+  `khuyenmai` (
+    `KM_id`,
+    `SP_id`,
+    `KM_tungay`,
+    `KM_denngay`,
+    `KM_phantram`
+  )
+VALUES
+  (39, 82, '2022-12-01', '2022-12-30', 10);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: link
@@ -14456,8 +15260,8 @@ VALUES
   (
     1,
     'Thanh tung',
-    'thanh123',
-    '1234567',
+    '893c3fd491f30b629fde7abe2ba1b516',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1665906167736-Admin.png',
     'tunha1234@gmail.com',
     'Can tho',
@@ -14485,9 +15289,9 @@ INSERT INTO
 VALUES
   (
     2,
-    'KhoChuBay',
-    'quangba',
-    '1234567',
+    'Lê Văn Bảy',
+    '2ce2cf8b63a7073cc1a1aa4f75699324',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1668132625519-KhoChuBay.png',
     'tunha1234@gmail.com',
     'An Giang',
@@ -14516,16 +15320,16 @@ VALUES
   (
     3,
     'Thanh Khô',
-    'thanhkho',
-    '1234567',
+    '5515ceec0523684f55c7f744923cc5d9',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1664955833762-Thank Kho.png',
     'tunha1234@gmail.com',
     'Can tho',
     '2022-09-17',
     917714026,
     1,
-    1,
-    ''
+    0,
+    'Hành vi không lành mạnh từ ngày 11/12/2022 đến ngày 30/12/2022'
   );
 INSERT INTO
   `nguoidung` (
@@ -14546,8 +15350,8 @@ VALUES
   (
     4,
     'Thanh Sang',
-    'thanhsang',
-    '1234567',
+    'ca2402a3e88cd63df4ca537d87056cf8',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1664960140569-ThanhSang.png',
     'tunha1234@gmail.com',
     'Can tho',
@@ -14576,8 +15380,8 @@ VALUES
   (
     5,
     'Linh Pink House',
-    'linhpinkhouse',
-    '1234567',
+    '3fd987f5fd485c1243271985b6030809',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1664977429789-LinhPinKHouse.png',
     'tunha1234@gmail.com',
     'Can tho',
@@ -14606,8 +15410,8 @@ VALUES
   (
     6,
     'Nguyen123',
-    'nguyen',
-    '1234567',
+    '27ff2ffe376b2edcc7c2de309173f0d8',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1664980605378-Nguyen123.png',
     'tunha1234@gmail.com',
     'Can tho',
@@ -14636,11 +15440,11 @@ VALUES
   (
     7,
     'Lê Thị Mỹ Linh',
-    'linh',
-    '1234567',
+    '892da3d819056410c05bca7747d22735',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1665065258331-LINH.png',
     'linh1862014@gmail.com',
-    'An Giang',
+    'Cần Thơ',
     '2022-09-25',
     918814029,
     2,
@@ -14666,8 +15470,8 @@ VALUES
   (
     8,
     'Nguyễn Thanh Sơn',
-    'son123',
-    '1234567',
+    '1885e46b0ec4e787fad11754c7319b50',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1665063389348-Son.png',
     'son1234@gmail.com',
     'Can tho',
@@ -14696,8 +15500,8 @@ VALUES
   (
     9,
     'Trần Thị Thi Liễu',
-    'lieu123',
-    '1234567',
+    '041647c6a3e0665a151f09106435af43',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1665063475342-Lieu.png',
     'lieu1234@gmail.com',
     'Cần Thơ',
@@ -14726,8 +15530,8 @@ VALUES
   (
     10,
     'Lưu Thanh Sang',
-    'sang123',
-    '1234567',
+    'bb1fd84f3c93eecf02e3153cccf98d98',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1665063528149-Sang.png',
     'sang1234@gmail.com',
     'Cần Thơ',
@@ -14756,8 +15560,8 @@ VALUES
   (
     11,
     'Lê Thị Mỹ Hạnh',
-    'hanh123',
-    '1234567',
+    '8750adbed6044cf9a7c3fec8a5fa8a46',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1665063574338-Hanh.png',
     'hanh1234@gmail.com',
     'Cần Thơ',
@@ -14786,8 +15590,8 @@ VALUES
   (
     12,
     'Ngô Kiến Huy',
-    'huy123',
-    '1234567',
+    'b8dc042d8cf7deefb0ec6a264c930b02',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1665063615608-HUY.png',
     'huy1234@gmail.com',
     'Cần Thơ',
@@ -14816,16 +15620,16 @@ VALUES
   (
     13,
     'Mạc Văn Khoa',
-    'khoa123',
-    '1234567',
+    'e15c0fbe60ae42e8fcc8f46195c4ce9b',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1665062634433-KHOA.png',
     'khoa1234@gmail.com',
     'Cần Thơ',
     '2022-10-03',
     918814789,
     2,
-    1,
-    'Hành vi không lành mạnh từ ngày 8/11/2022 đến ngày 30/12/2022 gg'
+    0,
+    'Hành vi không lành mạnh từ ngày 11/12/2022 đến ngày 30/12/2022'
   );
 INSERT INTO
   `nguoidung` (
@@ -14846,8 +15650,8 @@ VALUES
   (
     14,
     'Trần Thị Yến Vy',
-    'vy123',
-    '1234567',
+    '64ef23791c18c4384d7b1e99031d0ae4',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1669816227949-hinh-nen-4k-tuyet-dep-cho-may-tinh-03.jpg',
     'vy1234@gmail.com',
     'Cần Thơ',
@@ -14876,13 +15680,103 @@ VALUES
   (
     15,
     'Lưu Gia Hưng',
-    'hung123',
-    '1234567',
+    '87cfe89dd6e63c2ae0a206cecc4c3b64',
+    'fcea920f7412b5da7be0cf42b8c93759',
     'http://localhost:5000/customers/1669820539633-3837171.png',
     'hung123@gmail.com',
     'Cần Thơ',
     '2022-11-30',
     918824578,
+    2,
+    1,
+    ''
+  );
+INSERT INTO
+  `nguoidung` (
+    `ND_id`,
+    `ND_hoten`,
+    `ND_username`,
+    `ND_password`,
+    `ND_image`,
+    `ND_email`,
+    `ND_diachi`,
+    `ND_ngayDK`,
+    `ND_sdt`,
+    `ND_quyen`,
+    `ND_trangthai`,
+    `ND_ghichu`
+  )
+VALUES
+  (
+    16,
+    'Nguyễn Thanh Vân',
+    'b7b74ebaa17d7fd7c453ef021f72da9f',
+    'fcea920f7412b5da7be0cf42b8c93759',
+    'http://localhost:5000/customers/1670722069157-Untitled design.png',
+    'Mayuri1862014@gmail.com',
+    'Cần Thơ',
+    '2022-12-11',
+    912345678,
+    2,
+    1,
+    ''
+  );
+INSERT INTO
+  `nguoidung` (
+    `ND_id`,
+    `ND_hoten`,
+    `ND_username`,
+    `ND_password`,
+    `ND_image`,
+    `ND_email`,
+    `ND_diachi`,
+    `ND_ngayDK`,
+    `ND_sdt`,
+    `ND_quyen`,
+    `ND_trangthai`,
+    `ND_ghichu`
+  )
+VALUES
+  (
+    17,
+    'Nguyễn Thanh Tùng',
+    '009b35b6a859335651d384702f545a04',
+    'fcea920f7412b5da7be0cf42b8c93759',
+    'http://localhost:5000/customers/1670725001532-3f5518d1311fcabfe70707830d01f87d.jpg',
+    'Mayuri1862014@gmail.com',
+    'Cần Thơ',
+    '2022-12-11',
+    912345679,
+    2,
+    1,
+    ''
+  );
+INSERT INTO
+  `nguoidung` (
+    `ND_id`,
+    `ND_hoten`,
+    `ND_username`,
+    `ND_password`,
+    `ND_image`,
+    `ND_email`,
+    `ND_diachi`,
+    `ND_ngayDK`,
+    `ND_sdt`,
+    `ND_quyen`,
+    `ND_trangthai`,
+    `ND_ghichu`
+  )
+VALUES
+  (
+    18,
+    'Nguyễn Thanh Sơn',
+    '615ef38abaa269a5774b7d93a4600b8b',
+    'd41d8cd98f00b204e9800998ecf8427e',
+    'http://localhost:5000/customers/1670727510652-3837171.png',
+    'Mayuri1862014@gmail.com',
+    'Cần Thơ',
+    '2022-12-11',
+    918814026,
     2,
     1,
     ''
@@ -15008,7 +15902,7 @@ VALUES
     2,
     'khô cá lóc dẻo 2 nắng 1kg',
     40,
-    30,
+    31,
     235000,
     'http://localhost:5000/product/1664953076115-cf874b0c0a33adb4c125b79e4d80e891.jfif',
     1000,
@@ -15036,7 +15930,7 @@ VALUES
     2,
     'Khô cá lóc Chợ Mới đủ 3 nắng tự nhiên, ít mặn, dai thơm ,đảm bảo vệ sinh Không dử dụng chất bảo quản',
     200,
-    36,
+    37,
     130000,
     'http://localhost:5000/product/1664952643350-90b0608c10f133bef72f9bf02eef9c86.jfif',
     500,
@@ -15064,7 +15958,7 @@ VALUES
     2,
     'Khô cá lóc 3 nắng,đủ nắng,vị vừa ăn,không chất bảo quản,vệ sinh-Đặc sản Miền Tây 1KG',
     200,
-    40,
+    43,
     235000,
     'http://localhost:5000/product/1664949847389-bbc60778d98220bf2232a852c01eb662.jfif',
     1000,
@@ -15092,7 +15986,7 @@ VALUES
     2,
     '1kg Khô Cá Lóc Rút Xương Vị Vừa Ăn Không Chất Bảo Quản-500gr',
     200,
-    35,
+    37,
     89000,
     'http://localhost:5000/product/1664949515046-aae97c5e7df67fe2f4277c3b73d7e711.jfif',
     500,
@@ -15120,7 +16014,7 @@ VALUES
     2,
     '1 Ký CÁ LÓC 1 NẮNG',
     200,
-    33,
+    34,
     140000,
     'http://localhost:5000/product/1664946386393-dcd4d87358f96d662992e333933919e4.jfif',
     1000,
@@ -15148,7 +16042,7 @@ VALUES
     2,
     'Khô cá lóc đồng phơi nắng tự nhiên thơm ngon 500g',
     100,
-    36,
+    42,
     115000,
     'http://localhost:5000/product/1665027007288-cc8a72e3af28ed38bb7d1aa2b8b52024.jfif',
     500,
@@ -15876,7 +16770,7 @@ VALUES
     2,
     'Khô cá sặc bổi  - mặn vừa, dai thịt, thơm ngon (500g)',
     100,
-    35,
+    36,
     155000,
     'http://localhost:5000/product/1665027361437-9ed6e3ecc6672d8f3ae47bcc299fb005.jfif',
     500,
@@ -15904,7 +16798,7 @@ VALUES
     2,
     '500 gram khô cá sặc hàng mới về vị vừa ăn cá khô loại 1 bao ngon',
     100,
-    38,
+    40,
     135000,
     'http://localhost:5000/product/1665027512627-14b1baa13fb2944f7c4f1b65dacfe22b.jfif',
     500,
@@ -15932,7 +16826,7 @@ VALUES
     2,
     '1KG KHÔ CÁ SẶC TRỨNG BAO NGON',
     100,
-    39,
+    43,
     150000,
     'http://localhost:5000/product/1665027747764-a2553efc151eeeed582b8ff5fc524d06.jfif',
     1000,
@@ -15988,7 +16882,7 @@ VALUES
     2,
     'Khô cá sặc đồng, cá sặc bướm, hàng siêu lạt CÁ MỚI chất lượng 500gr',
     100,
-    39,
+    41,
     135000,
     'http://localhost:5000/product/1665028216239-c88084b4d826d5bd6ee192e335a8bdb7.jfif',
     500,
@@ -16660,7 +17554,7 @@ VALUES
     2,
     'Khô cá tra 1kg Mekong Foods , chất lượng hảo hạng , thời gian sử dụng lâu nguồn nguyên liệu cá sạch',
     100,
-    41,
+    44,
     270000,
     'http://localhost:5000/product/1666513069408-e42b5edc9ab6bf6ba3bdecf5639756fd.jfif',
     1000,
@@ -16688,7 +17582,7 @@ VALUES
     2,
     '1KG khô cá tra giàu dinh dưỡng , hải sản khô ngon hảo hạng nhiều Vitamin ,thực phẩm được khách hàng rất thich',
     100,
-    37,
+    40,
     175000,
     'http://localhost:5000/product/1666513434320-fad417d7663795a082b392c5feba6d61.jfif',
     1000,
@@ -16744,7 +17638,7 @@ VALUES
     2,
     '1 Kg Mỡ bụng cá tra nhà làm Thơm Ngon Béo, giá sỉ hàng mới',
     100,
-    50,
+    56,
     90000,
     'http://localhost:5000/product/1666513847837-73d43191415ffef8ed6e530607f77282.jfif',
     1000,
@@ -16772,7 +17666,7 @@ VALUES
     2,
     '1KG Khô lườn cá tra phồng 3 nắng [Đặc sản An Giang]',
     100,
-    39,
+    42,
     110000,
     'http://localhost:5000/product/1666514161734-8cd9b4ec9b0e6c0fd361ce3ca4004da5.jfif',
     1000,
@@ -17199,6 +18093,90 @@ VALUES
     '<p>Khô cá tra phòng dùng để chiên chứ ko phải dùng để nướng như các loại khô khác . Khô cá tra phòng chiên nở phòng ra . Giòn và béo khi ăn&nbsp;</p><p>Hạng sử dụng : 2 tháng bảo quản ngăn mát tủ lạnh</p>',
     1,
     9
+  );
+INSERT INTO
+  `sanpham` (
+    `SP_id`,
+    `NB_id`,
+    `SP_ten`,
+    `SP_soluong`,
+    `SP_soluongban`,
+    `SP_gia`,
+    `SP_image`,
+    `SP_trongluong`,
+    `SP_mota`,
+    `SP_trangthai`,
+    `DM_id`
+  )
+VALUES
+  (
+    81,
+    2,
+    'Khô cá lóc 1kg thơm ngon nha',
+    100,
+    0,
+    234000,
+    'http://localhost:5000/product/1670723204150-9fa33cb348377de54219722cb89803c0.jfif',
+    1000,
+    '<p>Sản phẩm bảo quản trong 6 tháng</p>',
+    2,
+    1
+  );
+INSERT INTO
+  `sanpham` (
+    `SP_id`,
+    `NB_id`,
+    `SP_ten`,
+    `SP_soluong`,
+    `SP_soluongban`,
+    `SP_gia`,
+    `SP_image`,
+    `SP_trongluong`,
+    `SP_mota`,
+    `SP_trangthai`,
+    `DM_id`
+  )
+VALUES
+  (
+    82,
+    2,
+    'Khô cá lóc 1kg thơm ngon nha',
+    100,
+    0,
+    190000,
+    'http://localhost:5000/product/1670725907726-9fa33cb348377de54219722cb89803c0.jfif',
+    1000,
+    '<p>Sản phẩm có thể bảo quản 3 tháng</p>',
+    2,
+    1
+  );
+INSERT INTO
+  `sanpham` (
+    `SP_id`,
+    `NB_id`,
+    `SP_ten`,
+    `SP_soluong`,
+    `SP_soluongban`,
+    `SP_gia`,
+    `SP_image`,
+    `SP_trongluong`,
+    `SP_mota`,
+    `SP_trangthai`,
+    `DM_id`
+  )
+VALUES
+  (
+    83,
+    2,
+    'Khô cá lóc 1 kg thơm ngon nha',
+    100,
+    0,
+    120000,
+    'http://localhost:5000/product/1670728282192-09859e00592d7a3ea8d418368de656d6_tn.jfif',
+    1000,
+    '<p>Sản phẩm bảo quản trong 3 tháng</p>',
+    2,
+    1
   );
 
 # ------------------------------------------------------------
@@ -20545,7 +21523,7 @@ INSERT INTO
     `TTDH_phantram`
   )
 VALUES
-  (258, 7, 2, 64, 'DHSPMP46', 1, 90000, 7);
+  (258, 7, 2, 64, 'DHSPMP46', 2, 90000, 7);
 INSERT INTO
   `thongtindonhang` (
     `TTDH_id`,
@@ -20571,7 +21549,7 @@ INSERT INTO
     `TTDH_phantram`
   )
 VALUES
-  (260, 7, 2, 64, 'DHSPMP47', 1, 90000, 7);
+  (260, 7, 2, 64, 'DHSPMP47', 2, 90000, 7);
 INSERT INTO
   `thongtindonhang` (
     `TTDH_id`,
@@ -22014,7 +22992,7 @@ INSERT INTO
     `TTDH_phantram`
   )
 VALUES
-  (371, 7, 2, 64, 'DHSPMP155', 1, 90000, 7);
+  (371, 7, 2, 64, 'DHSPMP155', 2, 90000, 7);
 INSERT INTO
   `thongtindonhang` (
     `TTDH_id`,
@@ -23172,6 +24150,539 @@ INSERT INTO
   )
 VALUES
   (461, 14, 2, 37, 'DHSPMP220', 1, 135000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (462, 11, 2, 35, 'DHSPMP221', 2, 150000, 17);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (463, 11, 2, 65, 'DHSPMP221', 2, 110000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (464, 7, 2, 64, 'DHSPMP222', 2, 90000, 7);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (465, 7, 2, 4, 'DHSPMP222', 1, 235000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (467, 10, 2, 64, 'DHSPMP223', 2, 90000, 7);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (468, 10, 2, 37, 'DHSPMP223', 1, 135000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (469, 11, 2, 62, 'DHSPMP224', 1, 175000, 10);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (470, 11, 2, 65, 'DHSPMP224', 1, 110000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (471, 12, 2, 2, 'DHSPMP225', 1, 235000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (472, 12, 2, 5, 'DHSPMP225', 2, 89000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (473, 14, 2, 6, 'DHSPMP226', 1, 140000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (474, 14, 2, 33, 'DHSPMP226', 1, 155000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (475, 8, 2, 4, 'DHSPMP227', 1, 235000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (476, 8, 2, 35, 'DHSPMP227', 1, 150000, 17);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (477, 9, 2, 3, 'DHSPMP228', 1, 130000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (478, 9, 2, 34, 'DHSPMP228', 1, 135000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (479, 10, 2, 37, 'DHSPMP229', 1, 135000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (480, 10, 2, 61, 'DHSPMP229', 1, 270000, 10);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (481, 7, 2, 7, 'DHSPMP231', 2, 115000, 4);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (482, 7, 2, 61, 'DHSPMP231', 1, 270000, 10);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (483, 7, 3, 12, 'DHSPMP230', 2, 140000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (484, 7, 2, 4, 'LLUNME', 1, 235000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (485, 7, 2, 62, 'LLUNME', 1, 175000, 10);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (486, 7, 2, 7, 'DHSPMP233', 1, 115000, 4);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (487, 7, 2, 61, 'DHSPMP233', 1, 270000, 10);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (488, 7, 6, 30, 'DHSPMP232', 2, 140000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (489, 7, 2, 34, 'LLUNEQ', 1, 135000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (490, 7, 2, 37, 'LLUNEQ', 1, 135000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (491, 9, 2, 7, 'DHSPMP235', 2, 115000, 4);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (492, 9, 2, 62, 'DHSPMP235', 1, 175000, 10);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (493, 9, 3, 12, 'DHSPMP234', 2, 140000, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (494, 9, 2, 35, 'LLUNEL', 1, 150000, 17);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (495, 9, 2, 64, 'LLUNEL', 2, 90000, 7);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (496, 7, 2, 35, 'DHSPMP236', 2, 150000, 17);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (497, 7, 2, 61, 'DHSPMP236', 1, 270000, 10);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (498, 7, 2, 7, 'LLUDGL', 1, 115000, 4);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (499, 7, 2, 61, 'LLUDGL', 1, 270000, 10);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (500, 7, 2, 61, NULL, 1, 0, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (501, 7, 6, 30, NULL, 2, 0, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (503, 7, 5, 49, NULL, 1, 0, 0);
+INSERT INTO
+  `thongtindonhang` (
+    `TTDH_id`,
+    `ND_id`,
+    `NB_id`,
+    `SP_id`,
+    `DH_id`,
+    `TTDH_soluong`,
+    `TTDH_gia`,
+    `TTDH_phantram`
+  )
+VALUES
+  (504, 7, 6, 32, NULL, 2, 0, 0);
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

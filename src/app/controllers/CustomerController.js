@@ -1,4 +1,5 @@
 const Customer = require('../models/Customer');
+const  md5 = require('md5');
 // const {
 //     multipleMongooseToObject,
 //     mongooseToObject,
@@ -46,7 +47,7 @@ class CustomerController {
                         Promise.all([mydb.query(`SELECT MAX(ND_id) as num FROM nguoidung`)])
                         .then(([num]) => {
                             console.log('num: ', num);
-                            Promise.all([mydb.query(`INSERT INTO khachhang(ND_NG_id) VALUES ('${num[0].num}')`)])
+                            Promise.all([mydb.query(`INSERT INTO khachhang(ND_id, ND_NG_id) VALUES ('${num[0].num}', '${num[0].num}')`)])
                             .then(([num]) => {
                                         
                             })
@@ -71,7 +72,9 @@ class CustomerController {
     }
 
     //POST LOGIN
+    
     login(req, res, next){
+        console.log('password: ',req.body.ND_username);
         let url =`SELECT ND_id FROM nguoidung WHERE ND_username='${req.body.ND_username}'`;
         Promise.all([mydb.query(url)])
         .then(([result]) =>{
@@ -79,7 +82,7 @@ class CustomerController {
                 let url2=`SELECT * FROM nguoidung WHERE ND_id='${result[0].ND_id}'`;
                 Promise.all([mydb.query(url2)])
                     .then(([results]) => {
-                        if(results[0].ND_password === req.body.ND_password){
+                        if(results[0].ND_password === req.body.ND_password){ 
                             res.json({
                                 account:true,
                                 pass: true,

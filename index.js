@@ -7,6 +7,8 @@ const methodOverride = require('method-override');
 const passportSetup = require("./src/passport");
 const passport = require('passport');
 
+ 
+
 const exportDB = require('./src/exportDB');
 
 const cors = require('cors');
@@ -76,5 +78,4 @@ route(app);
 
 app.listen(process.env.PORT||5000, () => {
   console.log(`Example app listening on port ${process.env.PORT||5000}`);
-  console.log(`__dirname`, __dirname);
 })
